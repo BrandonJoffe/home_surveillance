@@ -73,8 +73,8 @@ def recognize_face(classifierModel,img):
     person = le.inverse_transform(maxI)
     confidence = predictions[maxI]
 
-    print("Prediction took {} seconds.".format(time.time() - start))
-    print("Predict {} with {:.2f} confidence.".format(person, confidence))
+    print("Recognition took {} seconds.".format(time.time() - start))
+    print("Recognized {} with {:.2f} confidence.".format(person, confidence))
     #if isinstance(clf, GMM):
     #    dist = np.linalg.norm(rep - clf.means_[maxI])
     #    print("  + Distance from the mean: {}".format(dist))
@@ -93,9 +93,7 @@ def getRep(alignedFace):
     alignedFace = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
     start = time.time()
     rep = net.forward(alignedFace)
-    print("Neural network forward pass took {} seconds.".format(
-    time.time() - start))
-
+    #print("Neural network forward pass took {} seconds.".format(  time.time() - start))
     return rep
 
 
@@ -108,34 +106,39 @@ def detect_faces(camera,img,width,height):
     rgbFrame[:, :, 2] = buf[:, :, 0]
 
     annotatedFrame = np.copy(buf)
-    start = time.time()
+    #start = time.time()
     bbs = align.getAllFaceBoundingBoxes(rgbFrame)
-   
+    #print("Face detection took {} seconds.".format(time.time() - start))
+
     for bb in bbs:
 
-        print("Face detection took {} seconds.".format(time.time() - start))
+        bl = (bb.left(), bb.bottom())
+        tr = (bb.right(), bb.top())
+                        
+        print("\n=====================================================================")
+        print("Face Being Processed")
         start = time.time()
         landmarks = align.findLandmarks(rgbFrame, bb)
         alignedFace = align.align(args.imgDim, rgbFrame, bb,landmarks=landmarks,landmarkIndices=openface.AlignDlib.OUTER_EYES_AND_NOSE)                                                     
         if alignedFace is None:
-            print("Face could not be Aligned")
+            cv2.rectangle(annotatedFrame, bl, tr, color=(255, 150, 150), thickness=2)
+            print("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
             continue
         print("Face Alignment took {} seconds.".format(time.time() - start))
 
         cv2.imwrite("facedebug.png", alignedFace)
 
-        start = time.time()
         persondict = recognize_face("generated-embeddings/classifier.pkl",alignedFace)
         if persondict is None:
+            print("//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////")
             continue
-            print("Face could not be recognized")
         else:
-            print("Face Recognition took {} seconds.".format(time.time() - start))
-            bl = (bb.left(), bb.bottom())
-            tr = (bb.right(), bb.top())
-            cv2.rectangle(annotatedFrame, bl, tr, color=(153, 255, 204),
-                          thickness=2)
-            cv2.putText(annotatedFrame,  str(persondict['name']) + " " + str(math.ceil(persondict['confidence']*100)/100), (bb.left(), bb.top() - 10),
+            print("=====================================================================")
+            if persondict['confidence'] > 0.60:
+                cv2.rectangle(annotatedFrame, bl, tr, color=(153, 255, 200), thickness=2)
+            else:
+                cv2.rectangle(annotatedFrame, bl, tr, color=(100, 255, 255),thickness=2) 
+            cv2.putText(annotatedFrame,  str(persondict['name']) + " " + str(math.ceil(persondict['confidence']*100))+ "%", (bb.left()-15, bb.bottom() + 10),
                     cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.25,
                     color=(152, 255, 204), thickness=1)
 

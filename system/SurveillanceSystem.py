@@ -58,27 +58,41 @@ class Surveillance_System(object):
         self.align = openface.AlignDlib(self.args.dlibFacePredictor)
         self.net = openface.TorchNeuralNet(self.args.networkModel, imgDim=self.args.imgDim,  cuda=self.args.cuda) 
 
-        #Build Classification Model
-        self.build_classification_model(luaDir)
+
+       
+       
 
         #default IP cam
-        self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
-        #self.cameras.append(Camera.VideoCamera("Test.mov"))
+        #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
+        self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
 
    def initialize(self):
-        return
-        #do training or get trained file
+    
+        start = time.time()
+        #align raw images  and place them in "aligned-images"
+        aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",self.args.dlibFacePredictor,self.args.imgDim)
+        print("Aligning images took {} seconds.".format(time.time() - start))
+        
+        done = False
+        start = time.time()
+        #Build Classification Model from aligned images
+        done = self.generate_representation(luaDir)
+        if done is True:
+            print("Representation Generation took {} seconds.".format(time.time() - start))
+            start = time.time()
+            #Train Model
+            self.train("generated-embeddings/","LinearSvm",-1)
+            print("Training took {} seconds.".format(time.time() - start))
+        else:
+            print("Generate representation did not return True")
+
         #open cameras with Threads
         #Get Notification Details
         #Start processing
 
-   def build_classification_model(self,fileDir):
-        #1 align raw images   
-        aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",self.args.dlibFacePredictor,self.args.imgDim)
-
-        #2 Generate Representation ./batch-represent/main.lua -outDir <feature-directory> -data <path-to-aligned-data> creates reps.csv and labels.csv in <feature-directory>.        
-        self.cmd = ['/usr/bin/env', 'th', os.path.join(fileDir, 'main.lua'),'-outDir',  "generated-embeddings/" , '-data', "aligned-images/"]
-                    
+   def generate_representation(self,fileDir):
+        #2 Generate Representation 
+        self.cmd = ['/usr/bin/env', 'th', os.path.join(fileDir, 'main.lua'),'-outDir',  "generated-embeddings/" , '-data', "aligned-images/"]                 
         if self.args.cuda:
             self.cmd.append('-cuda')
         self.p = Popen(self.cmd, stdin=PIPE, stdout=PIPE, bufsize=0)
@@ -88,9 +102,7 @@ class Surveillance_System(object):
                 self.p.kill()
         atexit.register(exitHandler) 
 
-        #3 Create Classification Model ./demos/classifier.py train <feature-directory>
-        self.train("generated-embeddings/","LinearSvm",-1)
-       
+        return True
 
    def train(self,workDir,classifier,ldaDim):
       print("Loading embeddings.")
