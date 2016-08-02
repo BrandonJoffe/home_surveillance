@@ -55,7 +55,7 @@ class VideoCamera(object):
 		#cv2.imwrite("debug.png", frame)
 		# Return the capture image data.
 		height, width, channels = frame.shape
-		#resized_frame = cv2.resize(frame,(width/2, height/2), interpolation = cv2.INTER_CUBIC)
+		frame = cv2.resize(frame,(480, 320), interpolation = cv2.INTER_CUBIC)
 		#Do Frame Processing
 		#//////////////////////////////////////////////////////////////////
 
