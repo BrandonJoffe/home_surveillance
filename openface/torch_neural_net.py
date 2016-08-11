@@ -62,6 +62,7 @@ class TorchNeuralNet:
         def exitHandler():
             if self.p.poll() is None:
                 self.p.kill()
+                print("\n/////////////////////// P just got killed //////////////////////////////\n")
         atexit.register(exitHandler)
 
     def forwardPath(self, imgPath):
