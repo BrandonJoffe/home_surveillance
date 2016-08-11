@@ -17,9 +17,14 @@ from subprocess import Popen, PIPE
 import os.path
 import sys
 
+import logging
+import threading
+import time
+
 import Camera
 import openface
 import aligndlib
+import ImageProcessor
 
 #Get paths for models
 #//////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,17 +34,22 @@ np.set_printoptions(precision=2)
 
 
 #///////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
                               
 class Surveillance_System(object):
     
    def __init__(self):
+
         self.training = True
         self.cameras = []
+        self.camera_threads = []
         self.svm = None
 
+        self.video_frame1 = None
+        self.video_frame2 = None
+        self.video_frame3 = None
 
         fileDir = os.path.dirname(os.path.realpath(__file__))
         luaDir = os.path.join(fileDir, '..', 'batch-represent')
@@ -64,21 +74,34 @@ class Surveillance_System(object):
 
         #default IP cam
         #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
+        #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
+        #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
         self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        #self.cameras.append(Camera.VideoCamera("debugging/example_01.mp4"))
+
+        # processing frame thread
+        for i, cam in enumerate(self.cameras):
+          self.proccesing_lock = threading.Lock()
+          thread = threading.Thread(name='process_thread_' + str(i),target=self.process_frame,args=(cam,))
+          thread.daemon = False
+          self.camera_threads.append(thread)
+          thread.start()
+
 
    def initialize(self):
-    
         start = time.time()
         #align raw images  and place them in "aligned-images"
         aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",self.args.dlibFacePredictor,self.args.imgDim)
-        print("Aligning images took {} seconds.".format(time.time() - start))
+        print("\nAligning images took {} seconds.".format(time.time() - start))
         
         done = False
         start = time.time()
         #Build Classification Model from aligned images
         done = self.generate_representation(luaDir)
         if done is True:
-            print("Representation Generation took {} seconds.".format(time.time() - start))
+            print("Representation Generation (Classification Model) took {} seconds.".format(time.time() - start))
             start = time.time()
             #Train Model
             self.train("generated-embeddings/","LinearSvm",-1)
@@ -89,6 +112,14 @@ class Surveillance_System(object):
         #open cameras with Threads
         #Get Notification Details
         #Start processing
+
+   def process_frame(self,camera):
+      logging.debug('Processing Frames')
+      while True:
+        if camera.capture_frame is not None:      
+          height, width, channels = camera.capture_frame.shape
+          frame = ImageProcessor.detect_faces(camera,camera.capture_frame,width,height)
+          camera.processed_frame = frame
 
    def generate_representation(self,fileDir):
         #2 Generate Representation 
@@ -141,3 +172,24 @@ class Surveillance_System(object):
 
    def add_notifications():
       return
+
+   # def camera_stream(self,camera):
+   #    while True:
+   #       logging.debug('reading')
+   #       camera.processed_frame = camera.read()
+
+   # Ensures all scripts use same instance of surveillance object
+
+# if __name__ == "__main__":
+
+#   Home_surveillance = Surveillance_System.getInstance()
+#   WebSocket.start()
+
+
+  
+
+ 
+
+
+
+
