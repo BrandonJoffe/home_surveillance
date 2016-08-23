@@ -253,8 +253,8 @@ class Surveillance_System(object):
 
       # code produced in this tutorial - http://naelshiab.com/tutorial-send-email-python/
 
-      fromaddr = "bjjoffe@gmail.com"
-      toaddr = "bjjoffe@gmail.com"
+      fromaddr = "email"
+      toaddr = "email"
        
       msg = MIMEMultipart()
        
@@ -279,7 +279,7 @@ class Surveillance_System(object):
        
       server = smtplib.SMTP('smtp.gmail.com', 587)
       server.starttls()
-      server.login(fromaddr, "Jofhouse021")
+      server.login(fromaddr, "password")
       text = msg.as_string()
       server.sendmail(fromaddr, toaddr, text)
       server.quit()
