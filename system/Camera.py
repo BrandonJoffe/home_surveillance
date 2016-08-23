@@ -1,3 +1,27 @@
+# Camera Class
+# Brandon Joffe
+# 2016
+#
+# Copyright 2016, Brandon Joffe, All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Some of the code for this VideoCamera class was based on:
+# Raspberry Pi Face Recognition Treasure Box 
+# Webcam OpenCV Camera Capture Device
+# Copyright 2013 Tony DiCola 
+
+
 import threading
 import time
 import numpy as np
@@ -10,7 +34,12 @@ import argparse
 
 import logging
 
-CAPTURE_HZ = 5.0
+from flask import Flask, render_template, Response, redirect, url_for, request
+import Camera
+from flask.ext.socketio import SocketIO,send, emit #Socketio depends on gevent
+import SurveillanceSystem
+
+CAPTURE_HZ = 15.0
 
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-10s) %(message)s',
@@ -25,7 +54,16 @@ class VideoCamera(object):
 		self.processed_frame = None
 		self.capture_frame = None
 		self.firstFrame = None
-		self.people = []
+
+		self.people = {}
+		self.unknownPeople = []
+
+		self.rgbFrame = None
+		self.faceBoxes = None
+
+		self.people_dict_lock = threading.Lock()
+
+		self.frame_lock = threading.Lock()
 
 	 	self.video = cv2.VideoCapture(camURL)
 	 	self.url = camURL
@@ -51,87 +89,69 @@ class VideoCamera(object):
 		parser.add_argument('--cuda', action='store_true')
 		args = parser.parse_args()
 		self.net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,cuda=args.cuda)
-                               
-		
-       
+                                  
     def __del__(self):
         self.video.release()
     	
     def get_frame(self):
 		logging.debug('Getting Frames')
 		while True:
-		        success, frame = self.video.read()
+			success, frame = self.video.read()
 			with self.capture_lock:
 				self.capture_frame = None
-				if success:	
-					r = 480.0 / frame.shape[1]
-					dim = (480, int(frame.shape[0] * r))
-					# perform the actual resizing of the image and show it
-					frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)		
+				if success:		
 					self.capture_frame = frame
-			time.sleep(1.0/CAPTURE_HZ)
+			time.sleep(1.0/CAPTURE_HZ) # only sleep if frame captured
 
-    def read(self):
 
- 		#Block until processed_frame is available
- 		while self.processed_frame == None:
- 			continue
-			
-		frame = self.processed_frame 	
+    def read_jpg(self):
+
+		frame = None
+		with self.capture_lock:
+			frame = self.capture_frame	
+		while frame == None: # If there are problems, keep retrying until an image can be read.
+			time.sleep(0)
+			with self.capture_lock:	
+				frame  = self.capture_frame
+				#frame = self.processed_frame
+
+
+ 	# 	height, width, channels = frame.shape
+		# frame = ImageProcessor.detect_faces(self, frame,width,height)
+		# frame = self.processed_frame 	
 
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
 		ret, jpeg = cv2.imencode('.jpg', frame)
 		#cv2.imwrite("stream/frame.jpg", frame)
-		self.previous_frame = frame
+		#self.previous_frame = frame
 		return jpeg.tostring()
 
+    def read_frame(self):
+		frame = None
+		with self.capture_lock:
+			frame = self.capture_frame	
+		while frame == None: # If there are problems, keep retrying until an image can be read.
+			time.sleep(0)
+			with self.capture_lock:	
+				frame  = self.capture_frame
+				#frame = self.processed_frame
 
+		return frame
 
-class Person(object):
-    person_count = 0
+    def read_processed(self):
+		frame = None
+		#with self.capture_lock:
+		frame = self.processed_frame	
+		while frame == None: # If there are problems, keep retrying until an image can be read.
+			#time.sleep(0)
+			#with self.capture_lock:	
+			frame = self.processed_frame
 
-    def __init__(self,personCoord):
-        
-        self.personCoord = personCoord
-        self.identity = "unknown_" + str(Person.person_count)
-        self.confidence = 0
-        Person.person_count += 1 
-      	self.tracker = dlib.correlation_tracker()
-    
-    def get_identity(self):
-        return self.identity
-
-    def set_identity(self, id):
-        self.identity = id
-
-    def recognize_face(self):     
-       return
-
-    def update_position(self, newCoord):
-       self.personCoord = newCoord
-
-    def get_current_position(self):
-       return self.personCoord
-
-    def start_tracking(self,img):
- 	   self.tracker.start_track(img, dlib.rectangle(self.personCoord))
-    
-    def update_tracker(self,img):    
-       self.tracker.update(img)
-
-    def get_position(self):
-       return self.tracker.get_position()
-
-    def find_face(self):     
-       return
-
-
-
-   # tracking = FaceTracking(detect_min_size=detect_min_size,
-   #                          detect_every=detect_every,
-   #                          track_min_overlap_ratio=track_min_overlap_ratio,
-   #                          track_min_confidence=track_min_confidence,
-   #                          track_max_gap=track_max_gap)
+        # We are using Motion JPEG, but OpenCV defaults to capture raw images,
+        # so we must encode it into JPEG in order to correctly display the
+        # video stream.
+		ret, jpeg = cv2.imencode('.jpg', frame)
+		return jpeg.tostring()
 
