@@ -30,10 +30,11 @@ cd system
 python WebSocket.py
 ```
 -  visit ```localhost:5000``` in your web browser
+-  Username ```admin``` Password ```admin```
 
 # Notes
 ---
-- By default the system processes three videos (high resolution - there is a noticable lag)
+- By default the system processes 1 video file (high resolution - there is a noticable lag)
 - IP cameras can be used by simply going into the the SurveillanceSystem Script and adding the IP camera URLs inside the Class constructor self.cameras.append(Camera.VideoCamera("CamURL"))
 - Please be aware that this project is far from finished and certainly does contain bugs!!
 - This code is being developed for the purpose of my thesis and will hopefully be ready to be shared for everybody to enjoy by October 2016
