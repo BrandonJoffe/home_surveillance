@@ -1,3 +1,25 @@
+# ImageProcessor.
+# Brandon Joffe
+# 2016
+#
+# Copyright 2016, Brandon Joffe, All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Code used in this project included opensource software (openface)
+# developed by Brandon Amos
+# Copyright 2015-2016 Carnegie Mellon University
+
 import cv2
 import numpy as np
 import os
@@ -76,7 +98,7 @@ def recognize_face(classifierModel,img,net):
     predictions = clf.predict_proba(rep).ravel()
     maxI = np.argmax(predictions)
     person = le.inverse_transform(maxI)
-    confidence = predictions[maxI]
+    confidence = int(math.ceil(predictions[maxI]*100))
 
     print("Recognition took {} seconds.".format(time.time() - start))
     print("Recognized {} with {:.2f} confidence.".format(person, confidence))
@@ -154,59 +176,76 @@ def detect_faces(camera,img,width,height):
 
     return annotatedFrame
 
-# def motion_detector(camera,frame):
+def motion_detector(camera,frame):
   
-#         text = "Unoccupied"
+        text = "Unoccupied"
 
-#         # resize the frame, convert it to grayscale, and blur it
-#         frame = imutils.resize(frame, width=500)
-#         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-#         gray = cv2.GaussianBlur(gray, (21, 21), 0)
+        # resize the frame, convert it to grayscale, and blur it
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        gray = cv2.GaussianBlur(gray, (11, 11), 0)
 
-#         # if the first frame is None, initialize it
-#         if camera.firstFrame is None:
-#             camera.firstFrame = gray
-#             return frame
+        # if the first frame is None, initialize it
+        if camera.firstFrame is None:
+            camera.firstFrame = gray
+            return frame
 
-#         # compute the absolute difference between the current frame and
-#         # first frame
-#         frameDelta = cv2.absdiff(camera.firstFrame, gray)
-#         thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
+        # compute the absolute difference between the current frame and
+        # first frame
+        frameDelta = cv2.absdiff(camera.firstFrame, gray)
+        thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
 
-#         # dilate the thresholded image to fill in holes, then find contours
-#         # on thresholded image
+        # dilate the thresholded image to fill in holes, then find contours
+        # on thresholded image
 
-#         thresh = cv2.dilate(thresh, None, iterations=2)
-#         (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-#             cv2.CHAIN_APPROX_SIMPLE)
+        thresh = cv2.dilate(thresh, None, iterations=2)
+        (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+            cv2.CHAIN_APPROX_SIMPLE)
 
-#         # loop over the contours
-#         for c in cnts:
-#             # if the contour is too small, ignore it
-#             if cv2.contourArea(c) < 4000:
-#                 continue
+        # loop over the contours
+        for c in cnts:
+            # if the contour is too small, ignore it
+            if cv2.contourArea(c) < 4000:
+                continue
 
-#             # compute the bounding box for the contour, draw it on the frame,
-#             # and update the text
-#             (x, y, w, h) = cv2.boundingRect(c)
-#             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#             text = "Occupied"
+            # compute the bounding box for the contour, draw it on the frame,
+            # and update the text
+            (x, y, w, h) = cv2.boundingRect(c)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            text = "Occupied"
 
-#         # draw the text and timestamp on the frame
-#         cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
-#             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-#         cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
-#             (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        # draw the text and timestamp on the frame
+        cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+        cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
+            (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
         
-#         # if len(cnts) > 0:
-#         #     return True
-#         # return False
+        # if len(cnts) > 0:
+        #     return True
+        # return False
 
-#         return frame
+        return frame
     
+def resize(frame):
+    r = 480.0 / frame.shape[1]
+    dim = (480, int(frame.shape[0] * r))
+    # perform the actual resizing of the image and show it
+    frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)    
+    return frame  
 
 def crop(image, box):
-    return image[box.bottom():box.bottom()+box.top(), box.left():box.left()+box.right()]
+    return image[box.top():box.bottom(), box.left():box.right()]
+
+    #img[y: y + h, x: x + w] 
+    #bl = (bb.left(), bb.bottom()) # (x1, y1)
+    #tr = (bb.right(), bb.top()) # (x+w,y+h) = (x2,y2)
+    #(x1, y1), (x2, y2)
+
+        # x1 y1 -------------
+        # -------------------
+        # -------------------
+        # -------------------
+        # -------------------
+        # ----------------x2 y2
 
 def is_inside(o, i):
     ox, oy, ow, oh = o
@@ -227,9 +266,27 @@ def pre_processing(image):
      gray = cv2.equalizeHist(gray)
      return gray
 
-def draw_rects(img, rects, color):
+def draw_rects_cv(img, rects, color=(152, 255, 204)):
     for x1, y1, x2, y2 in rects:
         cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
+        #(x1, y1), (x2, y2)
+
+        # x1 y1 -------------
+        # -------------------
+        # -------------------
+        # -------------------
+        # -------------------
+        # ----------------x2 y2
+    return img
+
+def draw_rects_dlib(img, rects):
+
+    for bb in rects:
+        bl = (bb.left(), bb.bottom()) # (x, y)
+        tr = (bb.right(), bb.top()) # (x+w,y+h)
+        cv2.rectangle(img, bl, tr, color=(255, 150, 150), thickness=2)
+    return img
+
 
 def detect_cascade(img, cascade):
     rects = cascade.detectMultiScale(img, scaleFactor=2, minNeighbors=4, minSize=(20, 20), flags = cv2.CASCADE_SCALE_IMAGE)
@@ -248,7 +305,7 @@ def detect_people_hog(image):
                 break
         else:
             filtered_detections.append(r)
-            draw_person(image, r)  
+    draw_rects(image, filtered_detections)  
  
     return image
 
@@ -265,18 +322,51 @@ def detectprocess_face(image):
     frame = image.copy()
     image = pre_processing(image)
     rects = detect_cascade(image, facecascade)
-  
-    for person in rects:
-        x, y, w, h = person
-        faceimg = crop (frame, x, y, w, h)
-        draw_person(frame, person) 
-        alignedfaceimg = face_functions.process_face(faceimg,w,h)
+    frame = draw_rects(frame, rects)  
+    # for person in rects:
+    #     x, y, w, h = person
+    #     #faceimg = crop (frame, x, y, w, h)
+    #     draw_person(frame, person) 
+    #     alignedfaceimg = face_functions.process_face(faceimg,w,h)
         
     
     return frame
 
+def detectdlib_face(img,height,width):
 
+    buf = np.asarray(img)
+    rgbFrame = np.zeros((height, width, 3), dtype=np.uint8)
+    rgbFrame[:, :, 0] = buf[:, :, 2]
+    rgbFrame[:, :, 1] = buf[:, :, 1]
+    rgbFrame[:, :, 2] = buf[:, :, 0]
 
+    annotatedFrame = np.copy(buf)
+    #start = time.time()
+    bbs = align.getAllFaceBoundingBoxes(rgbFrame)
+    #print("Face detection took {} seconds.".format(time.time() - start))
 
+    return bbs, annotatedFrame
+
+def align_face(rgbFrame,bb):
+
+    landmarks = align.findLandmarks(rgbFrame, bb)
+    alignedFace = align.align(args.imgDim, rgbFrame, bb,landmarks=landmarks,landmarkIndices=openface.AlignDlib.OUTER_EYES_AND_NOSE)                                                     
+    if alignedFace is None:
+        return None
+        print("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
+        return alignedFace
+    print("FACE ALIGNED")
+    return alignedFace
+
+def face_recognition(camera,alignedFace):
+
+    persondict = recognize_face("generated-embeddings/classifier.pkl",alignedFace,camera.net)
+
+    if persondict is None:
+        print("//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////")
+        return persondict
+    else:
+        print("FACE RECOGNIZED")
+        return persondict
 
 
