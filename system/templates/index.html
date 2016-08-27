@@ -108,85 +108,184 @@
                 <!-- /.col-lg-12 -->
             </div>
                 <!-- /.row -->
-                <div class="row ">
-                    <div class="col-lg-6">
-                         <img class="img-thumbnail panel panel-default" id="bg" src="http://192.168.1.48/video.mjpg">
-                    </div>
-                    <div class="col-lg-6">
-                          <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}">
-                    </div>
+            <div class="row ">
+                <div class="col-lg-6">
+                      <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}">
                 </div>
+                <div class="col-lg-6">
+                      <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}">
+                </div>
+            </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-fw"></i> Faces Detected
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    Actions<i class="fa"></i>
+                                </button>
+                                <ul class="dropdown-menu slidedown">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-refresh fa-fw"></i> Refresh
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-check-circle fa-fw"></i> Retrain Database
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
-                                 <div class="col-md-3" id = "face">
-                                    <div class="thumbnail">
+
+                            <div class="col-md-6" id = "face">
+                                    <div class="thumbnail">   
                                        <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
-                                        <p class="text-center"><strong>name</strong></p>
+                                        <p class="text-center"><strong>Name</strong></p>
+                                         <div class="pull-right">
+
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu text-centre" role="menu">
+                                                    <li><a href="#">Set Notification</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Trust</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Add Face</a>
+                                                    </li>   
+                                                </ul>
+                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                <h4 class="modal-title" id="myModalLabel">Add Face to Database</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                               <div class="thumbnail">
+                                                                   <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
+                                                                    <p class="text-center"><strong>Name</strong></p>
+                                                                    <div class="progress ">
+                                                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                                                        50%
+                                                                        </div>
+                                                                    </div>    
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Add Face</button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                                <!-- /.modal -->
+                                            </div>
+                                        </div>
                                         <div class="progress ">
                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             50%
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>    
+                                </div>
                             </div>
-                             <div class="col-md-3">
+                             <div class="col-md-6">
                                    <div class="thumbnail">
                                        <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
                                         <p class="text-center"><strong>Name</strong></p>
+                                         <div class="pull-right">
+
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu text-centre" role="menu">
+                                                    <li><a href="#">Set Notification</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Trust</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Add Face</a>
+                                                    </li>   
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="progress ">
                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             50%
                                             </div>
-                                        </div>
+                                        </div>    
                                     </div>
                             </div>
-                             <div class="col-md-3 ">
+                             <div class="col-md-6 ">
                                     <div class="thumbnail">
                                        <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
                                         <p class="text-center"><strong>Name</strong></p>
+                                         <div class="pull-right">
+
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu text-centre" role="menu">
+                                                    <li><a href="#">Trust</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                     <li><a href="#">Intruder</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a data-target="#myModal">Add Face</a>
+                                                    </li>   
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="progress ">
                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             50%
                                             </div>
-                                        </div>
+                                        </div>    
                                     </div>
                             </div>
-                             <div class="col-md-3 ">
+                             <div class="col-md-6 ">
                                     <div class="thumbnail">
                                        <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
                                         <p class="text-center"><strong>Name</strong></p>
+                                         <div class="pull-right">
+
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu text-centre" role="menu">
+                                                    <li><a href="#">Set Notification</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Trust</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="#">Add Face</a>
+                                                    </li>   
+                                                </ul>
+                                            </div>
+                                        </div>
                                         <div class="progress ">
                                             <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             50%
                                             </div>
-                                        </div>
+                                        </div>    
                                     </div>
                             </div>
                         </div>
@@ -194,36 +293,122 @@
                     </div>
                    
                 </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
+                 <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i>Alarm Notifications Panel
+                            <i class="fa fa-fw"></i> Alarm Control Panel
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
+                             <div class="col-lg-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Status: <strong>Armed</strong>
+                                    </div>
+                                    <div class="panel-body">
+                                           <span >
+                                        <button type="button " class="btn btn-warning">Arm/Disarm</button>       
+                                        <button type="button " class="btn btn-danger">Panic</button>
+                                           </span >
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Create New Alert
+                                    </div>
+                                    <div class="panel-body">
+                                      <div class="row ">
+                                            <div class="col-md-6 ">
+                                                <div class="form-group">
+                                                    <label>Cameras</label>
+                                                    <select class="form-control">
+                                                        <option>Camera 1</option>
+                                                        <option>Camera 2</option>
+                                                        <option>Camera 3</option>
+                                                        <option>Camera 4</option>
+                                                        <option>All</option>
+                                                    </select>
+                                                </div>
+                                                 <div class="form-group">
+                                                    <label>Alarm State</label>
+                                                    <select class="form-control">
+                                                        <option>Armed</option>
+                                                        <option>Disarmed</option>
+                                                        <option>All</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 ">
+                                                <div class="form-group">
+                                                        <label>Recognition</label>
+                                                        <select class="form-control">
+                                                            <option>None</option>
+                                                            <option>Brandon Joffe</option>
+                                                            <option>Benji Lewis</option>
+                                                            <option>Robby Katz</option>
+                                                        </select>
+                                                </div>
+                                               
+                                                 <div class="form-group">
+                                                    <label>Detections</label>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" value="">Motion 
+                                                        </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" value="">Intruder 
+                                                        </label>
+                                                    </div>
+                                                  </div>
+                                                   
+                                            </div>
+                                            
+                                      </div> 
+                                    <button type="button " class="btn btn-success">Create</button> 
+                                    </div>
+                                </div>
                             </div>
+                              <div class="col-lg-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-bell fa-fw"></i>Notification Alerts
+                                    </div>
+                                    <!-- /.panel-heading -->
+                                    <div class="panel-body">
+                                        <div class="alert alert-success alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            Motion Detected 
+                                        </div>
+                                        <div class="alert alert-info alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            Intruder Detected 
+                                        </div>
+                                        <div class="alert alert-warning alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            Alarm Set 
+                                        </div>
+                                        <div class="alert alert-danger alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            Brandon detected in lounge <!-- <a href="#" class="alert-link">Alert Link</a>. -->
+                                        </div>
                             <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                            <!-- <a href="#" class="btn btn-default btn-block">Add Alerts Alerts</a> -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                                <!-- /.col-lg-4 -->
+                            </div>
+                              
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                   
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
                     <div class="chat-panel panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-comments fa-fw"></i>
@@ -241,22 +426,6 @@
                                     <li>
                                         <a href="#">
                                             <i class="fa fa-check-circle fa-fw"></i> Available
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-clock-o fa-fw"></i> Away
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
                                         </a>
                                     </li>
                                 </ul>

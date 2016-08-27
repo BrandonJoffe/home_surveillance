@@ -82,7 +82,7 @@ align = openface.AlignDlib(args.dlibFacePredictor)
 
 
 
-facecascade = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt2.xml")
+facecascade = cv2.CascadeClassifier("cascades/haarcascade_frontalface_default.xml")
 uppercascade = cv2.CascadeClassifier("cascades/haarcascade_upperbody.xml")
 eyecascade = cv2.CascadeClassifier("cascades/haarcascade_eye.xml")
 
@@ -177,53 +177,74 @@ def detect_faces(camera,img,width,height):
     return annotatedFrame
 
 def motion_detector(camera,frame):
-  
+        #calculate mean standard deviation then determine if motion has actually accurred
         text = "Unoccupied"
-
-        # resize the frame, convert it to grayscale, and blur it
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        occupied = False
+        # resize the frame, convert it to grayscale, filter and blur it
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  
         gray = cv2.GaussianBlur(gray, (11, 11), 0)
+        gray = cv2.medianBlur(gray,9) 
+        #fgbg = cv2.BackgroundSubtractorMOG2(history=5, varThreshold=16, bShadowDetection = False)
+        #thresh = fgbg.apply(frame ,learningRate=1.0/5)
+        cv2.imwrite("grayfiltered.jpg", gray)
 
-        # if the first frame is None, initialize it
-        if camera.firstFrame is None:
-            camera.firstFrame = gray
-            return frame
+        #initialise and build some history
+        if camera.history == 0:
+            camera.current_frame = gray
+            camera.history +=1
+            return occupied 
+        elif camera.history == 1:
+            camera.previous_frame = camera.current_frame
+            camera.current_frame = gray
+            #camera.next_frame = gray
+            camera.meanframe = cv2.addWeighted(camera.previous_frame,0.5,camera.current_frame,0.5,0)
+            cv2.imwrite("avegrayfiltered.jpg", camera.meanframe)
+            camera.history +=1
+            return occupied 
+        elif camera.history == 20:
+            camera.previous_frame = camera.current_frame
+            camera.current_frame = gray
+            #camera.next_frame = gray
+            camera.history = 0
 
         # compute the absolute difference between the current frame and
         # first frame
-        frameDelta = cv2.absdiff(camera.firstFrame, gray)
+        frameDelta = cv2.absdiff(camera.meanframe , gray)
         thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
-
+        cv2.imwrite("motion.jpg", thresh)
         # dilate the thresholded image to fill in holes, then find contours
         # on thresholded image
 
         thresh = cv2.dilate(thresh, None, iterations=2)
+
         (cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
             cv2.CHAIN_APPROX_SIMPLE)
 
         # loop over the contours
         for c in cnts:
             # if the contour is too small, ignore it
-            if cv2.contourArea(c) < 4000:
+            if cv2.contourArea(c) < 8000 or cv2.contourArea(c) > 80000:
                 continue
 
             # compute the bounding box for the contour, draw it on the frame,
             # and update the text
-            (x, y, w, h) = cv2.boundingRect(c)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            text = "Occupied"
-
+            # (x, y, w, h) = cv2.boundingRect(c)
+            # cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            # text = "Occupied"
+            occupied = True
         # draw the text and timestamp on the frame
-        cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-        cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
-            (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        # cv2.putText(frame, "Room Status: {}".format(text), (10, 10),
+        #     cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+        # cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
+        #     (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
         
         # if len(cnts) > 0:
         #     return True
         # return False
 
-        return frame
+        camera.history +=1
+
+        return occupied
     
 def resize(frame):
     r = 480.0 / frame.shape[1]
@@ -253,7 +274,7 @@ def is_inside(o, i):
     return ox > ix and oy > iy and ox + ow < ix + iw and oy + oh < iy + ih
 
 def draw_person(image, bl, tr):
-   cv2.rectangle(image, bl, tr, color=(100, 255, 255),thickness=2) 
+   cv2.rectangle(image, bl, tr, color=(100, 100, 255),thickness=2) 
 
 def draw_text(image, persondict):
     cv2.putText(image,  str(persondict['name']) + " " + str(math.ceil(persondict['confidence']*100))+ "%", (bb.left()-15, bb.bottom() + 10),
@@ -266,9 +287,14 @@ def pre_processing(image):
      gray = cv2.equalizeHist(gray)
      return gray
 
-def draw_rects_cv(img, rects, color=(152, 255, 204)):
-    for x1, y1, x2, y2 in rects:
-        cv2.rectangle(img, (x1, y1), (x2, y2), color, 2)
+def draw_rects_cv(img, rects, color=(0, 40, 255)):
+
+    overlay = img.copy()
+    output = img.copy()
+
+    for x, y, w, h in rects:
+        cv2.rectangle(overlay, (x, y), (x+w, y+h), color, 2)
+        cv2.addWeighted(overlay, 0.5, output, 0.5, 0, output)
         #(x1, y1), (x2, y2)
 
         # x1 y1 -------------
@@ -277,25 +303,30 @@ def draw_rects_cv(img, rects, color=(152, 255, 204)):
         # -------------------
         # -------------------
         # ----------------x2 y2
-    return img
+    return output
 
 def draw_rects_dlib(img, rects):
+
+    overlay = img.copy()
+    output = img.copy()
 
     for bb in rects:
         bl = (bb.left(), bb.bottom()) # (x, y)
         tr = (bb.right(), bb.top()) # (x+w,y+h)
-        cv2.rectangle(img, bl, tr, color=(255, 150, 150), thickness=2)
-    return img
+        cv2.rectangle(overlay, bl, tr, color=(240, 240, 240), thickness=2)
+        cv2.addWeighted(overlay, 0.5, output, 0.5, 0, output)
+        
+    return output
 
 
 def detect_cascade(img, cascade):
-    rects = cascade.detectMultiScale(img, scaleFactor=2, minNeighbors=4, minSize=(20, 20), flags = cv2.CASCADE_SCALE_IMAGE)
+    rects = cascade.detectMultiScale(img, scaleFactor=1.3, minNeighbors=4, minSize=(30, 30), flags = cv2.CASCADE_SCALE_IMAGE)
     return rects
 
 def detect_people_hog(image):
     hog = cv2.HOGDescriptor()
     hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-    found, w = hog.detectMultiScale(image,winStride=(7,7),padding=(16,16), scale=1.05)
+    found, w = hog.detectMultiScale(image,winStride=(7,7),padding=(32,32), scale=1.05)
 
     filtered_detections = []
   
@@ -305,7 +336,7 @@ def detect_people_hog(image):
                 break
         else:
             filtered_detections.append(r)
-    draw_rects(image, filtered_detections)  
+    draw_rects_cv(image, filtered_detections)  
  
     return image
 
@@ -314,22 +345,19 @@ def detect_people_cascade(image):
     #image = pre_processing(image)
     rects = detect_cascade(image, uppercascade)
     
-    for person in rects:
-       draw_person(image, person) 
+    image = draw_rects_cv(image, rects,color=(0, 255, 0))  
     return image
 
-def detectprocess_face(image):
+def detectopencv_face(image):
     frame = image.copy()
     image = pre_processing(image)
     rects = detect_cascade(image, facecascade)
-    frame = draw_rects(frame, rects)  
+    frame = draw_rects_cv(frame, rects)  
     # for person in rects:
     #     x, y, w, h = person
     #     #faceimg = crop (frame, x, y, w, h)
     #     draw_person(frame, person) 
-    #     alignedfaceimg = face_functions.process_face(faceimg,w,h)
-        
-    
+    #     alignedfaceimg = face_functions.process_face(faceimg,w,h)  
     return frame
 
 def detectdlib_face(img,height,width):

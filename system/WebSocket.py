@@ -62,14 +62,19 @@ def video_feed_one():
     return Response(gen(Home_Surveillance.cameras[0]),
                     mimetype='multipart/x-mixed-replace; boundary=frame') # a stream where each part replaces the previous part the multipart/x-mixed-replace content type must be used.
 
-# @app.route('/video_feed_two')
-# def video_feed_two():
-#     return Response(gen(Home_Surveillance.cameras[0]),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/video_feed_two')
+def video_feed_two():
+    return Response(gen(Home_Surveillance.cameras[1]),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # @app.route('/video_feed_three')
 # def video_feed_three():
 #     return Response(gen(Home_Surveillance.cameras[2]),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# @app.route('/video_feed_four')
+# def video_feed_four():
+#     return Response(gen(Home_Surveillance.cameras[3]),
 #                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # def get_faceimg(camera,name):

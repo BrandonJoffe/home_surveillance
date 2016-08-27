@@ -39,7 +39,7 @@ import Camera
 from flask.ext.socketio import SocketIO,send, emit #Socketio depends on gevent
 import SurveillanceSystem
 
-CAPTURE_HZ = 15.0
+CAPTURE_HZ = 20.0
 
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-10s) %(message)s',
@@ -50,10 +50,19 @@ class VideoCamera(object):
     def __init__(self,camURL):
 		print("Loading Stream From IP Camera ",camURL)
 
-		self.previous_frame = None
 		self.processed_frame = None
 		self.capture_frame = None
-		self.firstFrame = None
+
+		self.motion = False
+
+		#self.motion_detected_event = threading.Event()
+		#self.faces_detected_event = threading.Event()
+
+		self.previous_frame = None
+		self.current_frame = None
+		self.next_frame = None
+		self.history = 0
+		self.meanframe = None
 
 		self.people = {}
 		self.unknownPeople = []

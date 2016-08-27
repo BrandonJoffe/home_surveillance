@@ -79,6 +79,7 @@ class Surveillance_System(object):
         self.training = True
         self.cameras = []
         self.camera_threads = []
+        self.camera_facedetection_threads = []
         self.people_processing_threads = []
         self.svm = None
 
@@ -87,14 +88,14 @@ class Surveillance_System(object):
         self.video_frame3 = None
 
         fileDir = os.path.dirname(os.path.realpath(__file__))
-        luaDir = os.path.join(fileDir, '..', 'batch-represent')
-        modelDir = os.path.join(fileDir, '..', 'models')
-        dlibModelDir = os.path.join(modelDir, 'dlib')
-        openfaceModelDir = os.path.join(modelDir, 'openface')
+        self.luaDir = os.path.join(fileDir, '..', 'batch-represent')
+        self.modelDir = os.path.join(fileDir, '..', 'models')
+        self.dlibModelDir = os.path.join(self.modelDir, 'dlib')
+        self.openfaceModelDir = os.path.join(self.modelDir, 'openface')
 
         parser = argparse.ArgumentParser()
-        parser.add_argument('--dlibFacePredictor', type=str, help="Path to dlib's face predictor.", default=os.path.join(dlibModelDir, "shape_predictor_68_face_landmarks.dat"))                  
-        parser.add_argument('--networkModel', type=str, help="Path to Torch network model.", default=os.path.join(openfaceModelDir, 'nn4.small2.v1.t7'))                   
+        parser.add_argument('--dlibFacePredictor', type=str, help="Path to dlib's face predictor.", default=os.path.join(self.dlibModelDir, "shape_predictor_68_face_landmarks.dat"))                  
+        parser.add_argument('--networkModel', type=str, help="Path to Torch network model.", default=os.path.join(self.openfaceModelDir, 'nn4.small2.v1.t7'))                   
         parser.add_argument('--imgDim', type=int, help="Default image dimension.", default=96)                    
         parser.add_argument('--cuda', action='store_true')
         parser.add_argument('--unknown', type=bool, default=False, help='Try to predict unknown people')
@@ -105,7 +106,7 @@ class Surveillance_System(object):
 
 
         
-       
+        #self.initialize()   # add faces to DB and train classifier
 
         #default IP cam
         #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
@@ -113,21 +114,24 @@ class Surveillance_System(object):
         #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
+        #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
+        #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
+        #self.cameras.append(Camera.VideoCamera("debugging/iphone_distance1080pHD.m4v"))
         self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
-        #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
         #self.cameras.append(Camera.VideoCamera("debugging/example_01.mp4"))
-
-        #processing frame thread
+        
+        #processing frame threads- for detecting motion and face detection
         for i, cam in enumerate(self.cameras):
           self.proccesing_lock = threading.Lock()
-          thread = threading.Thread(name='process_thread_' + str(i),target=self.process_frame,args=(cam,))
+          thread = threading.Thread(name='frame_process_thread_' + str(i),target=self.process_frame,args=(cam,))
           thread.daemon = False
           self.camera_threads.append(thread)
           thread.start()
 
+        # Threads for alignment and recognition
         for i, cam in enumerate(self.cameras):
           #self.proccesing_lock = threading.Lock()
-          thread = threading.Thread(name='people_process_thread_' + str(i),target=self.people_processing,args=(cam,))
+          thread = threading.Thread(name='face_process_thread_' + str(i),target=self.people_processing,args=(cam,))
           thread.daemon = False
           self.people_processing_threads.append(thread)
           thread.start()
@@ -142,7 +146,7 @@ class Surveillance_System(object):
         done = False
         start = time.time()
         #Build Classification Model from aligned images
-        done = self.generate_representation(luaDir)
+        done = self.generate_representation(self.luaDir)
         if done is True:
             print("Representation Generation (Classification Model) took {} seconds.".format(time.time() - start))
             start = time.time()
@@ -157,23 +161,26 @@ class Surveillance_System(object):
         #Start processing
 
    def process_frame(self,camera):
-      logging.debug('Processing Frames')
+        logging.debug('Processing Frames')
+        state = 1
+        frame_count = 0;
+        while True:  
 
-      while True:  
-            frame = camera.read_frame()
-            frame = ImageProcessor.resize(frame)
-            height, width, channels = frame.shape
-
-            with camera.frame_lock: #aquire lock
-              camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame,height, width )
-              camera.processed_frame = ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
-
-
+             frame = camera.read_frame()
+             frame = ImageProcessor.resize(frame)
+             height, width, channels = frame.shape
+             # #
+             #camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame, height, width )
+             frame  = ImageProcessor.detectopencv_face(frame)
+             frame  = ImageProcessor.detect_people_cascade(frame)
+             camera.processed_frame = frame #ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
+                      
           
    def people_processing(self,camera):   
       logging.debug('Ready to process faces')
       detectedFaces = 0
-      while True:  
+      while True: 
+          #camera.motion_detected_event.wait()  
           with camera.frame_lock: #aquire lock
             if camera.faceBoxes is not None:
                detectedFaces  = len(camera.faceBoxes)
@@ -253,7 +260,7 @@ class Surveillance_System(object):
 
       # code produced in this tutorial - http://naelshiab.com/tutorial-send-email-python/
 
-      fromaddr = "bjjoffe@gmail.com"
+      fromaddr = "home.face.surveillance@gmail.com"
       toaddr = "bjjoffe@gmail.com"
        
       msg = MIMEMultipart()
@@ -279,7 +286,7 @@ class Surveillance_System(object):
        
       server = smtplib.SMTP('smtp.gmail.com', 587)
       server.starttls()
-      server.login(fromaddr, "Jofhouse021")
+      server.login(fromaddr, "facialrecognition")
       text = msg.as_string()
       server.sendmail(fromaddr, toaddr, text)
       server.quit()
