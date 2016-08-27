@@ -286,8 +286,10 @@ class Surveillance_System(object):
 
       # code produced in this tutorial - http://naelshiab.com/tutorial-send-email-python/
 
+
       fromaddr = "home.face.surveillance@gmail.com"
       toaddr = "bjjoffe@gmail.com"
+
        
       msg = MIMEMultipart()
        
@@ -311,7 +313,9 @@ class Surveillance_System(object):
       msg.attach(part)
        
       server = smtplib.SMTP('smtp.gmail.com', 587)
+      
       server.starttls()
+      
       server.login(fromaddr, "facialrecognition")
       text = msg.as_string()
       server.sendmail(fromaddr, toaddr, text)
