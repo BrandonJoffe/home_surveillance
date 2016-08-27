@@ -164,16 +164,42 @@ class Surveillance_System(object):
         logging.debug('Processing Frames')
         state = 1
         frame_count = 0;
+        start = time.time()
         while True:  
 
              frame = camera.read_frame()
              frame = ImageProcessor.resize(frame)
              height, width, channels = frame.shape
-             # #
+
+             if state == 1:
+                 motion = ImageProcessor.motion_detector(camera,frame)
+                 if motion == True:
+                    logging.debug('Motion Detected - Looking for faces in Face Detection Mode')
+                    state = 2
+                 camera.processed_frame = frame
+
+             elif state == 2:
+
+                if frame_count == 0:
+                  start = time.time()
+                  frame_count += 1
+
+                with camera.frame_lock: #aquire lock
+                    camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame,height, width)
+                if len(camera.faceBoxes) == 0:
+                  if (time.time() - start) > 10.0:
+                    logging.debug('No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode')
+                    state = 1
+                    frame_count = 0;
+                    camera.processed_frame = frame
+                else:
+                    start = time.time()
+                    camera.processed_frame = ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
+
              #camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame, height, width )
-             frame  = ImageProcessor.detectopencv_face(frame)
-             frame  = ImageProcessor.detect_people_cascade(frame)
-             camera.processed_frame = frame #ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
+             #frame  = ImageProcessor.detectopencv_face(frame)
+             #frame  = ImageProcessor.detect_people_cascade(frame)
+             #camera.processed_frame = frame #ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
                       
           
    def people_processing(self,camera):   
@@ -198,7 +224,7 @@ class Surveillance_System(object):
                     if camera.people[predictions['name']].confidence < predictions['confidence']:
 
                         camera.people[predictions['name']].confidence = predictions['confidence']
-                        if (predictions['confidence'] > 70):
+                        if (predictions['confidence'] > 90):
                             cv2.imwrite("notification/image.png", camera.processed_frame)
                             self.send_notification_alert(predictions['name'],camera.people[predictions['name']].confidence)
 
