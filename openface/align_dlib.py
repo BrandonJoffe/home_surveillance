@@ -178,7 +178,9 @@ class AlignDlib:
 
         if landmarks is None:
             landmarks = self.findLandmarks(rgbImg, bb)
-
+            if landmarks is None:
+                return None
+                
         npLandmarks = np.float32(landmarks)
         npLandmarkIndices = np.array(landmarkIndices)
 
