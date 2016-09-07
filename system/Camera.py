@@ -51,9 +51,12 @@ class VideoCamera(object):
 		print("Loading Stream From IP Camera ",camURL)
 
 		self.processed_frame = None
+		self.temp_frame = None
 		self.capture_frame = None
 
-		self.motion = False
+		self.motion = False     # used for alerts and transistion between system states i.e from motion detection to face detection
+		self.people = {}		# holds detected faces as well as there condidences
+		self.unknownPeople = [] # holds faces that have not yet been processed
 
 		#self.motion_detected_event = threading.Event()
 		#self.faces_detected_event = threading.Event()
@@ -62,10 +65,7 @@ class VideoCamera(object):
 		self.current_frame = None
 		self.next_frame = None
 		self.history = 0
-		self.meanframe = None
-
-		self.people = {}
-		self.unknownPeople = []
+		self.meanframe = None	
 
 		self.rgbFrame = None
 		self.faceBoxes = None
@@ -78,6 +78,7 @@ class VideoCamera(object):
 	 	self.url = camURL
 		if not self.video.isOpened():
 			self.video.open()
+			
 		# Start a thread to continuously capture frames.
 		# Use a lock to prevent access concurrent access to the camera.
 		self.capture_lock = threading.Lock()
@@ -97,7 +98,8 @@ class VideoCamera(object):
                     help="Default image dimension.", default=96)
 		parser.add_argument('--cuda', action='store_true')
 		args = parser.parse_args()
-		self.net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,cuda=args.cuda)
+
+		self.net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,cuda=args.cuda) # neural net to generate 128 measurements of a face 
                                   
     def __del__(self):
         self.video.release()

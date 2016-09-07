@@ -397,6 +397,17 @@ def detectdlib_face(img,height,width):
 
     return bbs, annotatedFrame
 
+def convertImageToNumpyArray(img,height,width): #numpy array used by dlib for image operations
+    buf = np.asarray(img)
+    rgbFrame = np.zeros((height, width, 3), dtype=np.uint8)
+    rgbFrame[:, :, 0] = buf[:, :, 2]
+    rgbFrame[:, :, 1] = buf[:, :, 1]
+    rgbFrame[:, :, 2] = buf[:, :, 0]
+
+    annotatedFrame = np.copy(buf)
+    return annotatedFrame
+
+
 def align_face(rgbFrame,bb):
 
     landmarks = align.findLandmarks(rgbFrame, bb)

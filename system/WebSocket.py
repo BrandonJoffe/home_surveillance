@@ -21,7 +21,7 @@
 # from gevent import monkey
 # monkey.patch_all()
 #import redis
-from flask import Flask, render_template, Response, redirect, url_for, request, jsonify
+from flask import Flask, render_template, Response, redirect, url_for, request, jsonify, send_file
 import Camera
 from flask.ext.socketio import SocketIO,send, emit #Socketio depends on gevent
 import SurveillanceSystem
@@ -30,6 +30,8 @@ import logging
 import threading
 import time
 from random import random
+
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -64,7 +66,7 @@ def home():
  
 def gen(camera):
     while True:
-        frame = camera.read_processed()
+        frame = camera.read_jpg()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')  # builds 'packet' of data with header and payload 
 
@@ -89,29 +91,115 @@ def video_feed_two():
 #     return Response(gen(Home_Surveillance.cameras[3]),
 #                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+# {'camera': cam, 'eventdetail': eventd, 'alarmstate': alarm, 'person': pers, 
+# 'alerts': {'push_alert': push,'email_alert':email, 'trigger_alarm':triggerA, 'notify_police':notifyP}}
+
+@app.route('/create_alert', methods = ['GET','POST'])
+def create_alert():
+    if request.method == 'POST':
+        camera = request.form.get('camera')
+        event = request.form.get('eventdetail')
+        alarmstate = request.form.get('alarmstate')
+        person = request.form.get('person')
+        push_alert = request.form.get('push_alert')
+        email_alert = request.form.get('email_alert')
+        trigger_alarm = request.form.get('trigger_alarm')
+        notify_police = request.form.get('notify_police')
+
+
+        actions = {'push_alert': push_alert , 'email_alert':email_alert , 'trigger_alarm':trigger_alarm , 'notify_police':notify_police}
+        with Home_Surveillance.alerts_lock:
+            Home_Surveillance.alerts.append(SurveillanceSystem.Alert(alarmstate,camera, event, person, actions))  #alarmState,camera, event, person, action)
+        Home_Surveillance.alerts[-1].id 
+        data = {"alert_id": Home_Surveillance.alerts[-1].id, "alert_message": "Alert if " + Home_Surveillance.alerts[-1].alertString}
+        return jsonify(data)
+    return render_template('index.html')
+
+@app.route('/remove_alert', methods = ['GET','POST'])
+def remove_alert():
+    if request.method == 'POST':
+        alertID = request.form.get('alert_id')
+
+        with Home_Surveillance.alerts_lock:
+            for i, alert in enumerate(Home_Surveillance.alerts):
+                if alert.id == alertID:
+                    del Home_Surveillance.alerts[i]
+                    break
+           
+        data = {"alert_status": "removed"}
+        return jsonify(data)
+    return render_template('index.html')
+
+@app.route('/remove_face', methods = ['GET','POST'])
+def remove_face():
+    if request.method == 'POST':
+        predicted_name = request.form.get('predicted_name')
+
+        for camera in Home_Surveillance.cameras:
+            with camera.people_dict_lock:    
+                del camera.people[predicted_name]    #removes face from people detected in all cameras - need to change this!!
+
+        data = {"face_removed":  'true'}
+        return jsonify(data)
+    return render_template('index.html')
+
+@app.route('/add_face', methods = ['GET','POST'])
+def add_face():
+    if request.method == 'POST':
+        new_name = request.form.get('new_name')
+        predicted_name = request.form.get('predicted_name')
+
+        for camera in Home_Surveillance.cameras:
+            with camera.people_dict_lock:    
+                img = camera.people[predicted_name].face   #gets face of person detected in cameras 
+                del camera.people[predicted_name]    #removes face from people detected in all cameras - need to change this!!
+        wriitenToDir = Home_Surveillance.add_face(new_name,img)
+           
+           
+        data = {"face_added":  wriitenToDir}
+        return jsonify(data)
+    return render_template('index.html')
+
+@app.route('/retrain_classifier', methods = ['GET','POST'])
+def retrain_classifier():
+    if request.method == 'POST':
+
+        retrained = Home_Surveillance.trainClassifier()
+                   
+        data = {"finished":  retrained}
+        return jsonify(data)
+    return render_template('index.html')
+
+
+
 @app.route('/get_faceimg/<name>')
 def get_faceimg(name):
-    print "\n/////////////////////////////////////////////////image\n" + name + "\n/////////////////////////////////////////////////image\n"
+    #print "\n/////////////////////////////////////////////////image\n"+name+"\n/////////////////////////////////////////////////image\n"
     for camera in Home_Surveillance.cameras:    
-            img = camera.people['brandon-joffe'].thumbnail
+            try:
+                img = camera.people[name].thumbnail #need to change to get face from specific camera
+            except:
+                img = ""
+                pass
               
-    return Response((b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + img + b'\r\n\r\n'), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-                   
+    return  Response((b'--frame\r\n'
+                     b'Content-Type: image/jpeg\r\n\r\n' + img + b'\r\n\r\n'),
+                    mimetype='multipart/x-mixed-replace; boundary=frame') #send_file(img, mimetype='image/jpg')
 
 def update_faces():
-    
-     print "\nsending face data/////////////////////////////////////////////////\n"
+     #, 'imgurl': url_for('get_faceimg', name = key) 
+     #print "\nsending face data/////////////////////////////////////////////////\n"
      while True:
             peopledata = []
             persondict = {}
             thumbnail = None
             for camera in Home_Surveillance.cameras:
-                for key, obj in camera.people.iteritems():
-                    persondict = {'identity': key , 'confidence': obj.confidence}
+                for key, obj in camera.people.iteritems():  
+                   
+                    persondict = {'identity': key , 'confidence': obj.confidence, 'image': '/get_faceimg/' + key}
                    
                     peopledata.append(persondict)
-            print json.dumps(peopledata)
+            #print json.dumps(peopledata)
      
             socketio.emit('people_detected', json.dumps(peopledata) ,namespace='/test')
             time.sleep(4)

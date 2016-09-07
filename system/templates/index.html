@@ -103,7 +103,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Home Surveillance Dashboard</h1>
+                    <h1 class="page-header text-center">Home Surveillance Dashboard</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -116,90 +116,25 @@
                       <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}">
                 </div>
             </div>
+            <div class="col-lg-12">
+                    <h1 class="page-header"></h1>
+            </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-fw"></i> Faces Detected
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    Actions<i class="fa"></i>
+                            <div class="btn-group pull-right" id = "facedetectbtn">
+                                <button type="button" id="retrain" onclick="retrainClassifier()" class="btn btn-default btn-xs" >
+                                    <i class="fa fa-refresh fa-fw"></i> Retrain Database
                                 </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Retrain Database
-                                        </a>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body" id="detected-faces">
 
-                            <div class="col-md-6" id = "face">
-                                    <div class="thumbnail">   
-                                       <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
-                                        <p class="text-center"><strong>Name</strong></p>
-                                         <div class="pull-right">
-
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu text-centre" role="menu">
-                                                    <li><a href="#">Set Notification</a>
-                                                    </li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Trust</a>
-                                                    </li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Add Face</a>
-                                                    </li>   
-                                                </ul>
-                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                <h4 class="modal-title" id="myModalLabel">Add Face to Database</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                               <div class="thumbnail">
-                                                                   <img src="http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png" class="img-circle person" alt="Random Name" width="100" height="100">
-                                                                    <p class="text-center"><strong>Name</strong></p>
-                                                                    <div class="progress ">
-                                                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                                                        50%
-                                                                        </div>
-                                                                    </div>    
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Add Face</button>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /.modal-content -->
-                                                    </div>
-                                                    <!-- /.modal-dialog -->
-                                                </div>
-                                                <!-- /.modal -->
-                                            </div>
-                                        </div>
-                                        <div class="progress ">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            50%
-                                            </div>
-                                        </div>    
-                                </div>
-                            </div>
+                           
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -208,19 +143,19 @@
                  <div class="col-lg-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-fw"></i> Alarm Control Panel
+                            <i class="fa fa-fw"></i> Surveillance Control Panel
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                              <div class="col-lg-6">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        Status: <strong>Armed</strong>
+                                       Alarm Status: <strong>Armed</strong>
                                     </div>
                                     <div class="panel-body">
                                            <span >
-                                        <button type="button " class="btn btn-warning">Arm/Disarm</button>       
-                                        <button type="button " class="btn btn-danger">Panic</button>
+                                            <button type="button " onclick = "changeAlarmState()" class="btn btn-warning">Arm/Disarm</button> 
+                                            <button type="button " onclick = "panic()"  class="btn btn-danger">Panic</button>
                                            </span >
                                     </div>
                                 </div>
@@ -228,22 +163,22 @@
                                     <div class="panel-heading">
                                         Create New Alert
                                     </div>
-                                    <div class="panel-body">
+                                    <div class="panel-body form">
                                       <div class="row ">
                                             <div class="col-md-6 ">
                                                 <div class="form-group">
                                                     <label>Cameras</label>
-                                                    <select class="form-control">
-                                                        <option>Camera 1</option>
-                                                        <option>Camera 2</option>
-                                                        <option>Camera 3</option>
-                                                        <option>Camera 4</option>
-                                                        <option>All</option>
+                                                    <select id="camera" class="form-control">
+                                                        <option value="0">Camera 1</option>
+                                                        <option value="1">Camera 2</option>
+                                                        <option value="2">Camera 3</option>
+                                                        <option value="3">Camera 4</option>
+                                                        <option value="all">All</option>
                                                     </select>
                                                 </div>
                                                  <div class="form-group">
                                                     <label>Alarm State</label>
-                                                    <select class="form-control">
+                                                    <select id="alarmstate" class="form-control">
                                                         <option>Armed</option>
                                                         <option>Disarmed</option>
                                                         <option>All</option>
@@ -251,34 +186,62 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6 ">
-                                                <div class="form-group">
-                                                        <label>Recognition</label>
-                                                        <select class="form-control">
-                                                            <option>None</option>
-                                                            <option>Brandon Joffe</option>
-                                                            <option>Benji Lewis</option>
-                                                            <option>Robby Katz</option>
-                                                        </select>
-                                                </div>
-                                               
+                                                
                                                  <div class="form-group">
-                                                    <label>Detections</label>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" value="">Motion 
-                                                        </label>
+                                                        <label>Event</label>
+                                                        <select id="event" class="form-control">
+                                                            <option>Motion</option>
+                                                            <option>Recognition</option>
+                                                        </select>
+                                                </div>      
+                                                <div class="form-group">
+                                                        <label>Select Person</label>
+                                                        <select id="person"  id="disabledSelect" class="form-control">
+                                                            <option>Intruder</option>
+                                                            <option>brandon-joffe</option>
+                                                            <option>Benji Lewis</option>
+                                                            <option>robby-katz</option>
+                                                        </select>
+                                                </div>                                
+                                            </div>
+                                              <div class="col-lg-12">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <strong>Actions</strong>
                                                     </div>
-                                                    <div class="checkbox">
-                                                        <label>
-                                                            <input type="checkbox" value="">Intruder 
-                                                        </label>
+                                                    <div class="panel-body">
+                                                         <div class="row ">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox ">
+                                                                       <label>
+                                                                            <input id="email" type="checkbox" value="">EmailNotification
+                                                                        </label>
+                                                                         <label>
+                                                                            <input id="push" type="checkbox" value="">PushNotification
+                                                                        </label>
+                                                                    </div>
+                                                                  </div>
+                                                            </div>
+                                                            <div class="col-md-6 ">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox text-center">
+                                                                        <label>
+                                                                            <input id="trigger" type="checkbox" value="">TriggerAlarm
+                                                                        </label>
+                                                                        <label>
+                                                                            <input id="notify" type="checkbox" value="">NotifyPolice
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                         </div>
                                                     </div>
-                                                  </div>
-                                                   
+                                                   </div>
+                                                </div>
                                             </div>
                                             
                                       </div> 
-                                    <button type="button " class="btn btn-success">Create</button> 
+                                    <button type="button " onclick="createAlert()" class="btn btn-success">Create</button> 
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +251,7 @@
                                         <i class="fa fa-bell fa-fw"></i>Notification Alerts
                                     </div>
                                     <!-- /.panel-heading -->
-                                    <div class="panel-body">
+                                    <div class="panel-body" id="alert-list" >
                                         <div class="alert alert-success alert-dismissable">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                             Motion Detected 
@@ -305,6 +268,8 @@
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                             Brandon detected in lounge <!-- <a href="#" class="alert-link">Alert Link</a>. -->
                                         </div>
+                                       
+                                    
                             <!-- /.list-group -->
                             <!-- <a href="#" class="btn btn-default btn-block">Add Alerts Alerts</a> -->
                         </div>
@@ -425,7 +390,190 @@
      <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
      <script type="text/javascript" charset="utf-8">
+
+                function retrainClassifier(){
+                    
+                      $('#retrain').html('<i class="fa fa-refresh fa-spin fa-3x fa-fw" style="font-size:12px;"></i> Retraining Database');
+
+                      $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('retrain_classifier') }}",
+                                  data : {}, 
+                                  success: function(results) {
+                                    console.log(results.finished);
+                                    $('#numbers').html(results.finished+ "training")
+                                    $('#retrain').html('<i class="fa fa-refresh fa-fw"></i> Retrain Database');
+
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                           });
+
+
+                }
+                function removeFace(id){
+                    
+                      //var text=$('#' + id + '_input').html();
+                      var values = id.split('_');
+
+                      var name = values[0];
+                     
+                      var person =document.getElementById(name); //remove person from div
+                      person.parentNode.removeChild(person);
+
+                      $('#numbers').html(name+ " :  removed");
+                      $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('remove_face') }}",
+                                  data : {'predicted_name': name}, 
+                                  success: function(results) {
+                                    console.log(results);
+                                    $('#numbers').html('face removed: ' + results.face_removed);
+                                        
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                           });
+
+
+                }
+
+
+                 function addFace(id){
+                    
+                      var values = id.split('_');
+
+                      var name = values[0];
+                      if(values[1]=='trust') {
+                            var newNameID = name;
+                      }
+                      else{
+                            var newNameID = document.getElementById(name + "_input").value;
+
+                      }
+
+                      
+                      var person =document.getElementById(name); //remove person from div
+                      person.parentNode.removeChild(person);
+
+                      $('#numbers').html(name+ " : " + newNameID);
+                      $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('add_face') }}",
+                                  data : {'predicted_name': name, 'new_name': newNameID}, 
+                                  success: function(results) {
+                                    console.log(results);
+
+                                    $('#numbers').html('face added ' + results.face_added);
+
+
+                                        
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                           });
+
+
+                }
+
+                function createAlert() {
+                            //getting selected option from dropdowns
+                            var e = document.getElementById("camera");
+                            var cam = e.options[e.selectedIndex].value; 
+                            var e1 = document.getElementById("event");
+                            var eventd = e1.options[e1.selectedIndex].text; 
+                            var e2 = document.getElementById("alarmstate");
+                            var alarm = e2.options[e2.selectedIndex].text; 
+                            var e3 = document.getElementById("person");
+                            var pers = e3.options[e3.selectedIndex].text;  
+
+                            var email = false;
+                            var push = false;
+                            var triggerA = false;
+                            var notifyP = false;
+
+                       
+                            if(document.getElementById("email").checked==true) {
+                                email = true;
+                                alertstyle = "alert-success"
+                            }
+                            if(document.getElementById("push").checked==true) {
+                                push = true;
+                                alertstyle = "alert-info"
+                            }
+                            if(document.getElementById("trigger").checked==true) {
+                                triggerA = true;
+                                alertstyle = "alert-danger"
+                            }
+                            if(document.getElementById("notify").checked==true) {
+                                notifyP = true;
+                                alertstyle = "alert-danger"
+                            }
+
+
+                            //ajax post used to send alert data via json [ 'push_alert': push,'email_alert':email, 'trigger_alarm':triggerA, 'notify_police':notifyP]
+                             $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('create_alert') }}",
+                                  data : {'camera': cam, 'eventdetail': eventd, 'alarmstate': alarm, 'person': pers, 'push_alert': push,'email_alert':email, 'trigger_alarm':triggerA,'notify_police':notifyP}, 
+                                  success: function(results) {
+                                    console.log(results);
+                                    $('#numbers').html(results.alert_id);
+
+
+                                        var alertdiv = document.createElement("div");
+                                        alertdiv.setAttribute("class","alert alert-dismissable " + alertstyle);   
+                                        var btn = document.createElement("BUTTON");        
+                                        btn.setAttribute("type","button");    
+                                        btn.setAttribute("class", "close"); 
+                                        btn.setAttribute("data-dismiss", "alert");  
+                                        btn.setAttribute("aria-hidden","true"); 
+                                        btn.setAttribute("onclick","removeAlert(this.id)"); 
+                                        btn.setAttribute("id",results.alert_id);  
+                                        btn.innerHTML = "&times;";
+                                        alertdiv.innerHTML = results.alert_message;
+                                        alertdiv.appendChild(btn);
+                                        document.getElementById("alert-list").appendChild(alertdiv);
+
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                            });
+
+                            document.getElementById("numbers").innerHTML = "push: " + push+ " email: " + email+ " trigger: " + triggerA + "   " + push + "   "+email+ "   "+triggerA;
+                }
+
+                function removeAlert(id) {
+                     $('#numbers').html("removed alert " + id);
+
+                      $.ajax({
+                              type: "POST",
+                              url: "{{ url_for('remove_alert') }}",
+                              data : {'alert_id': id}, 
+                              success: function(results) {
+                                console.log(results);
+                                $('#numbers').html(results.alert_status);
+                              },
+                              error: function(error) {
+                                console.log(error);
+                              }
+                        });
+
+                 }
+
+                function changeAlarmState() {
+                            document.getElementById("numbers").innerHTML = "AlarmStateChanged";
+                }
+                function panic() {
+                            document.getElementById("numbers").innerHTML = "Panic";
+                }
+
                 $(document).ready(function(){
+
                     var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
 
                     var numbers_received = [];
@@ -465,11 +613,13 @@
                         console.log("Received peopledata in Loop" + json);
                         var people = JSON.parse(json);
                         people_string = '';
-                
+                       
                         for (var i = 0; i < people.length; i++){
 
                             if(!document.getElementById(people[i].identity)){
-        
+
+                                    var img_string = "/get_faceimg/"+ people[i].identity + "#";
+
             /////////////////////////////////////////////////////////////////// Main divs
                                     var maindiv = document.createElement("div");
                                     maindiv.setAttribute("class", "col-md-6 ");
@@ -478,11 +628,12 @@
                                     thumbdiv.setAttribute("class", "thumbnail");
             /////////////////////////////////////////////////////////////////// img element
                                     var imgj = document.createElement("img");
-                                    imgj.setAttribute("src", "http://www.industrytap.com/wp-content/uploads/2014/04/dan2.png");
+                                    imgj.setAttribute("src", img_string + new Date().getTime());
                                     imgj.setAttribute("height", "100");
                                     imgj.setAttribute("width", "100");
+                                    imgj.setAttribute("id", people[i].identity+ "_image");
                                     imgj.setAttribute("alt", "Random Name");
-                                    imgj.setAttribute("class", "img-circle person");
+                                    imgj.setAttribute("class", "person"); //img-circle 
                                     //document.getElementById("progressbar").appendChild(imgj);
                                     thumbdiv.appendChild(imgj);
             /////////////////////////////////////////////////////////////////// name element
@@ -508,17 +659,22 @@
                                     var list = document.createElement("ul");
                                     list.setAttribute("class","dropdown-menu text-centre"); 
                                     list.setAttribute("role","menu"); 
+                                    list.setAttribute("id","faceActionList"); 
+
+
                                     var listitem = document.createElement("li");
                                     var inner = document.createElement("a");
-                                    inner.setAttribute("href","#"); 
-                                    inner.innerHTML = "Intruder";
-
+                                    inner.setAttribute("id",people[i].identity+"_remove"); 
+                                    inner.setAttribute("onclick","removeFace(this.id)"); 
+                                    inner.innerHTML = "Remove";
+                                    //addFace(id)
                                     listitem.appendChild(inner);
                                     list.appendChild(listitem);
 
                                     var listitem = document.createElement("li");
                                     var inner = document.createElement("a");
-                                    inner.setAttribute("href","#"); 
+                                    inner.setAttribute("id",people[i].identity+"_trust"); 
+                                    inner.setAttribute("onclick","addFace(this.id)"); 
                                     inner.innerHTML = "Trust";
                                     
                                     listitem.appendChild(inner);
@@ -526,9 +682,11 @@
 
                                     var listitem = document.createElement("li");
                                     var inner = document.createElement("a");
-                                    inner.setAttribute("data-target","#myModal"); 
-                                    inner.innerHTML = "Add Face";
-                                    
+                                    inner.setAttribute("data-toggle","modal"); 
+                                    inner.setAttribute("id","addfacebtnID"); 
+                                    inner.setAttribute("data-target","#"+people[i].identity+"_modal"); 
+                                    inner.innerHTML = "Add New Face";
+                                  
                                     listitem.appendChild(inner);
                                     list.appendChild(listitem);   
 
@@ -549,28 +707,129 @@
                                     d2.setAttribute("aria-valuemax","100");
                                     d2.setAttribute("style","width:" + people[i].confidence +"%");
                                     d2.innerHTML = people[i].confidence + "%";
-
-                                 
                                     d1.appendChild(d2);
+             /////////////////////////////////////////////////////////////////////////////////////
+                                 
+                                    var modal = document.createElement("div");
+                                    modal.setAttribute("class","modal fade col-md-3 text-center");
+                                    modal.setAttribute("id",people[i].identity+"_modal");
+                                    modal.setAttribute("tabindex","-1");
+                                    modal.setAttribute("role","dialog");
+                                    modal.setAttribute("aria-labelledby","myModalLabel");
+                                    modal.setAttribute("aria-hidden","true");
+                                
+
+
+                                    var dialog = document.createElement("div");
+                                    dialog.setAttribute("class","modal-dialog");
+                                    //modal.appendChild(dialog);
+
+                                    var content = document.createElement("div");
+                                    dialog.setAttribute("class","modal-content");
+                                    //dialog.appendChild(content);
+
+                                    var header = document.createElement("div");
+                                    header.setAttribute("class","modal-header");
+                                    //dialog.appendChild(content);
+
+                                    var btn2 = document.createElement("BUTTON");        
+                                    btn2.setAttribute("type","button");    
+                                    btn2.setAttribute("class", "close");  
+                                    btn2.setAttribute("data-dismiss","modal");  
+                                    btn2.setAttribute("aria-hidden","true");  
+                                    btn2.innerHTML = "&times;";
+
+                                    header.appendChild(btn2);
+
+                                    var title = document.createElement("h4");        
+                                    title.setAttribute("id","myModalLabel");    
+                                    title.setAttribute("class", "modal-title");  
+                                    title.innerHTML = "Add face to Database";
+                                  
+                                    header.appendChild(title);                
+                                    content.appendChild(header);
+
+                                    var body = document.createElement("div");
+                                    body.setAttribute("class","modal-body");
+
+                                    var imgj1 = document.createElement("img");
+                                    imgj1.setAttribute("src", img_string + new Date().getTime());
+                                    imgj1.setAttribute("height", "100");
+                                    imgj1.setAttribute("width", "100");
+                                    imgj1.setAttribute("id", people[i].identity+ "_imageModal");
+                                    imgj1.setAttribute("class", "person"); //img-circle 
+                                    
+                                    body.appendChild(imgj1);
+
+                                    var name = document.createElement("h4");
+                                    name.setAttribute("class", "text-center");
+                                    name.setAttribute("id", people[i].identity+ "nameID");
+                                    name.innerHTML = "<strong>" + people[i].identity+ " ?</strong>";
+
+                                    body.appendChild(name);
+
+                                    var form = document.createElement("div");
+                                    form.setAttribute("class","form-group has-success");
+
+                                    var input = document.createElement("input");
+                                    input.setAttribute("class","form-control"); 
+                                    input.setAttribute("placeholder","Enter Name"); 
+                                    input.setAttribute("type","text");  
+                                    input.setAttribute("id", people[i].identity+ "_input");   
+
+                                    form.appendChild(input);                
+                                    body.appendChild(form);
+                                 
+                                    content.appendChild(body);
+
+                                    var footer = document.createElement("div");
+                                    footer.setAttribute("class","modal-footer");
+                                    //dialog.appendChild(content);
+
+                                    var btn3 = document.createElement("BUTTON");        
+                                    btn3.setAttribute("type","button");    
+                                    btn3.setAttribute("class", "btn btn-success pull-right");  
+                                    btn3.setAttribute("data-dismiss","modal");  
+                                    btn3.setAttribute("aria-hidden","true"); 
+                                    btn3.setAttribute("id",people[i].identity+"_add");  
+                                    btn3.setAttribute("onclick","addFace(this.id)");  
+                                    btn3.innerHTML = "Add Face";
+
+                                    footer.appendChild(btn3);
+
+                                    content.appendChild(footer);
+                                    dialog.appendChild(content);
+                                    modal.appendChild(dialog);
 
 
                                     thumbdiv.appendChild(d1);
+                                   
                                     maindiv.appendChild(thumbdiv);
+                            
 
                                     document.getElementById("detected-faces").appendChild(maindiv);
+                                    document.getElementById("detected-faces").appendChild(modal);
                             }
                             else{
 
                                 var x = document.getElementById(people[i].identity).getElementsByClassName("progress-bar progress-bar-success");
+                                    
                                 for (var j = 0; j < x.length; j++) {
+                                        console.log("Updating detected face");                        
                                         x[j].setAttribute("style","width:" + people[i].confidence +"%");
                                         x[j].innerHTML = people[i].confidence +"%";
                                     }
+                                console.log("Updating image: " + people[i].identity);  
+                                var img_string = "/get_faceimg/"+ people[i].identity + "#";
+                                $('#' + people[i].identity+ '_image').attr('src',  img_string  + new Date().getTime()); //jquery used to update image
+                                $('#' + people[i].identity + "_imageModal").attr('src',  img_string  + new Date().getTime()); //update modal image 
                             }
 
                             //console.log(people_string);
               
                         }   
+
+
                         
                     });
 
