@@ -150,12 +150,12 @@
                              <div class="col-lg-6">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                       Alarm Status: <strong>Armed</strong>
+                                       Alarm Status: <strong id="alarmStatus"></strong>
                                     </div>
                                     <div class="panel-body">
                                            <span >
-                                            <button type="button " onclick = "changeAlarmState()" class="btn btn-warning">Arm/Disarm</button> 
-                                            <button type="button " onclick = "panic()"  class="btn btn-danger">Panic</button>
+                                            <button type="button " id="changestate" onclick = "changeAlarmState()" class="btn btn-warning">Arm/Disarm</button> 
+                                            <button type="button " id="panic" onclick = "panic()"  class="btn btn-danger">Panic</button>
                                            </span >
                                     </div>
                                 </div>
@@ -566,6 +566,7 @@
                  }
 
                 function changeAlarmState() {
+
                             document.getElementById("numbers").innerHTML = "AlarmStateChanged";
                 }
                 function panic() {
@@ -579,13 +580,24 @@
                     var numbers_received = [];
                     var people_received = [];
 
+                     $("#changestate").click(function(){
+                        socket.emit('alarm_state_change');
+                        return false;
+                     }); 
+
+                    $("#panic").click(function(){
+                        socket.emit('panic');
+                        return false;
+                     }); 
+
                     socket.on('my response', function(msg) {           //socket.on used to define event handeler
                         $('#log').append('<p>' + msg.data + '</p>');
                     });
 
+
+
                     $('form#emit').submit(function(event) {
-                        socket.emit('my event', {data: $('#emit_data').val()});
-                        return false;
+                        
                     });
 
                     $('form#broadcast').submit(function(event) {
@@ -829,9 +841,25 @@
               
                         }   
 
-
                         
                     });
+                    
+                      socket.on('alarm_status', function(json) {   
+
+                               console.log("Alarm Status: " + json);
+                               var alarm_status = JSON.parse(json);
+
+                               if(alarm_status.triggered == true){
+
+                                    $("#alarmStatus").html("Alarm Triggered");
+                               }
+                               else{
+                                    $("#alarmStatus").html(alarm_status.state);
+
+                               }         
+
+                        });
+
 
                 });
 

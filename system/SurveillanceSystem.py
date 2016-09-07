@@ -50,6 +50,8 @@ from email.MIMEText import MIMEText
 from email.MIMEBase import MIMEBase
 from email import encoders
 
+import requests
+import json
 
 import Camera
 import openface
@@ -82,6 +84,7 @@ class Surveillance_System(object):
         self.trainingEvent.set()
 
         self.alarmState = 'Disarmed' #disarmed, armed, triggered
+        self.alarmTriggerd = False
         self.alerts = []
         self.cameras = []
 
@@ -111,7 +114,8 @@ class Surveillance_System(object):
         self.align = openface.AlignDlib(self.args.dlibFacePredictor)
         self.net = openface.TorchNeuralNet(self.args.networkModel, imgDim=self.args.imgDim,  cuda=self.args.cuda) 
 
-
+        self.change_alarmState()
+        self.trigger_alarm()
         
         #self.trainClassifier()  # add faces to DB and train classifier
 
@@ -129,6 +133,7 @@ class Surveillance_System(object):
         #self.cameras.append(Camera.VideoCamera("debugging/example_01.mp4"))
         
         #processing frame threads- for detecting motion and face detection
+
 
        
         for i, cam in enumerate(self.cameras):
@@ -504,14 +509,36 @@ class Surveillance_System(object):
    def getFaceDatabaseNames(self):
       return
 
-   def arm_alarm(self):
-      return
+   def change_alarmState(self):
+      r = requests.post('http://192.168.1.35:5000/change_state', data={"password": "admin"})
+      alarm_states = json.loads(r.text) 
+    
+      print alarm_states
 
-   def disarm_alarm(self):
-      return
+      if alarm_states['state'] == 1:
+          self.alarmState = 'Armed' 
+      else:
+         self.alarmState = 'Disarmed' 
+       
+      self.alarmTriggerd = alarm_states['triggered']
+
+
 
    def trigger_alarm(self):
-      return
+
+      r = requests.post('http://192.168.1.35:5000/trigger', data={"password": "admin"})
+      alarm_states = json.loads(r.text) 
+    
+      print alarm_states
+
+      if alarm_states['state'] == 1:
+          self.alarmState = 'Armed' 
+      else:
+         self.alarmState = 'Disarmed' 
+       
+      self.alarmTriggerd = alarm_states['triggered']
+      print self.alarmTriggerd 
+
 
 
 

@@ -81,18 +81,6 @@ def video_feed_two():
     return Response(gen(Home_Surveillance.cameras[1]),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# @app.route('/video_feed_three')
-# def video_feed_three():
-#     return Response(gen(Home_Surveillance.cameras[2]),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
-# @app.route('/video_feed_four')
-# def video_feed_four():
-#     return Response(gen(Home_Surveillance.cameras[3]),
-#                     mimetype='multipart/x-mixed-replace; boundary=frame')
-
-# {'camera': cam, 'eventdetail': eventd, 'alarmstate': alarm, 'person': pers, 
-# 'alerts': {'push_alert': push,'email_alert':email, 'trigger_alarm':triggerA, 'notify_police':notifyP}}
 
 @app.route('/create_alert', methods = ['GET','POST'])
 def create_alert():
@@ -136,8 +124,11 @@ def remove_face():
         predicted_name = request.form.get('predicted_name')
 
         for camera in Home_Surveillance.cameras:
-            with camera.people_dict_lock:    
-                del camera.people[predicted_name]    #removes face from people detected in all cameras - need to change this!!
+            with camera.people_dict_lock:
+                try:    
+                    del camera.people[predicted_name]    #removes face from people detected in all cameras - need to change this!!
+                except:
+                    pass
 
         data = {"face_removed":  'true'}
         return jsonify(data)
@@ -204,8 +195,25 @@ def update_faces():
             socketio.emit('people_detected', json.dumps(peopledata) ,namespace='/test')
             time.sleep(4)
 
+def alarm_state():
+     while True:
+            alarmstatus = {'state': Home_Surveillance.alarmState , 'triggered': Home_Surveillance.alarmTriggerd }
+            socketio.emit('alarm_status', json.dumps(alarmstatus) ,namespace='/test')
+            time.sleep(2)
+
+
+@socketio.on('alarm_state_change', namespace='/test') 
+def alarm_state_change():   
+    Home_Surveillance.change_alarmState()
+
+@socketio.on('panic', namespace='/test') 
+def panic(): 
+    Home_Surveillance.trigger_alarm()
+   
+
 @socketio.on('my event', namespace='/test') #socketio used to receive websocket messages # Namespaces allow a cliet to open multiple connectiosn to the server that are multiplexed on a single socket
-def test_message(message):   #custom events deliver JSON payload               
+def test_message(message):   #custom events deliver JSON payload 
+
     emit('my response', {'data': message['data']}) # emit() sends a message under a custom event name
 
 @socketio.on('my broadcast event', namespace='/test')
@@ -217,6 +225,7 @@ def test_message(message):
 def test_connect():                           #first argumenent is the event name, connect and disconnect are special event names the others are custom events
     
     global thread2 #need visibility of global thread object
+    global thread1
     print "\n\nclient connected\n\n"
     #Start the random number generator thread only if the thread has not been started before.
     # if not thread1.isAlive():
@@ -227,6 +236,11 @@ def test_connect():                           #first argumenent is the event nam
     if not thread2.isAlive():
         print "Starting Thread2"
         thread2 = threading.Thread(name='websocket_process_thread_',target= update_faces, args=())
+        thread2.start()
+
+    if not thread1.isAlive():
+        print "Starting Thread1"
+        thread2 = threading.Thread(name='alarmstate_process_thread_',target= alarm_state, args=())
         thread2.start()
 
     #emit('my response', {'data': 'Connected'})
