@@ -114,8 +114,8 @@ class Surveillance_System(object):
         self.align = openface.AlignDlib(self.args.dlibFacePredictor)
         self.net = openface.TorchNeuralNet(self.args.networkModel, imgDim=self.args.imgDim,  cuda=self.args.cuda) 
 
-        self.change_alarmState()
-        self.trigger_alarm()
+        #self.change_alarmState()
+        #self.trigger_alarm()
         
         #self.trainClassifier()  # add faces to DB and train classifier
 
