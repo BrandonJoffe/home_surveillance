@@ -39,7 +39,7 @@ import Camera
 from flask.ext.socketio import SocketIO,send, emit #Socketio depends on gevent
 import SurveillanceSystem
 
-CAPTURE_HZ = 20.0
+CAPTURE_HZ = 30.0
 
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-10s) %(message)s',
@@ -50,7 +50,7 @@ class VideoCamera(object):
     def __init__(self,camURL):
 		print("Loading Stream From IP Camera ",camURL)
 
-		self.processed_frame = None
+		self.processing_frame = None
 		self.temp_frame = None
 		self.capture_frame = None
 
@@ -80,7 +80,7 @@ class VideoCamera(object):
 			self.video.open()
 			
 		# Start a thread to continuously capture frames.
-		# Use a lock to prevent access concurrent access to the camera.
+		# Use a lock to prevent concurrent access to the camera.
 		self.capture_lock = threading.Lock()
 		self.capture_thread = threading.Thread(name='video_capture_thread',target=self.get_frame)
 		self.capture_thread.daemon = True
@@ -99,7 +99,7 @@ class VideoCamera(object):
 		parser.add_argument('--cuda', action='store_true')
 		args = parser.parse_args()
 
-		self.net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,cuda=args.cuda) # neural net to generate 128 measurements of a face 
+		#self.net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,cuda=args.cuda) # neural net to generate 128 measurements of a face 
                                   
     def __del__(self):
         self.video.release()
@@ -108,28 +108,23 @@ class VideoCamera(object):
 		logging.debug('Getting Frames')
 		while True:
 			success, frame = self.video.read()
-			with self.capture_lock:
-				self.capture_frame = None
-				if success:		
-					self.capture_frame = frame
+			#with self.capture_lock:   # stops other processes from reading the frame while it is being updated
+			self.capture_frame = None
+			if success:		
+				self.capture_frame = frame
 			time.sleep(1.0/CAPTURE_HZ) # only sleep if frame captured
 
 
     def read_jpg(self):
 
 		frame = None
-		with self.capture_lock:
-			frame = self.capture_frame	
+		#with self.capture_lock:
+		frame = self.capture_frame	
 		while frame == None: # If there are problems, keep retrying until an image can be read.
-			time.sleep(0)
-			with self.capture_lock:	
-				frame  = self.capture_frame
-				#frame = self.processed_frame
-
-
- 	# 	height, width, channels = frame.shape
-		# frame = ImageProcessor.detect_faces(self, frame,width,height)
-		# frame = self.processed_frame 	
+			#time.sleep(0)
+			#with self.capture_lock:	
+			frame  = self.capture_frame
+				#frame = self.processing_frame
 
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
@@ -141,24 +136,24 @@ class VideoCamera(object):
 
     def read_frame(self):
 		frame = None
-		with self.capture_lock:
-			frame = self.capture_frame	
+		#with self.capture_lock:
+		frame = self.capture_frame	
 		while frame == None: # If there are problems, keep retrying until an image can be read.
-			time.sleep(0)
-			with self.capture_lock:	
-				frame  = self.capture_frame
-				#frame = self.processed_frame
+			#time.sleep(0)
+			#with self.capture_lock:	
+			frame  = self.capture_frame
+				#frame = self.processing_frame
 
 		return frame
 
     def read_processed(self):
 		frame = None
 		#with self.capture_lock:
-		frame = self.processed_frame	
+		frame = self.processing_frame	
 		while frame == None: # If there are problems, keep retrying until an image can be read.
 			#time.sleep(0)
 			#with self.capture_lock:	
-			frame = self.processed_frame
+			frame = self.processing_frame
 
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the

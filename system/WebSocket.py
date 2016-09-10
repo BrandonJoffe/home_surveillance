@@ -76,10 +76,19 @@ def video_feed_one():
     return Response(gen(Home_Surveillance.cameras[0]),
                     mimetype='multipart/x-mixed-replace; boundary=frame') # a stream where each part replaces the previous part the multipart/x-mixed-replace content type must be used.
 
-@app.route('/video_feed_two')
-def video_feed_two():
-    return Response(gen(Home_Surveillance.cameras[1]),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+# @app.route('/video_feed_two')
+# def video_feed_two():
+#     return Response(gen(Home_Surveillance.cameras[0]),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+# @app.route('/video_feed_three')
+# def video_feed_three():
+#     return Response(gen(Home_Surveillance.cameras[2]),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# @app.route('/video_feed_two')
+# def video_feed_four():
+#     return Response(gen(Home_Surveillance.cameras[3]),
+#                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 @app.route('/create_alert', methods = ['GET','POST'])
@@ -139,11 +148,14 @@ def add_face():
     if request.method == 'POST':
         new_name = request.form.get('new_name')
         predicted_name = request.form.get('predicted_name')
-
+        img = None
         for camera in Home_Surveillance.cameras:
-            with camera.people_dict_lock:    
-                img = camera.people[predicted_name].face   #gets face of person detected in cameras 
-                del camera.people[predicted_name]    #removes face from people detected in all cameras - need to change this!!
+            with camera.people_dict_lock:  
+                try:  
+                    img = camera.people[predicted_name].face   #gets face of person detected in cameras 
+                    del camera.people[predicted_name]    #removes face from people detected in all cameras - need to change this!!
+                except:
+                    continue
         wriitenToDir = Home_Surveillance.add_face(new_name,img)
            
            
@@ -165,21 +177,21 @@ def retrain_classifier():
 
 @app.route('/get_faceimg/<name>')
 def get_faceimg(name):
-    #print "\n/////////////////////////////////////////////////image\n"+name+"\n/////////////////////////////////////////////////image\n"
     for camera in Home_Surveillance.cameras:    
             try:
-                img = camera.people[name].thumbnail #need to change to get face from specific camera
+                with camera.people_dict_lock:
+                    img = camera.people[name].thumbnail #need to change to get face from specific camera
             except:
                 img = ""
-                pass
-              
+
+    if img == "":
+        return "http://www.character-education.org.uk/images/exec/speaker-placeholder.png"            
+
     return  Response((b'--frame\r\n'
                      b'Content-Type: image/jpeg\r\n\r\n' + img + b'\r\n\r\n'),
                     mimetype='multipart/x-mixed-replace; boundary=frame') #send_file(img, mimetype='image/jpg')
 
 def update_faces():
-     #, 'imgurl': url_for('get_faceimg', name = key) 
-     #print "\nsending face data/////////////////////////////////////////////////\n"
      while True:
             peopledata = []
             persondict = {}
@@ -187,10 +199,9 @@ def update_faces():
             for camera in Home_Surveillance.cameras:
                 for key, obj in camera.people.iteritems():  
                    
-                    persondict = {'identity': key , 'confidence': obj.confidence, 'image': '/get_faceimg/' + key}
+                    persondict = {'identity': key , 'confidence': obj.confidence}
                    
                     peopledata.append(persondict)
-            #print json.dumps(peopledata)
      
             socketio.emit('people_detected', json.dumps(peopledata) ,namespace='/test')
             time.sleep(4)

@@ -35,6 +35,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 from sklearn.mixture import GMM
 
+import dlib
+
 import atexit
 from subprocess import Popen, PIPE
 import os.path
@@ -57,6 +59,9 @@ import Camera
 import openface
 import aligndlib
 import ImageProcessor
+
+# import pdb
+# pdb.set_trace()
 
 from flask import Flask, render_template, Response, redirect, url_for, request
 import Camera
@@ -114,8 +119,8 @@ class Surveillance_System(object):
         self.align = openface.AlignDlib(self.args.dlibFacePredictor)
         self.net = openface.TorchNeuralNet(self.args.networkModel, imgDim=self.args.imgDim,  cuda=self.args.cuda) 
 
-        self.change_alarmState()
-        self.trigger_alarm()
+        #self.change_alarmState()
+        #self.trigger_alarm()
         
         #self.trainClassifier()  # add faces to DB and train classifier
 
@@ -126,9 +131,11 @@ class Surveillance_System(object):
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
-        #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
+        #self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
+        self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("debugging/iphone_distance1080pHD.m4v"))
-        self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
         #self.cameras.append(Camera.VideoCamera("debugging/rotationD.m4v"))
         #self.cameras.append(Camera.VideoCamera("debugging/example_01.mp4"))
         
@@ -145,12 +152,12 @@ class Surveillance_System(object):
 
         #Threads for alignment and recognition
 
-        for i, cam in enumerate(self.cameras):
-          #self.proccesing_lock = threading.Lock()
-          thread = threading.Thread(name='face_process_thread_' + str(i),target=self.people_processing,args=(cam,))
-          thread.daemon = False
-          self.people_processing_threads.append(thread)
-          thread.start()
+        # for i, cam in enumerate(self.cameras):
+        #   #self.proccesing_lock = threading.Lock()
+        #   thread = threading.Thread(name='face_process_thread_' + str(i),target=self.people_processing,args=(cam,))
+        #   thread.daemon = False
+        #   self.people_processing_threads.append(thread)
+        #   thread.start()
 
         #Thread for alert processing  
         self.alerts_lock = threading.Lock()
@@ -159,106 +166,87 @@ class Surveillance_System(object):
         thread.start()
 
 
-        #open cameras with Threads
-        #Get Notification Details
-        #Start processing
-
    def process_frame(self,camera):
         logging.debug('Processing Frames')
         state = 1
         frame_count = 0;
         start = time.time()
-
-
-        #img = cv2.imread('debugging/lighting.jpg')
-
-        #cv2.imwrite("frames/lighting" +str(frame_count) +".jpg", img)
-        #bl = (bb.left(), bb.bottom()) # (x1, y1)
-        #tr = (bb.right(), bb.top()) # (x+w,y+h) = (x2,y2)
         
         while True:  
 
              frame = camera.read_frame()
              frame = ImageProcessor.resize(frame)
-             #height, width, channels = frame.shape
+             height, width, channels = frame.shape
 
-           
-             camera.temp_frame = frame
-             # with camera.frame_lock: #aquire lock
-             #            camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame,height, width)
-             
-             # if state == 1:
-             #     camera.motion = ImageProcessor.motion_detector(camera,frame)
-             #     if camera.motion == True:
-             #        logging.debug('Motion Detected - Looking for faces in Face Detection Mode')
-             #        state = 2
-             #     camera.processed_frame = frame
+             if state == 1:
+                 camera.motion = ImageProcessor.motion_detector(camera,frame)
+                 if camera.motion == True:
+                    logging.debug('\n\n////////////////////// Motion Detected - Looking for faces in Face Detection Mode\n\n')
+                    state = 2
+                 camera.processing_frame = frame
+             elif state == 2:
+                if frame_count == 0:
+                  start = time.time()
+                  frame_count += 1
+                       
+                camera.faceBoxes = ImageProcessor.detectopencv_face(frame)
+                if len(camera.faceBoxes) == 0:
+                  if (time.time() - start) > 20.0:
+                    logging.debug('\n\n//////////////////////  No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode\n\n')
+                    state = 1
+                    frame_count = 0;
+                    camera.processing_frame = frame
+                else:
+                    training_blocker = self.trainingEvent.wait()  
+                    logging.debug('\n\n//////////////////////  '+ str(len(camera.faceBoxes)) +' FACES DETECTED  //////////////////////\n\n')
+                    camera.rgbFrame = ImageProcessor.convertImageToNumpyArray(frame,height,width) # conversion required by dlib methods
+                    for x, y, w, h in camera.faceBoxes:
+                        bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h))
+                        alignedFace = ImageProcessor.align_face(camera.rgbFrame,bb)
+                        if alignedFace == None:
+                          continue
+                        predictions = ImageProcessor.face_recognition(camera,alignedFace)
+                        with camera.people_dict_lock:
+                          if camera.people.has_key(predictions['name']):
+                              if camera.people[predictions['name']].confidence < predictions['confidence']:
+                                  camera.people[predictions['name']].confidence = predictions['confidence']
+                                  camera.people[predictions['name']].set_thumbnail(alignedFace)  
+                          else: 
+                              camera.people[predictions['name']] = Person(predictions['confidence'], alignedFace)
+                    start = time.time() #used to go back to motion detection state of 20s of not finding a face
 
-             # elif state == 2:
-
-             #    if frame_count == 0:
-             #      start = time.time()
-             #      frame_count += 1
-             #    with camera.frame_lock: #aquire lock
-             #            camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame,height, width)
-             #    if len(camera.faceBoxes) == 0:
-             #      if (time.time() - start) > 10.0:
-             #        logging.debug('No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode')
-             #        state = 1
-             #        frame_count = 0;
-             #        camera.processed_frame = frame
-             #    else:
-             #        start = time.time()
-             #        camera.processed_frame = ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
-
-             # camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(frame, height, width )
-      
-
-       #frame  = ImageProcessor.detect_people_cascade(frame)
-       #camera.processed_frame = frame #ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
+                    #camera.processing_frame = ImageProcessor.draw_rects_dlib(frame, camera.faceBoxes)
                       
           
-   def people_processing(self,camera):   
-      logging.debug('Ready to process faces')
-      detectedFaces = 0
-      faceBoxes = None
-      while True:  
+   # def people_processing(self,camera):   
+   #    logging.debug('Ready to process faces')
+   #    detectedFaces = 0
+   #    faceBoxes = None
+   #    while True:  
+   #        training_blocker = self.trainingEvent.wait()  
+   #        with camera.frame_lock: #aquire lock   
+   #            faceBoxes = camera.faceBoxes
 
-          blocker = self.trainingEvent.wait()
+   #        if faceBoxes is not None:
+   #            detectedFaces  = len(faceBoxes)
+   #            #for bb in faceBoxes:
+   #            for x, y, w, h in faceBoxes:
+   #                bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h))
+   #                alignedFace = ImageProcessor.align_face(camera.rgbFrame,bb)
+   #                camera.unknownPeople.append(alignedFace) # add to array so that rgbFrame can be released earlier rather than waiting for recognition
+   #                #cv2.imwrite("face.jpg", alignedFace)
+   #        for face in camera.unknownPeople:
 
-          if camera.temp_frame is None:
-              continue
+   #            predictions = ImageProcessor.face_recognition(camera,face)
 
-          camera.processed_frame = camera.temp_frame
-          height, width, channels = camera.processed_frame.shape
-
-          with camera.frame_lock: #aquire lock
-              camera.faceBoxes, camera.rgbFrame  = ImageProcessor.detectdlib_face(camera.processed_frame ,height, width)
-
-          with camera.frame_lock: #aquire lock   
-              faceBoxes = camera.faceBoxes
-
-          if camera.faceBoxes is not None:
-              detectedFaces  = len(faceBoxes)
-              for bb in faceBoxes:
-                  alignedFace = ImageProcessor.align_face(camera.rgbFrame,bb)
-                  camera.unknownPeople.append(alignedFace) # add to array so that rgbFrame can be released earlier rather than waiting for recognition
-                  #cv2.imwrite("face.jpg", alignedFace)
-          for face in camera.unknownPeople:
-              predictions = ImageProcessor.face_recognition(camera,face)
-              with camera.people_dict_lock:
-                if camera.people.has_key(predictions['name']):
-
-                    if camera.people[predictions['name']].confidence < predictions['confidence']:
-
-                        camera.people[predictions['name']].confidence = predictions['confidence']
-                        camera.people[predictions['name']].set_thumbnail(face)
-                    
-                        if (predictions['confidence'] > 70):
-                            cv2.imwrite("notification/image.png", camera.processed_frame)#
-                else: 
-                    camera.people[predictions['name']] = Person(predictions['confidence'], face)
-          camera.unknownPeople = []
+   #            with camera.people_dict_lock:
+   #              if camera.people.has_key(predictions['name']):
+   #                  if camera.people[predictions['name']].confidence < predictions['confidence']:
+   #                      camera.people[predictions['name']].confidence = predictions['confidence']
+   #                      camera.people[predictions['name']].set_thumbnail(face)  
+   #              else: 
+   #                  camera.people[predictions['name']] = Person(predictions['confidence'], face)
+   #        camera.unknownPeople = []
           
             
    def alert_engine(self):     #check alarm state -> check camera -> check event -> either look for motion or look for detected faces -> take action
@@ -267,7 +255,7 @@ class Surveillance_System(object):
 
            with self.alerts_lock:
               for alert in self.alerts:
-                logging.debug('checking alert')
+                logging.debug('\nchecking alert\n')
                 if alert.action_taken == False: #if action hasn't been taken for event 
                     if alert.alarmState != 'All':  #check states
                         if  alert.alarmState == self.alarmState: 
@@ -284,15 +272,14 @@ class Surveillance_System(object):
                     continue 
 
            time.sleep(2) #put this thread to sleep - let websocket update alerts if need be (delete or add)
-
   
    def check_camera_events(self,alert):   
 
         if alert.camera != 'All':  #check cameras               
             if alert.event == 'Recognition': #Check events
 
-                if (self.cameras[int(alert.camera)].people[alert.person] != None): # has person been detected
-
+                if (alert.person in self.cameras[int(alert.camera)].people.keys()): # has person been detected
+                      cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                       self.take_action(alert)
                       return True
 
@@ -302,7 +289,7 @@ class Surveillance_System(object):
             else:
 
                 if self.cameras[int(alert.camera)].motion == True: # has motion been detected
-
+                       cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                        self.take_action(alert)
                        return True
 
@@ -314,8 +301,8 @@ class Surveillance_System(object):
 
                 for camera in self.cameras: # look through all cameras
 
-                    if (camera.people[alert.person] != None): # has person been detected
-
+                    if alert.person in camera.people.keys():  # has person been detected
+                        cv2.imwrite("notification/image.png", camera.processing_frame)#
                         self.take_action(alert)
                         return True
 
@@ -326,7 +313,7 @@ class Surveillance_System(object):
                 for camera in self.cameras: # look through all cameras
 
                     if camera.motion == True: # has motion been detected
-
+                        cv2.imwrite("notification/image.png", camera.processing_frame)#
                         self.take_action(alert)
                         return True
 
@@ -345,6 +332,7 @@ class Surveillance_System(object):
                 self.send_push_notification(alert.alertString)
             if alert.actions['email_alert'] == 'true':
                 print "\nemail notification being sent\n"
+
                 self.send_email_notification_alert(alert.alertString)
             if alert.actions['trigger_alarm'] == 'true':
                 print "\ntriggering alarm\n"
@@ -360,7 +348,11 @@ class Surveillance_System(object):
 
         
         path = self.fileDir + "/aligned-images/cache.t7" 
-        os.remove(path) # remove cache from aligned images folder
+        try:
+          os.remove(path) # remove cache from aligned images folder
+        except:
+          print "Tried to remove cache.t7"
+          pass
 
         start = time.time()
         aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",self.args.dlibFacePredictor,self.args.imgDim)

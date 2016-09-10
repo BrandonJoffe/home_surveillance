@@ -110,11 +110,11 @@
                 <!-- /.row -->
             <div class="row ">
                 <div class="col-lg-6">
-                      <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}">
+                      <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}" height="260">
                 </div>
-                <div class="col-lg-6">
-                      <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_one') }}">
-                </div>
+               <!--  <div class="col-lg-6">
+                      <img class="img-thumbnail panel panel-default" id="bgtwo" src="{{ url_for('video_feed_two') }}" height="260">
+                </div> -->
             </div>
             <div class="col-lg-12">
                     <h1 class="page-header"></h1>
@@ -168,11 +168,11 @@
                                             <div class="col-md-6 ">
                                                 <div class="form-group">
                                                     <label>Cameras</label>
-                                                    <select id="camera" class="form-control">
-                                                        <option value="0">Camera 1</option>
-                                                        <option value="1">Camera 2</option>
-                                                        <option value="2">Camera 3</option>
-                                                        <option value="3">Camera 4</option>
+                                                    <select id="cameras" class="form-control">
+                                                        <option value="0">Camera 0</option>
+                                                        <option value="1">Camera 1</option>
+                                                        <option value="2">Camera 2</option>
+                                                        <option value="3">Camera 3</option>
                                                         <option value="all">All</option>
                                                     </select>
                                                 </div>
@@ -196,7 +196,7 @@
                                                 </div>      
                                                 <div class="form-group">
                                                         <label>Select Person</label>
-                                                        <select id="person"  id="disabledSelect" class="form-control">
+                                                        <select id="people"  id="disabledSelect" class="form-control">
                                                             <option>Intruder</option>
                                                             <option>brandon-joffe</option>
                                                             <option>Benji Lewis</option>
@@ -252,23 +252,6 @@
                                     </div>
                                     <!-- /.panel-heading -->
                                     <div class="panel-body" id="alert-list" >
-                                        <div class="alert alert-success alert-dismissable">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                            Motion Detected 
-                                        </div>
-                                        <div class="alert alert-info alert-dismissable">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                            Intruder Detected 
-                                        </div>
-                                        <div class="alert alert-warning alert-dismissable">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                            Alarm Set 
-                                        </div>
-                                        <div class="alert alert-danger alert-dismissable">
-                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                            Brandon detected in lounge <!-- <a href="#" class="alert-link">Alert Link</a>. -->
-                                        </div>
-                                       
                                     
                             <!-- /.list-group -->
                             <!-- <a href="#" class="btn btn-default btn-block">Add Alerts Alerts</a> -->

@@ -37,7 +37,7 @@ import pickle
 import math
 import datetime
 #import imutils
-import time
+import threading
 
 from sklearn.decomposition import PCA
 from sklearn.grid_search import GridSearchCV
@@ -74,8 +74,9 @@ parser.add_argument('--unknown', type=bool, default=False,
 args = parser.parse_args()
 
 align = openface.AlignDlib(args.dlibFacePredictor)
-# net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,
-#                               cuda=args.cuda)
+net = openface.TorchNeuralNet(args.networkModel, imgDim=args.imgDim,
+                              cuda=args.cuda)
+neuralNet_lock = threading.Lock()
 
 # net = openface.TorchNeuralNet(../models/openface/nn4.small2.v1.t7, imgDim=args.imgDim,
 #                               cuda=args.cuda)
@@ -85,43 +86,6 @@ align = openface.AlignDlib(args.dlibFacePredictor)
 facecascade = cv2.CascadeClassifier("cascades/haarcascade_frontalface_alt2.xml")
 uppercascade = cv2.CascadeClassifier("cascades/haarcascade_upperbody.xml")
 eyecascade = cv2.CascadeClassifier("cascades/haarcascade_eye.xml")
-
-def recognize_face(classifierModel,img,net):
-
-    with open(classifierModel, 'r') as f:
-        (le, clf) = pickle.load(f)
-
-    if getRep(img,net) is None:
-        return None
-    rep = getRep(img,net).reshape(1, -1)
-    start = time.time()
-    predictions = clf.predict_proba(rep).ravel()
-    maxI = np.argmax(predictions)
-    person = le.inverse_transform(maxI)
-    confidence = int(math.ceil(predictions[maxI]*100))
-
-    print("Recognition took {} seconds.".format(time.time() - start))
-    print("Recognized {} with {:.2f} confidence.".format(person, confidence))
-    #if isinstance(clf, GMM):
-    #    dist = np.linalg.norm(rep - clf.means_[maxI])
-    #    print("  + Distance from the mean: {}".format(dist))
-
-    persondict = {'name': person, 'confidence': confidence}
-    return persondict
-
-
-def getRep(alignedFace,net):
-
-    bgrImg = alignedFace
-    if bgrImg is None:
-        print("unable to load image")
-        return None
-
-    alignedFace = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
-    start = time.time()
-    rep = net.forward(alignedFace)
-    #print("Neural network forward pass took {} seconds.".format(  time.time() - start))
-    return rep
 
 
 def detect_faces(camera,img,width,height):
@@ -142,8 +106,6 @@ def detect_faces(camera,img,width,height):
         bl = (bb.left(), bb.bottom()) # (x, y)
         tr = (bb.right(), bb.top()) # (x+w,y+h)
 
-       
-
         print("\n=====================================================================")
         print("Face Being Processed")
         start = time.time()
@@ -159,8 +121,8 @@ def detect_faces(camera,img,width,height):
 
         #//////////////////////////////////////////////////////////////////
         cv2.imwrite("facedebug.png", alignedFace)
-
-        persondict = recognize_face("generated-embeddings/classifier.pkl",alignedFace,camera.net)
+        with neuralNet_lock:
+            persondict = recognize_face("generated-embeddings/classifier.pkl",alignedFace,net)
         if persondict is None:
             print("//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////")
             continue
@@ -247,8 +209,8 @@ def motion_detector(camera,frame):
         return occupied
     
 def resize(frame):
-    r = 480.0 / frame.shape[1]
-    dim = (480, int(frame.shape[0] * r))
+    r = 420.0 / frame.shape[1]
+    dim = (420, int(frame.shape[0] * r))
     # perform the actual resizing of the image and show it
     frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)    
     return frame  
@@ -297,7 +259,7 @@ def draw_rects_cv(img, rects, color=(0, 40, 255)):
       
         cv2.rectangle(overlay, (x, y), (x+w, y+h), color, 2)
         cv2.addWeighted(overlay, 0.5, output, 0.5, 0, output)
-       
+
         #(x1, y1), (x2, y2)
 
         # x1 y1 -------------
@@ -371,12 +333,12 @@ def detectopencv_face(image):
     rects = detect_cascadeface(image, facecascade)
     #Ttime = time.time() - start
 
-    frame = draw_rects_cv(frame, rects)  
+    #frame = draw_rects_cv(frame, rects)  
 
     #lineString = "speed: " + str(Ttime )
     #writeToFile("detections.txt",lineString)
    
-    return frame
+    return rects
 
 def detectdlib_face(img,height,width):
 
@@ -412,23 +374,62 @@ def align_face(rgbFrame,bb):
 
     landmarks = align.findLandmarks(rgbFrame, bb)
     alignedFace = align.align(args.imgDim, rgbFrame, bb,landmarks=landmarks,landmarkIndices=openface.AlignDlib.OUTER_EYES_AND_NOSE)                                                     
-    if alignedFace is None:
-        return None
+    if alignedFace is None:  
         print("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
         return alignedFace
-    print("FACE ALIGNED")
+
+    print("//////////////////////  FACE ALIGNED  ////////////////////// ")
     return alignedFace
 
 def face_recognition(camera,alignedFace):
 
-    persondict = recognize_face("generated-embeddings/classifier.pkl",alignedFace,camera.net)
+    with neuralNet_lock:
+        persondict = recognize_face("generated-embeddings/classifier.pkl",alignedFace, net)
 
     if persondict is None:
         print("//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////")
         return persondict
     else:
-        print("FACE RECOGNIZED")
+        print("//////////////////////  FACE RECOGNIZED  ////////////////////// ")
         return persondict
+
+def recognize_face(classifierModel,img,net):
+
+    with open(classifierModel, 'r') as f:
+        (le, clf) = pickle.load(f)
+
+    if getRep(img,net) is None:
+        return None
+    rep = getRep(img,net).reshape(1, -1)
+    start = time.time()
+    predictions = clf.predict_proba(rep).ravel()
+    maxI = np.argmax(predictions)
+    person = le.inverse_transform(maxI)
+    confidence = int(math.ceil(predictions[maxI]*100))
+
+    print("Recognition took {} seconds.".format(time.time() - start))
+    print("Recognized {} with {:.2f} confidence.".format(person, confidence))
+    #if isinstance(clf, GMM):
+    #    dist = np.linalg.norm(rep - clf.means_[maxI])
+    #    print("  + Distance from the mean: {}".format(dist))
+
+    persondict = {'name': person, 'confidence': confidence}
+    return persondict
+
+
+def getRep(alignedFace,net):
+
+    bgrImg = alignedFace
+    if bgrImg is None:
+        print("unable to load image")
+        return None
+
+    alignedFace = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
+    start = time.time()
+    rep = net.forward(alignedFace)
+    #print("Neural network forward pass took {} seconds.".format(  time.time() - start))
+    return rep
+
 
 def writeToFile(filename,lineString): #Used for writing testing data to file
 
