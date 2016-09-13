@@ -39,7 +39,7 @@ import Camera
 from flask.ext.socketio import SocketIO,send, emit #Socketio depends on gevent
 import SurveillanceSystem
 
-CAPTURE_HZ = 30.0
+CAPTURE_HZ = 20.0
 
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-10s) %(message)s',

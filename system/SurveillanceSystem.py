@@ -93,6 +93,8 @@ class Surveillance_System(object):
         self.alerts = []
         self.cameras = []
 
+        self.peopleDB = []
+
         self.camera_threads = []
         self.camera_facedetection_threads = []
         self.people_processing_threads = []
@@ -119,10 +121,7 @@ class Surveillance_System(object):
         self.align = openface.AlignDlib(self.args.dlibFacePredictor)
         self.net = openface.TorchNeuralNet(self.args.networkModel, imgDim=self.args.imgDim,  cuda=self.args.cuda) 
 
-        #self.change_alarmState()
-        #self.trigger_alarm()
-        
-        #self.trainClassifier()  # add faces to DB and train classifier
+        #////////////////////////////////////////////////////Initialization////////////////////////////////////////////////////
 
         #default IP cam
         #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
@@ -132,17 +131,21 @@ class Surveillance_System(object):
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.48/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
-        self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
+        #self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("debugging/iphone_distance1080pHD.m4v"))
         #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
-        #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
         #self.cameras.append(Camera.VideoCamera("debugging/rotationD.m4v"))
         #self.cameras.append(Camera.VideoCamera("debugging/example_01.mp4"))
+
+
+        #self.change_alarmState()
+        #self.trigger_alarm()
+        self.getFaceDatabaseNames()
+        #self.trainClassifier()  # add faces to DB and train classifier
         
         #processing frame threads- for detecting motion and face detection
-
-
-       
+  
         for i, cam in enumerate(self.cameras):
           self.proccesing_lock = threading.Lock()
           thread = threading.Thread(name='frame_process_thread_' + str(i),target=self.process_frame,args=(cam,))
@@ -178,13 +181,17 @@ class Surveillance_System(object):
              frame = ImageProcessor.resize(frame)
              height, width, channels = frame.shape
 
-             if state == 1:
+             if state == 1: # if no faces have been found or there has been no movement
+
                  camera.motion = ImageProcessor.motion_detector(camera,frame)
                  if camera.motion == True:
                     logging.debug('\n\n////////////////////// Motion Detected - Looking for faces in Face Detection Mode\n\n')
                     state = 2
                  camera.processing_frame = frame
-             elif state == 2:
+                 continue
+
+             elif state == 2: # if motion has been detected
+
                 if frame_count == 0:
                   start = time.time()
                   frame_count += 1
@@ -195,16 +202,21 @@ class Surveillance_System(object):
                     logging.debug('\n\n//////////////////////  No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode\n\n')
                     state = 1
                     frame_count = 0;
-                    camera.processing_frame = frame
+                    #camera.processing_frame = frame
                 else:
                     training_blocker = self.trainingEvent.wait()  
+
+                    #camera.processing_frame = ImageProcessor.draw_rects_cv(frame, camera.faceBoxes)
+
                     logging.debug('\n\n//////////////////////  '+ str(len(camera.faceBoxes)) +' FACES DETECTED  //////////////////////\n\n')
                     camera.rgbFrame = ImageProcessor.convertImageToNumpyArray(frame,height,width) # conversion required by dlib methods
+
                     for x, y, w, h in camera.faceBoxes:
                         bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h))
                         alignedFace = ImageProcessor.align_face(camera.rgbFrame,bb)
                         if alignedFace == None:
                           continue
+                      
                         predictions = ImageProcessor.face_recognition(camera,alignedFace)
                         with camera.people_dict_lock:
                           if camera.people.has_key(predictions['name']):
@@ -493,13 +505,25 @@ class Surveillance_System(object):
 
       print "Writing Image To Directory: " + name
       cv2.imwrite(path+name+"/"+ name + "-"+str(num) + ".png", image)
+      self.getFaceDatabaseNames()
 
       return True
 
   
 
    def getFaceDatabaseNames(self):
-      return
+
+      path = self.fileDir + "/aligned-images/" 
+      self.peopleDB = []
+      for name in os.listdir(path):
+        if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
+          continue
+        self.peopleDB.append(name)
+        print name
+      self.peopleDB.append('unknown')
+
+
+ 
 
    def change_alarmState(self):
       r = requests.post('http://192.168.1.35:5000/change_state', data={"password": "admin"})

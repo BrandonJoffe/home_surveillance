@@ -270,6 +270,16 @@ def draw_rects_cv(img, rects, color=(0, 40, 255)):
         # ----------------x2 y2
     return output
 
+def draw_rect(img,x,y,w,h, color=(0, 40, 255)):
+
+    overlay = img.copy()
+    output = img.copy()
+          
+    cv2.rectangle(overlay, (x, y), (x+w, y+h), color, 2)
+    cv2.addWeighted(overlay, 0.5, output, 0.5, 0, output)
+
+    return output
+
 def draw_rects_dlib(img, rects):
 
     overlay = img.copy()

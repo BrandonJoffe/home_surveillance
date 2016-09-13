@@ -68,7 +68,7 @@ def gen(camera):
     while True:
         frame = camera.read_jpg()
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')  # builds 'packet' of data with header and payload 
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')  # builds 'jpeg' data with header and payload 
 
 @app.route('/video_feed_one')
 def video_feed_one():
@@ -157,7 +157,9 @@ def add_face():
                 except:
                     continue
         wriitenToDir = Home_Surveillance.add_face(new_name,img)
-           
+
+        systemData = {'camNum': len(Home_Surveillance.cameras) , 'people': Home_Surveillance.peopleDB}
+        socketio.emit('system_data', json.dumps(systemData) ,namespace='/test')
            
         data = {"face_added":  wriitenToDir}
         return jsonify(data)
@@ -233,26 +235,27 @@ def test_message(message):
 
                    
 @socketio.on('connect', namespace='/test') 
-def test_connect():                           #first argumenent is the event name, connect and disconnect are special event names the others are custom events
-    
-    global thread2 #need visibility of global thread object
+def test_connect(): 
+                          #first argumenent is the event name, connect and disconnect are special event names the others are custom events
     global thread1
+    global thread2 #need visibility of global thread object
+   
     print "\n\nclient connected\n\n"
-    #Start the random number generator thread only if the thread has not been started before.
-    # if not thread1.isAlive():
-    #     print "Starting Thread1"
-    #     thread1 = threading.Thread(name='websocket_process_thread_',target= random_number, args=())
-    #     thread1.start()
 
+
+    if not thread1.isAlive():
+        print "Starting Thread1"
+        thread1 = threading.Thread(name='alarmstate_process_thread_',target= alarm_state, args=())
+        thread1.start()
+   
     if not thread2.isAlive():
         print "Starting Thread2"
         thread2 = threading.Thread(name='websocket_process_thread_',target= update_faces, args=())
         thread2.start()
 
-    if not thread1.isAlive():
-        print "Starting Thread1"
-        thread2 = threading.Thread(name='alarmstate_process_thread_',target= alarm_state, args=())
-        thread2.start()
+    systemData = {'camNum': len(Home_Surveillance.cameras) , 'people': Home_Surveillance.peopleDB}
+    socketio.emit('system_data', json.dumps(systemData) ,namespace='/test')
+
 
     #emit('my response', {'data': 'Connected'})
 
