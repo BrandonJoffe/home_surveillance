@@ -121,14 +121,13 @@ class Surveillance_System(object):
         self.align = openface.AlignDlib(self.args.dlibFacePredictor)
         self.net = openface.TorchNeuralNet(self.args.networkModel, imgDim=self.args.imgDim,  cuda=self.args.cuda) 
 
-<<<<<<< HEAD
+
         #////////////////////////////////////////////////////Initialization////////////////////////////////////////////////////
-=======
+
         #self.change_alarmState()
         #self.trigger_alarm()
         
         #self.trainClassifier()  # add faces to DB and train classifier
->>>>>>> 47f60453e1a54769301a13bd94c5186171087b03
 
         #default IP cam
         #self.cameras.append(Camera.VideoCamera("rtsp://admin:12345@192.168.1.64/Streaming/Channels/2"))
