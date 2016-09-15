@@ -139,8 +139,8 @@ class Surveillance_System(object):
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("http://192.168.1.37/video.mjpg"))
         #self.cameras.append(Camera.VideoCamera("debugging/iphone_distance1080pHD.m4v"))
-        #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
         self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
+        #self.cameras.append(Camera.VideoCamera("debugging/Test.mov"))
         #self.cameras.append(Camera.VideoCamera("debugging/rotationD.m4v"))
         #self.cameras.append(Camera.VideoCamera("debugging/example_01.mp4"))
 
@@ -189,12 +189,14 @@ class Surveillance_System(object):
 
              if state == 1: # if no faces have been found or there has been no movement
 
-                 camera.motion = ImageProcessor.motion_detector(camera,frame)
+                 camera.motion, frame  = ImageProcessor.motion_detector(camera,frame)   #camera.motion,
+                 #camera.processing_frame = frame
                  if camera.motion == True:
                     logging.debug('\n\n////////////////////// Motion Detected - Looking for faces in Face Detection Mode\n\n')
                     state = 2
-                 camera.processing_frame = frame
+                 #camera.processing_frame = frame
                  continue
+
 
              elif state == 2: # if motion has been detected
 
@@ -350,11 +352,10 @@ class Surveillance_System(object):
                 self.send_push_notification(alert.alertString)
             if alert.actions['email_alert'] == 'true':
                 print "\nemail notification being sent\n"
-
                 self.send_email_notification_alert(alert.alertString)
             if alert.actions['trigger_alarm'] == 'true':
                 print "\ntriggering alarm\n"
-                #trigger_alarm
+                self.trigger_alarm()
             if alert.actions['notify_police'] == 'true':
                 print "\nnotifying police\n"
                 #notify police
@@ -540,7 +541,7 @@ class Surveillance_System(object):
       if alarm_states['state'] == 1:
           self.alarmState = 'Armed' 
       else:
-         self.alarmState = 'Disarmed' 
+          self.alarmState = 'Disarmed' 
        
       self.alarmTriggerd = alarm_states['triggered']
 
@@ -554,7 +555,7 @@ class Surveillance_System(object):
       print alarm_states
 
       if alarm_states['state'] == 1:
-          self.alarmState = 'Armed' 
+         self.alarmState = 'Armed' 
       else:
          self.alarmState = 'Disarmed' 
        

@@ -154,7 +154,7 @@ def motion_detector(camera,frame):
         if camera.history == 0:
             camera.current_frame = gray
             camera.history +=1
-            return occupied 
+            return occupied, frame#occupied 
         elif camera.history == 1:
             camera.previous_frame = camera.current_frame
             camera.current_frame = gray
@@ -162,8 +162,8 @@ def motion_detector(camera,frame):
             camera.meanframe = cv2.addWeighted(camera.previous_frame,0.5,camera.current_frame,0.5,0)
             cv2.imwrite("avegrayfiltered.jpg", camera.meanframe)
             camera.history +=1
-            return occupied 
-        elif camera.history == 20:
+            return occupied, frame #occupied 
+        elif camera.history == 400:
             camera.previous_frame = camera.current_frame
             camera.current_frame = gray
             #camera.next_frame = gray
@@ -190,15 +190,15 @@ def motion_detector(camera,frame):
 
             # compute the bounding box for the contour, draw it on the frame,
             # and update the text
-            # (x, y, w, h) = cv2.boundingRect(c)
-            # cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            # text = "Occupied"
+            (x, y, w, h) = cv2.boundingRect(c)
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            text = "Occupied"
             occupied = True
         # draw the text and timestamp on the frame
-        # cv2.putText(frame, "Room Status: {}".format(text), (10, 10),
-        #     cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
-        # cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
-        #     (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+            cv2.putText(frame, "Room Status: {}".format(text), (10, 10),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+            cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
+            (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
         
         # if len(cnts) > 0:
         #     return True
@@ -206,7 +206,7 @@ def motion_detector(camera,frame):
 
         camera.history +=1
 
-        return occupied
+        return occupied, frame  #occupied, 
     
 def resize(frame):
     r = 420.0 / frame.shape[1]

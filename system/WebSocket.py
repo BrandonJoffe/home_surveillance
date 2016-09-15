@@ -66,7 +66,7 @@ def home():
  
 def gen(camera):
     while True:
-        frame = camera.read_jpg()
+        frame = camera.read_jpg()  #read_processed()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')  # builds 'jpeg' data with header and payload 
 
