@@ -1,0 +1,31 @@
+ .faceDetectedColor {
+    color: white;
+    background-color: #000000;
+    padding: 5px;
+}
+
+
+ .person {
+      border: 5px solid ;
+      margin-bottom: 1px;
+      width: 80%;
+      height: 80%;
+      border-color: #f1f1f1;
+  }
+  .person:hover {
+      border-color: #f1f1f1;
+  }
+
+  body {
+    background-color: #FFFFFF;
+}
+.container-home {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+

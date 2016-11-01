@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Home Surveillance</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="static/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link href="static/css/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="static/dist/css/skins/skin-blue.min.css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <!-- <span class="logo-mini"><b>A</b>LT</span> -->
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Home</b>Surveillance</span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+    <!--   <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a> -->
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <li class="dropdown messages-menu">
+            <!-- Menu toggle button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-envelope-o"></i>
+              <span class="label label-success">4</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 4 messages</li>
+              <li>
+                <!-- inner menu: contains the messages -->
+                <ul class="menu">
+                  <li><!-- start message -->
+                    <a href="#">
+                      <div class="pull-left">
+                        <!-- User Image -->
+                        <img src="static/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                      </div>
+                      <!-- Message title and timestamp -->
+                      <h4>
+                        Support Team
+                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                      </h4>
+                      <!-- The message -->
+                      <p>Why not buy a new awesome theme?</p>
+                    </a>
+                  </li>
+                  <!-- end message -->
+                </ul>
+                <!-- /.menu -->
+              </li>
+              <li class="footer"><a href="#">See All Messages</a></li>
+            </ul>
+          </li>
+          <!-- /.messages-menu -->
+
+          <!-- Notifications Menu -->
+          <li class="dropdown notifications-menu">
+            <!-- Menu toggle button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">10</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 10 notifications</li>
+              <li>
+                <!-- Inner Menu: contains the notifications -->
+                <ul class="menu">
+                  <li><!-- start notification -->
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    </a>
+                  </li>
+                  <!-- end notification -->
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
+          </li>
+          <!-- Tasks Menu -->
+          <li class="dropdown tasks-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-flag-o"></i>
+              <span class="label label-danger">9</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 9 tasks</li>
+              <li>
+                <!-- Inner menu: contains the tasks -->
+                <ul class="menu">
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <!-- Task title and progress text -->
+                      <h3>
+                        Design some buttons
+                        <small class="pull-right">20%</small>
+                      </h3>
+                      <!-- The progress bar -->
+                      <div class="progress xs">
+                        <!-- Change the css width attribute to simulate progress -->
+                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">20% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                </ul>
+              </li>
+              <li class="footer">
+                <a href="#">View all tasks</a>
+              </li>
+            </ul>
+          </li>
+          <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <!-- The user image in the navbar-->
+              <img src="static/dist/img/brandonjoffe.png" class="user-image" alt="User Image">
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <span class="hidden-xs">Brandon Joffe</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- The user image in the menu -->
+              <li class="user-header">
+                <img src="static/dist/img/brandonjoffe.png" class="img-circle" alt="User Image">
+
+                <p>
+                  Brandon Joffe - Computer Electrical Engineering Student
+                  <small>Oct. 2016</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+             <!--  <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+              </li> -->
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="www.bjjoffe.wixsite.com/e-portfolio" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="{{ url_for('login') }}" class="btn btn-default btn-flat">Log out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="static/dist/img/brandonjoffe.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>Brandon Joffe</p>
+          <!-- Status -->
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+
+      <!-- search form (Optional) -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+        <li class="header">HEADER</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#">Link in level 2</a></li>
+            <li><a href="#">Link in level 2</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Dashboard
+        <small>Home Surveillance with Facial Recognition</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+     <div class="row">
+
+               <div class="col-md-4 col-sm-6 col-xs-12">
+                      <img class="img-thumbnail panel panel-default" id="0" src="{{ url_for('video_streamer', camNum = 0) }}"  width="540">
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                      <img class="img-thumbnail panel panel-default" id="1" src="{{ url_for('video_streamer', camNum = 1) }}"  width="540">
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                      <img class="img-thumbnail panel panel-default" id="1" src="{{ url_for('video_streamer', camNum = 1) }}"  width="540">
+                </div>
+                
+     </div>
+
+     <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">CPU Traffic</span>
+                <span class="info-box-number">90<small>%</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Likes</span>
+              <span class="info-box-number">41,410</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Sales</span>
+              <span class="info-box-number">760</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">New Members</span>
+              <span class="info-box-number">2,000</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+
+    <div class="col-md-6">
+              <!-- USERS LIST -->
+          <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Faces Detected</h3>
+                  <div class="btn-group pull-right">
+                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  </div>
+             </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div id="detected-faces">
+              <!-- /.info-box-content --> 
+                </div>                 <!-- /.users-list -->
+              </div>
+                <!-- /.box-body -->
+              <div class="box-footer text-center">
+               <div class="btn-group pull-right" id = "facedetectbtn">
+                        <button type="button" id="retrain" onclick="retrainClassifier()" class="btn btn-primary btn-xs" >
+                            <i class="fa fa-refresh fa-fw"></i> Retrain Database
+                        </button>
+                </div>
+              </div>
+        <!-- /.box-footer -->
+        </div>
+      <!--/.box -->
+    </div>
+    <!-- /.col -->
+     <div class="col-md-3">
+          <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Alarm Control Panel</h3>
+
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  
+                </div>
+              </div>
+            <!-- /.box-header -->
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel-heading">
+                       Alarm Status: <strong id="alarmStatus"></strong>
+                    </div>
+                    <div class="panel-body">
+                           <span >
+                            <button type="button " id="changestate" onclick = "changeAlarmState()" class="btn btn-warning">Arm/Disarm</button> 
+                            <button type="button " id="panic" onclick = "panic()"  class="btn btn-danger">Panic</button>
+                           </span >
+                    </div>         
+                  </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+                <div class="row">
+                         <!-- /.description-block -->
+                </div>
+            </div>
+              <!-- /.row -->
+          </div>
+            <!-- /.box-footer -->
+        </div>
+
+        <div class="col-md-3">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Create New Alert</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-wrench"></i></button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                        <div class="col-md-12">
+                          <div class="box">
+                            <div class="box-header with-border">
+                             
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                              <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-body" id="alert-list" >
+                            <!-- /.list-group -->
+                            <!-- <a href="#" class="btn btn-default btn-block">Add Alerts Alerts</a> -->
+                                    </div>     
+                                </div>
+                                <!-- /.col -->
+                              </div>
+                              <!-- /.row -->
+                            </div>
+                            <!-- ./box-body -->
+                              <!-- /.row -->
+                            </div>
+                            <!-- /.box-footer -->
+                          </div>
+                          <div class="panel-body form">
+                            <div class="row ">
+                                  <div class="col-md-6 ">
+                                      <div class="form-group">
+                                          <label>Cameras</label>
+                                          <select id="cameras" class="form-control">
+                                              <option value="0">Camera 0</option>
+                                              <option value="1">Camera 1</option>
+                                              <option value="2">Camera 2</option>
+                                              <option value="3">Camera 3</option>
+                                              <option value="all">All</option>
+                                          </select>
+                                      </div>
+                                       <div class="form-group">
+                                          <label>Alarm State</label>
+                                          <select id="alarmstate" class="form-control">
+                                              <option>Armed</option>
+                                              <option>Disarmed</option>
+                                              <option>All</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 ">
+                                      
+                                       <div class="form-group">
+                                              <label>Event</label>
+                                              <select id="event" class="form-control">
+                                                  <option>Motion</option>
+                                                  <option>Recognition</option>
+                                              </select>
+                                      </div>      
+                                      <div class="form-group">
+                                              <label>Select Person</label>
+                                              <select id="people"  id="disabledSelect" class="form-control">
+                                                  <option>Intruder</option>
+                                                  <option>brandon-joffe</option>
+                                                  <option>Benji Lewis</option>
+                                                  <option>robby-katz</option>
+                                              </select>
+                                      </div>                                
+                                  </div>
+                                    <div class="col-lg-12">
+                                      <div class="panel panel-default">
+                                          <div class="panel-heading">
+                                              <strong>Actions</strong>
+                                          </div>
+                                          <div class="panel-body">
+                                               <div class="row ">
+                                                  <div class="col-md-6">
+                                                      <div class="form-group">
+                                                          <div class="checkbox ">
+                                                             <label>
+                                                                  <input id="email" type="checkbox" value="">Email Alert
+                                                              </label>
+                                                          </div>
+                                                        </div>
+                                                  </div>
+                                                  <div class="col-md-6 ">
+                                                      <div class="form-group">
+                                                          <div class="checkbox text-center">
+                                                              <label>
+                                                                  <input id="trigger" type="checkbox" value="">Trigger Alarm
+                                                              </label>
+                                                          </div>
+                                                      </div>
+                                               </div>
+                                          </div>
+                                         </div>
+                                      </div>
+                                  </div>
+                                  
+                            </div> 
+                          <button type="button " onclick="createAlert()" class="btn btn-success">Create</button> 
+                          </div>
+                      </div>
+                  
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+             <!-- ./box-body -->
+            
+            <!-- /.box-footer -->
+             <div class="col-md-6">
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Camera Settings</h3>
+
+                    <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      
+                    </div>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div class="row">
+                      <div class="col-md-12">            
+                        
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                  <!-- ./box-body -->
+                  <div class="box-footer">
+                    <div class="row">
+                        <!-- /.description-block -->
+                      </div>
+                    </div>
+                    <!-- /.row -->
+                  </div>
+                  <!-- /.box-footer -->
+               </div>   
+            </div>
+          <!-- /.box -->
+          </div>
+        <!-- /.col -->
+         </div>
+          <!-- /.row -->
+       </div>
+      <!-- /.row -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane active" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript::;">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript::;">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="pull-right-container">
+                  <span class="label label-danger pull-right">70%</span>
+                </span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+            function retrainClassifier(){
+                    
+                      $('#retrain').html('<i class="fa fa-refresh fa-spin fa-3x fa-fw" style="font-size:12px;"></i> Retraining Database');
+
+                      $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('retrain_classifier') }}",
+                                  data : {}, 
+                                  success: function(results) {
+                                    console.log(results.finished);
+                                   
+                                    $('#retrain').html('<i class="fa fa-refresh fa-fw"></i> Retrain Database');
+
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                           });
+
+
+                }
+            function removeFace(id){
+                    
+                      //var text=$('#' + id + '_input').html();
+                      var values = id.split('_');
+
+                      var name = values[0];
+                      var camera = values[1];
+                      var person =document.getElementById(name + "_" + camera); //remove person from div
+                      person.parentNode.removeChild(person);
+
+                      $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('remove_face') }}",
+                                  data : {'predicted_name': name, 'camera': camera}, 
+                                  success: function(results) {
+                                    console.log(results);
+                                  
+
+                                        
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                           });
+                }
+
+            function addFace(id){
+                    
+                      var values = id.split('_');
+
+                      var name = values[0];
+                      var camera = values[1];
+                      if(values[2]=='trust') {
+                            var newName = "trust";
+                      }
+                      else{
+                            var newName = document.getElementById(name + "_" + camera + "_input").value;
+
+                      }
+
+                      
+                      var person =document.getElementById(name + "_" + camera); //remove person from div
+                      person.parentNode.removeChild(person);
+
+                  
+                      $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('add_face') }}",
+                                  data : {'person_id': name, 'new_name': newName, 'camera' : camera}, 
+                                  success: function(results) {
+                                    console.log(results);
+
+                               
+
+
+                                        
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                           });
+
+                }
+
+                function createAlert() {
+                            //getting selected option from dropdowns
+                            var e = document.getElementById("cameras");
+                            var cam = e.options[e.selectedIndex].value; 
+                            var e1 = document.getElementById("event");
+                            var eventd = e1.options[e1.selectedIndex].text; 
+                            var e2 = document.getElementById("alarmstate");
+                            var alarm = e2.options[e2.selectedIndex].text; 
+                            var e3 = document.getElementById("people");
+                            var pers = e3.options[e3.selectedIndex].text;  
+
+                            var email = false;
+                            var push = false;
+                            var triggerA = false;
+                            var notifyP = false;
+
+                       
+                            if(document.getElementById("email").checked==true) {
+                                email = true;
+                                alertstyle = "alert-success"
+                            }
+                            // if(document.getElementById("push").checked==true) {
+                            //     push = true;
+                            //     alertstyle = "alert-info"
+                            // }
+                            if(document.getElementById("trigger").checked==true) {
+                                triggerA = true;
+                                alertstyle = "alert-danger"
+                            }
+                            // if(document.getElementById("notify").checked==true) {
+                            //     notifyP = true;
+                            //     alertstyle = "alert-danger"
+                            // }
+
+
+                            //ajax post used to send alert data via json [ 'push_alert': push,'email_alert':email, 'trigger_alarm':triggerA, 'notify_police':notifyP]
+                             $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('create_alert') }}",
+                                  data : {'camera': cam, 'eventdetail': eventd, 'alarmstate': alarm, 'person': pers, 'push_alert': push,'email_alert':email, 'trigger_alarm':triggerA,'notify_police':notifyP}, 
+                                  success: function(results) {
+                                    console.log(results);
+                                   
+
+
+                                        var alertdiv = document.createElement("div");
+                                        alertdiv.setAttribute("class","alert alert-dismissable " + alertstyle);   
+                                        var btn = document.createElement("BUTTON");        
+                                        btn.setAttribute("type","button");    
+                                        btn.setAttribute("class", "close"); 
+                                        btn.setAttribute("data-dismiss", "alert");  
+                                        btn.setAttribute("aria-hidden","true"); 
+                                        btn.setAttribute("onclick","removeAlert(this.id)"); 
+                                        btn.setAttribute("id",results.alert_id);  
+                                        btn.innerHTML = "&times;";
+                                        alertdiv.innerHTML = results.alert_message;
+                                        alertdiv.appendChild(btn);
+                                        document.getElementById("alert-list").appendChild(alertdiv);
+
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                            });
+
+                            
+                }
+
+                function removeAlert(id) {
+                
+
+
+                      $.ajax({
+                              type: "POST",
+                              url: "{{ url_for('remove_alert') }}",
+                              data : {'alert_id': id}, 
+                              success: function(results) {
+                                console.log(results);
+                          
+                              },
+                              error: function(error) {
+                                console.log(error);
+                              }
+                        });
+
+                 }
+
+                $(document).ready(function(){
+
+                    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+
+                    var numbers_received = [];
+                    var people_received = [];
+
+                     $("#changestate").click(function(){
+                        socket.emit('alarm_state_change');
+                        return false;
+                     }); 
+
+                    $("#panic").click(function(){
+                        socket.emit('panic');
+                        return false;
+                     }); 
+
+                    socket.on('my response', function(msg) {           //socket.on used to define event handeler
+                        $('#log').append('<p>' + msg.data + '</p>');
+                    });
+
+
+
+                    $('form#emit').submit(function(event) {
+                        
+                    });
+
+                    $('form#broadcast').submit(function(event) {
+                        socket.emit('my broadcast event', {data: $('#broadcast_data').val()});
+                        return false;
+                    });
+
+              
+
+                     socket.on('people_detected', function(json) {   
+                   
+                        console.log("Received peopledata in Loop" + json);
+                        var people = JSON.parse(json);
+                        people_string = '';
+                       
+                        for (var i = 0; i < people.length; i++){
+
+                            if(!document.getElementById(people[i].identity + "_" + people[i].camera)){
+
+
+                                    var img_string = "/get_faceimg/"+ people[i].identity +"_" + people[i].camera + "#";
+
+            /////////////////////////////////////////////////////////////////// Main divs
+                                    var maindiv = document.createElement("div");
+                                    maindiv.setAttribute("class", "col-md-4 ");
+                                    maindiv.setAttribute("id", people[i].identity + "_"+ people[i].camera);
+                                    var thumbdiv = document.createElement("div");
+                                    thumbdiv.setAttribute("class", "thumbnail");
+            /////////////////////////////////////////////////////////////////// img element
+                                    var imgj = document.createElement("img");
+                                    imgj.setAttribute("src", img_string + new Date().getTime());
+                                    imgj.setAttribute("height", "100");
+                                    imgj.setAttribute("width", "100");
+                                    imgj.setAttribute("id", people[i].identity + "_" + people[i].camera + "_image");
+                                    imgj.setAttribute("alt", "Random Name");
+                                    imgj.setAttribute("class", "person"); //img-circle 
+                                    //document.getElementById("progressbar").appendChild(imgj);
+                                    thumbdiv.appendChild(imgj);
+            /////////////////////////////////////////////////////////////////// name element
+                                    var name = document.createElement("p");
+                                    name.setAttribute("class", "text-center predictedName");
+                                    name.setAttribute("id", people[i].identity + "_"+ people[i].camera+"_prediction");
+                                    name.innerHTML = "<strong>"+people[i].prediction+"</strong>";
+                                    thumbdiv.appendChild(name);
+            /////////////////////////////////////////////////////////////////// button element
+                                    var aligndiv = document.createElement("div");
+                                    aligndiv.setAttribute("class","pull-right");   
+
+                                    var btndiv = document.createElement("div");
+                                    btndiv.setAttribute("class","btn-group");   
+                                    var btn = document.createElement("BUTTON");        
+                                    btn.setAttribute("type","button");    
+                                    btn.setAttribute("class", "btn btn-default btn-xs dropdown-toggle");  
+                                    btn.setAttribute("data-toggle","dropdown");  
+
+                                    var spn = document.createElement("span");
+                                    spn.setAttribute("class","caret");    
+                                    btn.appendChild(spn);
+                                   
+                                    var list = document.createElement("ul");
+                                    list.setAttribute("class","dropdown-menu text-centre"); 
+                                    list.setAttribute("role","menu"); 
+                                    list.setAttribute("id","faceActionList"); 
+
+
+                                    var listitem = document.createElement("li");
+                                    var inner = document.createElement("a");
+                                    inner.setAttribute("id",people[i].identity + "_"+ people[i].camera+"_remove"); 
+                                    inner.setAttribute("onclick","removeFace(this.id)"); 
+                                    inner.innerHTML = "Remove";
+                                    //addFace(id)
+                                    listitem.appendChild(inner);
+                                    list.appendChild(listitem);
+
+                                    var listitem = document.createElement("li");
+                                    var inner = document.createElement("a");
+                                    inner.setAttribute("id",people[i].identity + "_"+ people[i].camera+"_trust"); 
+                                    inner.setAttribute("onclick","addFace(this.id)"); 
+                                    inner.innerHTML = "Trust";
+                                    
+                                    listitem.appendChild(inner);
+                                    list.appendChild(listitem);
+
+                                    var listitem = document.createElement("li");
+                                    var inner = document.createElement("a");
+                                    inner.setAttribute("data-toggle","modal"); 
+                                    inner.setAttribute("id","addfacebtnID"); 
+                                    inner.setAttribute("data-target","#"+people[i].identity + "_"+ people[i].camera+"_modal"); 
+                                    inner.innerHTML = "Add New Face";
+                                  
+                                    listitem.appendChild(inner);
+                                    list.appendChild(listitem);   
+
+                                    btndiv.appendChild(btn);
+                                    btndiv.appendChild(list);
+                                    aligndiv.appendChild(btndiv);
+
+                                    //document.getElementById("progressbar").appendChild(btndiv);   
+                                    thumbdiv.appendChild(aligndiv);
+             ///////////////////////////////////////////////////////////////////  progress bar element                     
+                                    var d1 = document.createElement("div");
+                                    d1.setAttribute("class","progress");
+                                    var d2 = document.createElement("div");
+                                    //var values = people[i].prediction.split('_');
+                                    //var name = values[0];
+                                    var conf = people[i].confidence; 
+                                    console.log("New Person: " + people[i].prediction + ":"+people[i].confidence); 
+                                    if(people[i].prediction != "unknown"){
+                                        d2.setAttribute("class","progress-bar progress-bar-success");
+                                        d2.setAttribute("role","progress-bar progress-bar-success");   
+                                    }
+                                    else{
+                                           
+                                        d2.setAttribute("class","progress-bar progress-bar-danger");
+                                        d2.setAttribute("role","progress-bar progress-bar-danger");
+                                        conf = 100 - people[i].confidence;
+                                    }         
+                                    
+                                    d2.setAttribute("aria-valuenow","50");
+                                    d2.setAttribute("aria-valuemin","0");
+                                    d2.setAttribute("aria-valuemax","100");
+                                    d2.setAttribute("style","width:" + conf +"%");
+                                    d2.innerHTML = conf + "%";
+                                    d1.appendChild(d2);
+
+                                    var info = document.createElement("span");        
+                                    info.setAttribute("id","detectioinfo"); 
+                                    info.setAttribute("style","text-align:center; font-size:70%;");         
+                                    info.innerHTML = "Camera " + people[i].camera + "  -  " + people[i].timeD;       
+                                              
+                           
+             /////////////////////////////////////////////////////////////////////////////////////
+                                 
+                                    var modal = document.createElement("div");
+                                    modal.setAttribute("class","modal fade col-md-3 text-center");
+                                    modal.setAttribute("id",people[i].identity + "_" + people[i].camera + "_modal");
+                                    modal.setAttribute("tabindex","-1");
+                                    modal.setAttribute("role","dialog");
+                                    modal.setAttribute("aria-labelledby","myModalLabel");
+                                    modal.setAttribute("aria-hidden","true");
+                                
+
+
+                                    var dialog = document.createElement("div");
+                                    dialog.setAttribute("class","modal-dialog");
+                                    //modal.appendChild(dialog);
+
+                                    var content = document.createElement("div");
+                                    dialog.setAttribute("class","modal-content");
+                                    //dialog.appendChild(content);
+
+                                    var header = document.createElement("div");
+                                    header.setAttribute("class","modal-header");
+                                    //dialog.appendChild(content);
+
+                                    var btn2 = document.createElement("BUTTON");        
+                                    btn2.setAttribute("type","button");    
+                                    btn2.setAttribute("class", "close");  
+                                    btn2.setAttribute("data-dismiss","modal");  
+                                    btn2.setAttribute("aria-hidden","true");  
+                                    btn2.innerHTML = "&times;";
+
+                                    header.appendChild(btn2);
+
+                                    var title = document.createElement("h4");        
+                                    title.setAttribute("id","myModalLabel");    
+                                    title.setAttribute("class", "modal-title");  
+                                    title.innerHTML = "Add face to Database";
+                                  
+                                    header.appendChild(title);                
+                                    content.appendChild(header);
+
+                                    var body = document.createElement("div");
+                                    body.setAttribute("class","modal-body");
+
+                                    var imgj1 = document.createElement("img");
+                                    imgj1.setAttribute("src", img_string + new Date().getTime());
+                                    imgj1.setAttribute("height", "100");
+                                    imgj1.setAttribute("width", "100");
+                                    imgj1.setAttribute("id", people[i].identity + "_" + people[i].camera+ "_imageModal");
+                                    imgj1.setAttribute("class", "person"); //img-circle 
+                                    
+                                    body.appendChild(imgj1);
+
+                                    var name = document.createElement("h4");
+                                    name.setAttribute("class", "text-center");
+                                    name.setAttribute("id", people[i].identity + "_" + people[i].camera+ "nameID");
+                                    var values = people[i].prediction.split('_');
+                                    var nameprediction = values[0];
+                                    name.innerHTML = "<strong>" + nameprediction + " ?</strong>";
+
+                                    body.appendChild(name);
+
+                                    var form = document.createElement("div");
+                                    form.setAttribute("class","form-group has-success");
+
+                                    var input = document.createElement("input");
+                                    input.setAttribute("class","form-control"); 
+                                    input.setAttribute("placeholder","Enter Name"); 
+                                    input.setAttribute("type","text");  
+                                    input.setAttribute("id", people[i].identity + "_" + people[i].camera+ "_input");   
+
+                                    form.appendChild(input);                
+                                    body.appendChild(form);
+                                 
+                                    content.appendChild(body);
+
+                                    var footer = document.createElement("div");
+                                    footer.setAttribute("class","modal-footer");
+                                    //dialog.appendChild(content);
+
+                                    var btn3 = document.createElement("BUTTON");        
+                                    btn3.setAttribute("type","button");    
+                                    btn3.setAttribute("class", "btn btn-success pull-right");  
+                                    btn3.setAttribute("data-dismiss","modal");  
+                                    btn3.setAttribute("aria-hidden","true"); 
+                                    btn3.setAttribute("id",people[i].identity + "_" + people[i].camera + "_add");  
+                                    btn3.setAttribute("onclick","addFace(this.id)");  
+                                    btn3.innerHTML = "Add Face";
+
+                                    footer.appendChild(btn3);
+
+                                    content.appendChild(footer);
+                                    dialog.appendChild(content);
+                                    modal.appendChild(dialog);
+
+
+
+
+                                    thumbdiv.appendChild(d1);
+                                    thumbdiv.appendChild(info);  
+                                   
+                                    maindiv.appendChild(thumbdiv);
+                            
+
+                                    document.getElementById("detected-faces").appendChild(maindiv);
+                                    document.getElementById("detected-faces").appendChild(modal);
+                            }
+                            else{
+
+                                var x = document.getElementById(people[i].identity+ "_" + people[i].camera).getElementsByClassName("progress-bar");
+                                    
+                                for (var j = 0; j < x.length; j++) {
+                                        console.log("Updating detected face");
+                                        var values = people[i].prediction.split('_');
+                                        var name = values[0];
+                                        var conf = people[i].confidence; 
+                                        ///////////////////////
+                                        if(name != "unknown"){
+                                            x[j].setAttribute("class","progress-bar progress-bar-success");
+                                            x[j].setAttribute("role","progress-bar progress-bar-success");
+                                            var y = document.getElementById(people[i].identity+ "_" + people[i].camera).getElementsByClassName("predictedName");
+                                            y[0].innerHTML = "<strong>"+people[i].prediction+"</strong>";
+                                        
+                                        }
+                                        else{
+                                               
+                                            // x[j].setAttribute("class","progress-bar progress-bar-failure");
+                                            // x[j].setAttribute("role","progress-bar progress-bar-failure");
+                                            conf = 100 - people[i].confidence; 
+                                        }       
+
+                                        //////////////////////                          
+                                        x[j].setAttribute("style","width:" + conf +"%");
+                                        x[j].innerHTML = conf +"%";
+                                    }
+                                console.log("Updating image: " + people[i].identity);  
+                                var img_string = "/get_faceimg/"+people[i].identity +'_'+ people[i].camera+ "#";
+                                $('#' + people[i].identity + "_" + people[i].camera+ '_image').attr('src',  img_string  + new Date().getTime()); //jquery used to update image
+                                $('#' + people[i].identity + "_" + people[i].camera+ "_imageModal").attr('src',  img_string  + new Date().getTime()); //update modal image 
+                            }
+
+                            //console.log(people_string);
+              
+                        }   
+
+                        
+                    });
+                    
+                      socket.on('alarm_status', function(json) {   
+
+                               console.log("Alarm Status: " + json);
+                               var alarm_status = JSON.parse(json);
+
+                               if(alarm_status.triggered == true){
+
+                                    $("#alarmStatus").html("Alarm Triggered");
+                               }
+                               else{
+                                    $("#alarmStatus").html(alarm_status.state);
+
+                               }         
+
+                        });
+
+                      socket.on('system_data', function(json) {   
+
+                               console.log("System Data: " + json);
+                               var system_data = JSON.parse(json);
+                               var person;
+                               var i = 0;
+                               people_string = '';
+                               for (; i < system_data.people.length;i++) {
+                                    people_string = people_string + '<option>' + system_data.people[i]+ '</option>';
+                               }
+                                $('#people').html(people_string);
+
+                               var i = 0;
+                               camera_string = '';
+                               for (; i < system_data.camNum;i++) {
+                                    camera_string = camera_string + '<option value="' + i.toString() + '"> Camera ' + i + '</option>';
+                               }
+                               camera_string = camera_string + '<option value="All">All</option>';
+                                $('#cameras').html(camera_string);
+
+                        });
+
+
+                });
+
+                // function removeFileInput(i) {
+                //   var div = "att"+i;
+                //   var d = document.getElementById("detected-faces");
+                //   var olddiv = document.getElementById(div);
+                //   d.removeChild(olddiv);
+                // };
+               
+     </script>
+
+<!-- jQuery 2.2.3 -->
+<script src="static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="static/dist/js/app.min.js"></script>
+
+
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+</body>
+</html>
