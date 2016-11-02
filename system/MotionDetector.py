@@ -61,19 +61,20 @@ class MotionDetector(object):
             logging.debug('\n\n////////////////////// filtering 1 //////////////////////\n\n')
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  
             clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+            logging.debug('\n\n////////////////////// filtering 1.5 //////////////////////\n\n')
             gray = clahe.apply(gray)
             gray = cv2.medianBlur(gray,9)  # Filters out noise
             gray = cv2.GaussianBlur(gray, (11, 11), 0)
             logging.debug('\n\n////////////////////// filtering 2 //////////////////////\n\n')
             # Initialise and build background model useing frame averaging
-            if self.history == 0: # Let the camera warm up
+            if self.history <= 3: # Let the camera warm up
                 self.currentFrame = gray
                 self.history +=1
                 if get_rects == True: # Return peoplerects without frame
                     return occupied,  self.peopleRects 
                 else:
                     return occupied,  frame
-            elif self.history == 1:
+            elif self.history == 4:
                 self.previousFrame = self.currentFrame
                 self.currentFrame = gray      
                 self.meanFrame = cv2.addWeighted(self.previousFrame,0.5,self.currentFrame,0.5,0)
@@ -82,7 +83,7 @@ class MotionDetector(object):
                     return occupied,  self.peopleRects 
                 else:
                     return occupied,  frame
-            elif self.history == 2:
+            elif self.history == 5:
                 self.previousFrame = self.meanFrame
                 self.currentFrame = gray
                 self.meanFrame = cv2.addWeighted(self.previousFrame,0.5,self.currentFrame,0.5,0)
@@ -116,8 +117,9 @@ class MotionDetector(object):
                         break
                     continue     
                 (x, y, w, h) = cv2.boundingRect(c)  # Compute the bounding box for the contour
-                # If the bounding box is equal to the width or height of the frame it is likely that something is wrong - reset model
-                if (h-y) == height or (w-x) == width: 
+                # If the bounding box is equal to the width (made smaller never really covers whole width) 
+                # or height of the frame it is likely that something is wrong - reset model
+                if h == height or w >= width/1.5: 
                         self.history = 0
                         break
 

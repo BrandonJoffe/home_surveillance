@@ -87,7 +87,7 @@ def resize(frame):
 
 def resize_mjpeg(frame):
     r = 320.0 / frame.shape[1]
-    dim = (320, int(frame.shape[0] * r))
+    dim = (320, 200)#int(frame.shape[0] * r))
     # perform the actual resizing of the image and show it
     frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)    
     return frame  

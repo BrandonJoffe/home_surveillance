@@ -82,10 +82,7 @@ class IPCamera(object):
 	 	self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
 	 	self.url = camURL
 		if not self.video.isOpened():
-			self.video.open()
-		for i in range(0,5):  # Read first few frames from camera i.e let it warmup a little before you start processing
-			success, frame = self.video.read()
-			print "warming_up_" + str(i) + ": " + str(success)		
+			self.video.open()		
 		# Start a thread to continuously capture frames.
 		# The capture thread ensures the frames being processed are up to date and are not old
 		self.captureLock = threading.Lock() # Sometimes used to prevent concurrent access
@@ -101,6 +98,7 @@ class IPCamera(object):
 	    FPScount = 0
 	    warmup = 0
 	    FPSstart = time.time()
+
 	    while True:
 			success, frame = self.video.read()
 			self.captureEvent.clear() 
