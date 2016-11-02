@@ -32,9 +32,9 @@ docker run -v /Users/:/host/Users -p 9000:9000 -p 8000:8000 -p 5000:5000 -t -i b
 ```
 cd system
 ```
-- Run WebSocket.py
+- Run WebApp.py
 ```
-python WebSocket.py
+python WebApp.py
 ```
 - Visit ```localhost:5000 ```
 - Login Username: ```admin``` Password ```admin```
