@@ -3,7 +3,7 @@
 [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/prototype/system/debugging/dashboard.png)](#features)
 
 ## System Overview ##
----
+
 ### Whats Inside? ###
 
 
@@ -15,13 +15,12 @@
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/finalSystemImplementation.png?raw=true?raw=true)](#features)
 
-### How Do I Setup The Network ###
+### How Do I Setup The Network? ###
 
 [![solarized dualmode]
 (https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/testingEnvironment.png?raw=true)](#features)
 
 ## Installation and Usage ##
----
 
 1) Pull Docker Image
 
@@ -48,6 +47,8 @@ python WebApp.py
 ```
 - Visit ```localhost:5000 ```
 - Login Username: ```admin``` Password ```admin```
+
+## Recognition Accuracy ##
 
 ## Notes and Features ##
 ---
@@ -77,6 +78,17 @@ python WebApp.py
 - There is plenty work to be done for this system to become a fully functional and secure open source home surveillance system.
 
 - This project is being developed for the purpose of my thesis and I hope to have a fully functional system by the end of October 2016.
+
+# License
+---
+
+Copyright 2016, Brandon Joffe, All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 # References
 ---
