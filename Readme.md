@@ -6,6 +6,7 @@
 
 ### Whats Inside? ###
 
+The main systems include a dedicated application server and the Raspberry PI which hosts the alarm control interface.  
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/prototype/system/debugging/designOverview-2.png?raw=true)](#features)
