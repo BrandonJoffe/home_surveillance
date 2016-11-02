@@ -39,9 +39,12 @@ How the network is setup is really up to you, I used a PoE switch to connect all
 
 ## System Proccessing Capability ##
 
+The systems ability to process several cameras simultaneously in real time with different resolutions is shown in the graph below. These tests were conducted on a 2011 Mac Book Pro running Yosemite.  By default, the SurveillanceSystem object resizes frames to a ratio where the height is always 640 pixels. This was chosen as it produced the best results with regards to its effects on processing and face recognition accuracy.
+
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/processingCapability.png?raw=true)](#features)
 
+Although the graph shows the ability of the system to process up to 9 cameras in real time using a resolution of 640x480, it cannot stream 9 cameras to the web client simultaneously with the approach currently being used. During testing up to 6 cameras were able to stream in real time, but this was not always the case. The most consistent real-time streaming included the use of only three cameras.
 
 ## Installation and Usage ##
 
