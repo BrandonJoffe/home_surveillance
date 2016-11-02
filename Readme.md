@@ -10,19 +10,21 @@ The purpose of this project was to develop a low-cost, adaptive and extensible s
 
 ### Whats inside? ###
 
-The main system components include a dedicated system server and a Raspberry PI which hosts the alarm control interface.  
+The main system components include a dedicated system server which performs all the central processing and a Raspberry PI which hosts the alarm control interface.  
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/prototype/system/debugging/designOverview-2.png?raw=true)](#features)
 
 ### How does it work? ###
 
-The SurveillanceSystem object is the heart of the system and performs all the central processing. It can control several IPCameras and monitors the system's alerts. A FaceRecogniser object provides functions for training a linear SVM classifier using the face database and includes all the functions nessacery to perform face recognition using Openface's pretrained neural network (Thank you Brandon Amos!!). The IPcamera object streams frames directly from an IP camera and makes them available for processing, and streaming to the web client. Each IPCamera has its own MotionDetector and FaceDetector object, which are used by other subsequent processes to perform face recogtion and person tracking. 
+The SurveillanceSystem object is the heart of the system, it can process several IPCameras and monitors the system's alerts. A FaceRecogniser object provides functions for training a linear SVM classifier using the face database, and includes all the functions nessacery to perform face recognition using Openface's pretrained neural network (thank you Brandon Amos!!). The IPcamera object streams frames directly from an IP camera and makes them available for processing, and streaming to the web client. Each IPCamera has its own MotionDetector and FaceDetector object, which are used by other subsequent processes to perform face recogtion and person tracking. The FlaskSocketIO object streams jpeg frames (mjpeg) to the client, and tranfers JSON data using HTTP POST requests and websockets. Finally, the flask object on the Raspberry PI simply controls a GPIO interface which can be directly connected to an existing wired alarm panel.
  
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/finalSystemImplementation.png?raw=true?raw=true)](#features)
 
 ### How do I setup the network? ###
+
+How the network is setup is really up to you, I used a PoE switch to connect all my IP cameras to the network, you can process cameras that are connected directly to your NVR, and there are many other configartions to choose from.
 
 [![solarized dualmode]
 (https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/testingEnvironment.png?raw=true)](#features)
