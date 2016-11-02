@@ -4,19 +4,21 @@
 
 ## System Overview ##
 
-### Whats Inside? ###
+### Whats inside? ###
 
-The main systems include a dedicated application server and the Raspberry PI which hosts the alarm control interface.  
+The main systems include a dedicated system server and the Raspberry PI which hosts the alarm control interface.  
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/prototype/system/debugging/designOverview-2.png?raw=true)](#features)
 
-### How Does It Work? ###
+### How does it work? ###
 
+The diagram below illustrates the dependencies and relationships between each of the system objects and how they interface with the respective hardware components as well as the user interface. 
+ 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/finalSystemImplementation.png?raw=true?raw=true)](#features)
 
-### How Do I Setup The Network? ###
+### How do I setup the network? ###
 
 [![solarized dualmode]
 (https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/testingEnvironment.png?raw=true)](#features)
@@ -50,6 +52,9 @@ python WebApp.py
 - Login Username: ```admin``` Password ```admin```
 
 ## Recognition Accuracy ##
+
+### Openface ###
+
 
 ## Notes and Features ##
 ---
