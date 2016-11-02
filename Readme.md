@@ -1,12 +1,17 @@
 # Home Surveilance with Facial Recognition. 
+
+The purpose of this project was to develop a low cost, adaptive and extensible surveillance system which focused on identifying and alerting for potential home intruders. It has the ability to integrate into an existing alarm system and provides customizable alerts for the user. It can process several IP cameras and can distiguish between someone who is in the face database and someone who isn't (a potential intruder). 
+
 ---
+
 [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/prototype/system/debugging/dashboard.png)](#features)
+
 
 ## System Overview ##
 
 ### Whats inside? ###
 
-The main systems include a dedicated system server and the Raspberry PI which hosts the alarm control interface.  
+The main system components include a dedicated system server and a Raspberry PI which hosts the alarm control interface.  
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/prototype/system/debugging/designOverview-2.png?raw=true)](#features)
@@ -92,7 +97,7 @@ Copyright 2016, Brandon Joffe, All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+- http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
