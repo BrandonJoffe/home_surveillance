@@ -13,7 +13,7 @@ The main systems include a dedicated system server and the Raspberry PI which ho
 
 ### How does it work? ###
 
-The diagram below illustrates the dependencies and relationships between each of the system objects and how they interface with the respective hardware components as well as the user interface. 
+The SurveillanceSystem object is the heart of the system and performs all the central processing. It can control several IPCameras and monitors the system's alerts. A FaceRecogniser object provides functions for training a linear SVM classifier using the face database and includes all the functions nessacery to perform face recognition using Openface's pretrained neural network (Thank you Brandon Amos!!). 
  
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/finalSystemImplementation.png?raw=true?raw=true)](#features)
