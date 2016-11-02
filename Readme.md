@@ -2,12 +2,25 @@
 ---
 [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/prototype/system/debugging/dashboard.png)](#features)
 
-# System Overview
+## System Overview ##
+---
+### Whats Inside? ###
+
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/prototype/system/debugging/designOverview-2.png?raw=true)](#features)
 
-# Installation
+### How Does It Work? ###
+
+[![solarized dualmode]
+(https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/finalSystemImplementation.png?raw=true?raw=true)](#features)
+
+### How Do I Setup The Network ###
+
+[![solarized dualmode]
+(https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/testingEnvironment.png?raw=true)](#features)
+
+## Installation and Usage ##
 ---
 
 1) Pull Docker Image
@@ -23,9 +36,6 @@ docker run -v /Users/:/host/Users -p 9000:9000 -p 8000:8000 -p 5000:5000 -t -i b
 
 ```
 
-# Usage
----
-
 - Navigate to the home_surveillance project inside the Docker container
 - Move into the system directory
 
@@ -39,7 +49,7 @@ python WebApp.py
 - Visit ```localhost:5000 ```
 - Login Username: ```admin``` Password ```admin```
 
-# Notes and Features
+## Notes and Features ##
 ---
 
 - To add your own IP camera simply add the URL of the camera into field on the camera panel on the client dashboard. 
