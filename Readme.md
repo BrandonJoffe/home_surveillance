@@ -1,6 +1,6 @@
 # Home Surveilance with Facial Recognition. 
 
-The purpose of this project was to develop a low cost, adaptive and extensible surveillance system which focused on identifying and alerting for potential home intruders. It has the ability to integrate into an existing alarm system and provides customizable alerts for the user. It can process several IP cameras and can distiguish between someone who is in the face database and someone who isn't (a potential intruder). 
+The purpose of this project was to develop a low cost, adaptive and extensible surveillance system which focused on identifying and alerting for potential home intruders. It has the ability to integrate into an existing alarm system and provides customizable alerts for the user. It can process several IP cameras and can distiguish between someone who is in the face database and someone who isn't (a potential intruder). This is by no means a finished product, it was developed for my thesis and there is so much that can be done to make this an incredible useful tool.
 
 ---
 
