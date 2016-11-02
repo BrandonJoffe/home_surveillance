@@ -1,11 +1,10 @@
 # Home Surveilance with Facial Recognition. 
 
-The purpose of this project was to develop a low cost, adaptive and extensible surveillance system which focused on identifying and alerting for potential home intruders. It has the ability to integrate into an existing alarm system and provides customizable alerts for the user. It can process several IP cameras and can distiguish between someone who is in the face database and someone who isn't (a potential intruder). This is by no means a finished product, it was developed for my thesis and there is so much that can be done to make this an incredible useful tool.
+The purpose of this project was to develop a low-cost, adaptive and extensible surveillance system which focused on identifying and alerting for potential home intruders. It can integrate into an existing alarm system and provides customizable alerts for the user. It can process several IP cameras and can distinguish between someone who is in the face database and someone who is not (a potential intruder). This is by no means a finished product. It was developed for my thesis, and there is so much that can be done to make this an incredibly useful tool.
 
 ---
 
 [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/prototype/system/debugging/dashboard.png)](#features)
-
 
 ## System Overview ##
 
@@ -18,7 +17,7 @@ The main system components include a dedicated system server and a Raspberry PI 
 
 ### How does it work? ###
 
-The SurveillanceSystem object is the heart of the system and performs all the central processing. It can control several IPCameras and monitors the system's alerts. A FaceRecogniser object provides functions for training a linear SVM classifier using the face database and includes all the functions nessacery to perform face recognition using Openface's pretrained neural network (Thank you Brandon Amos!!). 
+The SurveillanceSystem object is the heart of the system and performs all the central processing. It can control several IPCameras and monitors the system's alerts. A FaceRecogniser object provides functions for training a linear SVM classifier using the face database and includes all the functions nessacery to perform face recognition using Openface's pretrained neural network (Thank you Brandon Amos!!). The IPcamera object streams frames directly from an IP camera and makes them available for processing, and streaming to the web client. Each IPCamera has its own MotionDetector and FaceDetector object, which are used by other subsequent processes to perform face recogtion and person tracking. 
  
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/finalSystemImplementation.png?raw=true?raw=true)](#features)
