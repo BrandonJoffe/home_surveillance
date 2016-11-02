@@ -29,6 +29,20 @@ How the network is setup is really up to you, I used a PoE switch to connect all
 [![solarized dualmode]
 (https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/testingEnvironment.png?raw=true)](#features)
 
+## Facial Recognition Accuracy ##
+
+[![solarized dualmode]
+(https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/imagesPerPersonAccuracy.png?raw=true)](#features)
+
+[![solarized dualmode]
+(https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/RecognitionAccuracy.png?raw=true)](#features)
+
+## System Proccessing Capability ##
+
+[![solarized dualmode]
+(https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/processingCapability.png?raw=true)](#features)
+
+
 ## Installation and Usage ##
 
 ### Docker ###
@@ -43,7 +57,7 @@ Openface provides an automated docker build which works well on Ubuntu and OSX (
 docker pull bjoffe/openface_flask_v2
 ```
 
-2) Run Docker image, make sure you mount your User (MAC) or home (Ubuntu) directory as a volume so you can access your local files
+2) Run Docker image, make sure you mount your User (for MAC) or home (for Ubuntu) directory as a volume so you can access your local files
 
 ```
 docker run -v /Users/:/host -p 9000:9000 -p 8000:8000 -p 5000:5000 -t -i bjoffe/openface_flask_v2  /bin/bash
@@ -63,11 +77,6 @@ python WebApp.py
 - Visit ```localhost:5000 ```
 - Login Username: ```admin``` Password ```admin```
 
-
-
-## Recognition Accuracy ##
-
-### Openface ###
 
 
 ## Notes and Features ##
