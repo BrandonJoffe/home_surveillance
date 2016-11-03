@@ -81,11 +81,9 @@ python WebApp.py
 
 ## Notes and Features ##
 
->### *Camera Settings *
+>### *Camera Settings*
 - To add your own IP camera simply add the URL of the camera into field on the camera panel and choose 1 out of the 5 proccessing settings and your prefered face detection method. 
-
 - Unfortunately I haven't included a means to remove the cameras once they have been added, however, this will be added shortly
-
 ### *Why should I care?*
 Because software tools are for people. If you don’t care, why are you contributing to open source? Surely, there must be a kernel (ha!) of care somewhere in that lovely little brain of yours.
 
