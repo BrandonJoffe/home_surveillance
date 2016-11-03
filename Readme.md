@@ -1,6 +1,7 @@
 # Home Surveilance with Facial Recognition. 
 
 Smart security is the future, and with the help of the open source community and technology available today an affordable intellegent video analytics system is within our reach. This application is a low-cost, adaptive and extensible surveillance system focused on identifying and alerting for potential home intruders. It can integrate into an existing alarm system and provides customizable alerts for the user. It can process several IP cameras and can distinguish between someone who is in the face database and someone who is not (a potential intruder).
+
 ---
 
 [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/dashboard.png)](#features)
