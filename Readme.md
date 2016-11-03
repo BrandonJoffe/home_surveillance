@@ -106,19 +106,7 @@ python WebApp.py
 - Both Dlib's and OpenCV's face detection methods produce false positives now and again. The system does incorporate some mitigation for these false detections by using more rigourous parameters, and background subtraction to ignore any detections that occur outside the region of interest.
 - The more people and face images you have in the database the longer it takes to train the classifier, it may take up to several minutes. Accasionaly Docker for MAC killed the python process used for training, in which case you have to start all over again.
 
-## How can this project become awesome? ##
-
-### Lets work together ###
-
-1. Create an issue and describe your idea
-2. [Fork it]
-3. Create your feature branch (`git checkout -b my-new-feature`)
-4. Commit your changes (`git commit -am 'Add some feature'`)
-5. Publish the branch (`git push origin my-new-feature`)
-6. Create a new Pull Request
-7. Profit! :white_check_mark:
-
-### Some Ideas for Future developement ###
+## Ideas for Future developement ##
 
 - Database Implmentation
 
