@@ -8,7 +8,7 @@ The purpose of this project was to develop a low-cost, adaptive and extensible s
 
 ## System Overview ##
 
-### Whats inside? ###
+### What's inside? ###
 
 The main system components include a dedicated system server which performs all the central processing and web based communication and a Raspberry PI which hosts the alarm control interface.  
 
