@@ -124,7 +124,7 @@ python WebApp.py
 
 - The addition of home automation control features 
 
-I could go on and on ...
+and many more...
 
 # License
 ---
