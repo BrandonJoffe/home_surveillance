@@ -81,17 +81,18 @@ python WebApp.py
 
 ## Notes and Features ##
 
->### *What’s the point of a change log?*
-To make it easier for users and contributors to see precisely what notable changes have been made between each release (or version) of the project.
+>### *Camera Settings *
+- To add your own IP camera simply add the URL of the camera into field on the camera panel and choose 1 out of the 5 proccessing settings and your prefered face detection method. 
+
+- Unfortunately I haven't included a means to remove the cameras once they have been added, however, this will be added shortly
+
 ### *Why should I care?*
 Because software tools are for people. If you don’t care, why are you contributing to open source? Surely, there must be a kernel (ha!) of care somewhere in that lovely little brain of yours.
 
 ### Camera Settings ###
 
 ----------------------
-- To add your own IP camera simply add the URL of the camera into field on the camera panel and choose 1 out of the 5 proccessing settings and your prefered face detection method. 
 
-- Unfortunately I haven't included a means to remove the cameras once they have been added, however, this will be added shortly
 
 ### Customizable Alerts ###
 ----------------------
