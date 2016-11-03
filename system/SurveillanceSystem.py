@@ -92,7 +92,7 @@ class SurveillanceSystem(object):
    together. It generates camera frame proccessing threads as 
    well as an alert monitoring thread. A camera frame proccessing 
    thread can process a camera using 5 different processing methods.
-   These methods aim to allow th user to adapt the system to their 
+   These methods aim to allow the user to adapt the system to their 
    needs and can be found in the process_frame() function. The alert 
    monitoring thread continually checks the system state and takes 
    action if a particular event occurs. """ 
