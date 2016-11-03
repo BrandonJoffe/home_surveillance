@@ -85,7 +85,7 @@ np.set_printoptions(precision=2)
 logging.basicConfig(level=logging.DEBUG,
                     format='(%(threadName)-10s) %(message)s',
                     )
-                              
+                  
 class SurveillanceSystem(object):
    """ The SurveillanceSystem object is the heart of this application.
    It provides all the central proccessing and ties everything
