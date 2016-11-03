@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This Flask implementation is used to demenstrate the potential of the
+# This Flask implementation is used to demonstrate the potential of the
 # system to be connected to an already existing alarm panel. In order
 # to acheive this, slight changes to the code will be required, as well as
 # the use of a few electrical components i.e transistor to create a open 
