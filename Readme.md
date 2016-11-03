@@ -31,11 +31,13 @@ How the network is setup is really up to you, I used a PoE switch to connect all
 
 ## Facial Recognition Accuracy ##
 
-The graph below shows the recognition accuracy of identifying known and unknown people with the use of an unknown class in the classifier and an unknown confidence threshold. Currently, Openface has an accuracy of 0.9292 ± 0.0134 on the LFW benchmark, and although benchmarks are great for comparing the accuracy of different techniques and algorithms, they do not model a real world surveillance environment. The tests conducted were taken in a home surveillance scenario with two different IP cameras in an indoor and outdoor environment at different times of the day. A total of 15 people were recorded, and face images were taken from both the LFW database as well as the FEI database, to act as probe images and create the unknown class in the classifier.  At an unknown confidence threshold of 20, the recognition accuracy of identifying an unknown person is 81.25%, while the accuracy of identifying a known person is 75.52%. This produces a final combined system recognition accuracy of 78.39%. 
+The graph below shows the recognition accuracy of identifying known and unknown people with the use of an unknown class in the classifier and an unknown confidence threshold. Currently, Openface has an accuracy of 0.9292 ± 0.0134 on the LFW benchmark, and although benchmarks are great for comparing the accuracy of different techniques and algorithms, they do not model a real world surveillance environment. The tests conducted were taken in a home surveillance scenario with two different IP cameras in an indoor and outdoor environment at different times of the day. A total of 15 people were recorded an captured to train the classifier. Face images were also taken from both the LFW database as well as the FEI database, to test the recognition accuracy of identifying unknown people and create the unknown class in the classifier. 
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/RecognitionAccuracy.png?raw=true)](#features)
 
+At an unknown confidence threshold of 20, the recognition accuracy of identifying an unknown person is 81.25%, while the accuracy of identifying a known person is 75.52%. This produces a final combined system recognition accuracy of 78.39%. 
+ 
 ## System Proccessing Capability ##
 
 The systems ability to process several cameras simultaneously in real time with different resolutions is shown in the graph below. These tests were conducted on a 2011 Mac Book Pro running Yosemite. 
