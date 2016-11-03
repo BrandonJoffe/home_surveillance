@@ -83,22 +83,10 @@ python WebApp.py
 
 >### *Camera Settings*
 - To add your own IP camera simply add the URL of the camera into field on the camera panel and choose 1 out of the 5 proccessing settings and your prefered face detection method. 
-- Unfortunately I haven't included a means to remove the cameras once they have been added, however, this will be added shortly
-### *Why should I care?*
-Because software tools are for people. If you don’t care, why are you contributing to open source? Surely, there must be a kernel (ha!) of care somewhere in that lovely little brain of yours.
-
-### Camera Settings ###
-
-----------------------
-
-
-### Customizable Alerts ###
-----------------------
-
+- Unfortunately I haven't included a means to remove the cameras once they have been added, however, this will be added shortly.
+### *Customizable Alerts*
 - The Dashboard allows you to configure your own email and alarm trigger alerts. 
-
 - The alerts panel allows you to set up certain events such as the recognition of a particular person or motion detection so    that you receive an email alert when the event occurs. The confidence slider sets the accuracy that you would like to use for recognition events. By default you'll receive a notification if a person is recognised with a percentage greater than 50%.
-
 - The alarm control panel sends http post requests to a web server on a Raspberry PI to control GPIO pins.
 
 ### Face Recognition and the Face Database ###
