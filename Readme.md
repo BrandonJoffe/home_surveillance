@@ -87,23 +87,23 @@ python WebApp.py
 ## Notes and Features ##
 
 
-### Camera control panel ###
+### Camera Settings ###
 ---
 
 - To add your own IP camera simply add the URL of the camera into field on the camera panel on the client dashboard. 
 
 - Cameras can be set to perform motion detection, face recognition and person tracking
 
-### Alert control panel ###
+### Customizable Alerts ###
 ---
 
 - The Dashboard allows you to configure your own email and alarm trigger alerts. 
 
-- The alerts panel allows you to set up certain events such as the recognition of a particular person or motion detection so that you receive an email alert when the event occurs. The confidence slider sets the accuracy that you would like to use for recognition events. By default you'll receive a notification if a person is recognised with a percentage greater than 50%.
+- The alerts panel allows you to set up certain events such as the recognition of a particular person or motion detection so    that you receive an email alert when the event occurs. The confidence slider sets the accuracy that you would like to use for recognition events. By default you'll receive a notification if a person is recognised with a percentage greater than 50%.
 
 - The alarm control panel sends http post requests to a web server on a Raspberry PI to control GPIO pins. The RPI alarm interface code is yet to be uploaded, but will be available shortly.
 
-### Faces detected panel ###
+### Face Recognition and the Face Database ###
 ---
 
 - Faces that are detected are shown in the faces detected panel on the Dashboard
@@ -113,6 +113,21 @@ python WebApp.py
 - To add faces to the database add a folder of images with the name of the person and retrain the classifier by selecting the retrain database on the client dashboard. Images can also be added through the dashboard but can currently only be added one at a time.
 
 - A person is classified as unknown if they are identified with a confidence less than 50%
+
+### Security ###
+---
+
+
+### Basic features that are missing ###
+---
+
+
+## How can this project become awesome ##
+
+### Lets work together ###
+
+### Future developement ###
+
 
 
 # License
