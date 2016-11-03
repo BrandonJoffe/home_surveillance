@@ -34,7 +34,7 @@ How the network is setup is really up to you, I used a PoE switch to connect all
 The graph below shows the recognition accuracy of identifying known and unknown people with the use of an unknown class in the classifier and an unknown confidence threshold. Currently, Openface has an accuracy of 0.9292 ± 0.0134 on the LFW benchmark, and although benchmarks are great for comparing the accuracy of different techniques and algorithms, they do not model a real world surveillance environment. The tests conducted were taken in a home surveillance scenario with two different IP cameras in an indoor and outdoor environment at different times of the day. A total of 15 people were recorded an captured to train the classifier. Face images were also taken from both the LFW database as well as the FEI database, to test the recognition accuracy of identifying unknown people and create the unknown class in the classifier. 
 
 [![solarized dualmode]
-(https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/RecognitionAccuracy.png?raw=true)](#features)
+(https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/RecognitionAccuracy.png?raw=true)](#features)
 
 At an unknown confidence threshold of 20, the recognition accuracy of identifying an unknown person is 81.25%, while the accuracy of identifying a known person is 75.52%. This produces a final combined system recognition accuracy of 78.39%. 
  
@@ -43,7 +43,7 @@ At an unknown confidence threshold of 20, the recognition accuracy of identifyin
 The systems ability to process several cameras simultaneously in real time with different resolutions is shown in the graph below. These tests were conducted on a 2011 Mac Book Pro running Yosemite. 
 
 [![solarized dualmode]
-(https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/processingCapability.png?raw=true)](#features)
+(https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/processingCapability.png?raw=true)](#features)
 
 By default, the SurveillanceSystem object resizes frames to a ratio where the height is always 640 pixels. This was chosen as it produced the best results with regards to its effects on processing and face recognition accuracy. Although the graph shows the ability of the system to process up to 9 cameras in real time using a resolution of 640x480, it cannot stream 9 cameras to the web client simultaneously with the approach currently being used. During testing up to 6 cameras were able to stream in real time, but this was not always the case. The most consistent real-time streaming included the use of only three cameras.
 
