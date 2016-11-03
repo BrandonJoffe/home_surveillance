@@ -10,7 +10,7 @@ The purpose of this project was to develop a low-cost, adaptive and extensible s
 
 ### Whats inside? ###
 
-The main system components include a dedicated system server which performs all the central processing and a Raspberry PI which hosts the alarm control interface.  
+The main system components include a dedicated system server which performs all the central processing and web based communication and a Raspberry PI which hosts the alarm control interface.  
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/prototype/system/debugging/designOverview-2.png?raw=true)](#features)
@@ -31,22 +31,19 @@ How the network is setup is really up to you, I used a PoE switch to connect all
 
 ## Facial Recognition Accuracy ##
 
-[![solarized dualmode]
-(https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/imagesPerPersonAccuracy.png?raw=true)](#features)
-
-The graph below shows the recognition accuracy of identifying known and unknown people with the use of an unknown class in the classifier and a unknown confidence threshold. Currently Openface has an accuracy of 0.9292 ± 0.0134 on the LFW benchmark, and although benchmarks are great for comparing the accuracy of different techniques and algorithms, they do not model a real world surveillance enviroment. The tests conducted were taken in a home surveillance scenario with two different IP cameras in an indoor and outdoor enviroment at different times of the day. A total of 15 people were recorded, and face images were taken from both the LFW database as well as the FEI database, to act as probe images and create the unknown class in the classifier.  At a confidence threshold of 20 the recognition accuracy of identifying an unknown person increases from its previous value of 63.82\% to 81.25\%, while the accuracy of identifying a known person only decreases from a value of 76.04\% to 75.52\%. This produces a final combined system recognition accuracy of 78.39\%. 
+The graph below shows the recognition accuracy of identifying known and unknown people with the use of an unknown class in the classifier and a unknown confidence threshold. Currently Openface has an accuracy of 0.9292 ± 0.0134 on the LFW benchmark, and although benchmarks are great for comparing the accuracy of different techniques and algorithms, they do not model a real world surveillance enviroment. The tests conducted were taken in a home surveillance scenario with two different IP cameras in an indoor and outdoor enviroment at different times of the day. A total of 15 people were recorded, and face images were taken from both the LFW database as well as the FEI database, to act as probe images and create the unknown class in the classifier.  At a unknown confidence threshold of 20 the recognition accuracy of identifying an unknown person is 81.25\%, while the accuracy of identifying a known person is 75.52\%. This produces a final combined system recognition accuracy of 78.39\%. 
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/RecognitionAccuracy.png?raw=true)](#features)
 
 ## System Proccessing Capability ##
 
-The systems ability to process several cameras simultaneously in real time with different resolutions is shown in the graph below. These tests were conducted on a 2011 Mac Book Pro running Yosemite.  By default, the SurveillanceSystem object resizes frames to a ratio where the height is always 640 pixels. This was chosen as it produced the best results with regards to its effects on processing and face recognition accuracy.
+The systems ability to process several cameras simultaneously in real time with different resolutions is shown in the graph below. These tests were conducted on a 2011 Mac Book Pro running Yosemite. 
 
 [![solarized dualmode]
 (https://github.com/BrandonJoffe/home_surveillance/blob/streamingTesting/system/testing/implementation/processingCapability.png?raw=true)](#features)
 
-Although the graph shows the ability of the system to process up to 9 cameras in real time using a resolution of 640x480, it cannot stream 9 cameras to the web client simultaneously with the approach currently being used. During testing up to 6 cameras were able to stream in real time, but this was not always the case. The most consistent real-time streaming included the use of only three cameras.
+By default, the SurveillanceSystem object resizes frames to a ratio where the height is always 640 pixels. This was chosen as it produced the best results with regards to its effects on processing and face recognition accuracy. Although the graph shows the ability of the system to process up to 9 cameras in real time using a resolution of 640x480, it cannot stream 9 cameras to the web client simultaneously with the approach currently being used. During testing up to 6 cameras were able to stream in real time, but this was not always the case. The most consistent real-time streaming included the use of only three cameras.
 
 ## Installation and Usage ##
 
@@ -82,17 +79,15 @@ python WebApp.py
 - Visit ```localhost:5000 ```
 - Login Username: ```admin``` Password ```admin```
 
-
-
 ## Notes and Features ##
 
 
 ### Camera Settings ###
 ---
 
-- To add your own IP camera simply add the URL of the camera into field on the camera panel on the client dashboard. 
+- To add your own IP camera simply add the URL of the camera into field on the camera panel and choose 1 out of the 5 proccessing settings and your prefered face detection method. 
 
-- Cameras can be set to perform motion detection, face recognition and person tracking
+- Unfortunately I haven't included a means to remove the cameras once they have been added, however, this will be added shortly
 
 ### Customizable Alerts ###
 ---
@@ -101,7 +96,7 @@ python WebApp.py
 
 - The alerts panel allows you to set up certain events such as the recognition of a particular person or motion detection so    that you receive an email alert when the event occurs. The confidence slider sets the accuracy that you would like to use for recognition events. By default you'll receive a notification if a person is recognised with a percentage greater than 50%.
 
-- The alarm control panel sends http post requests to a web server on a Raspberry PI to control GPIO pins. The RPI alarm interface code is yet to be uploaded, but will be available shortly.
+- The alarm control panel sends http post requests to a web server on a Raspberry PI to control GPIO pins.
 
 ### Face Recognition and the Face Database ###
 ---
@@ -112,11 +107,14 @@ python WebApp.py
 
 - To add faces to the database add a folder of images with the name of the person and retrain the classifier by selecting the retrain database on the client dashboard. Images can also be added through the dashboard but can currently only be added one at a time.
 
-- A person is classified as unknown if they are identified with a confidence less than 50%
+- To perform accurate face recognition, twenty or more face images should be used. Furthermore, images taken in the surveillance enviroment (i.e use the IP cameras to capture face images - this can be acheived by using the face_capture option in the SurveillanceSystem script and creating your own face directory) produce better results as a posed to adding images taken else where.
+
+- A person is classified as unknown if they are recognised with a confidence lower than 20% or are predicted as unknown by the classifier
 
 ### Security ###
 ---
 
+- Unfortunately, the only security that has been implemented includes basic session management and hard coded authenetication. Where each user is faced with a login page. Data and password encryption is a feature for future developement.
 
 ### Basic features that are missing ###
 ---
@@ -127,7 +125,6 @@ python WebApp.py
 ### Lets work together ###
 
 ### Future developement ###
-
 
 
 # License
