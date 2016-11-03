@@ -4,7 +4,7 @@ The purpose of this project was to develop a low-cost, adaptive and extensible s
 
 ---
 
-[![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/debugging/dashboard.png)](#features)
+[![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/dashboard.png)](#features)
 
 ## System Overview ##
 
@@ -13,7 +13,7 @@ The purpose of this project was to develop a low-cost, adaptive and extensible s
 The main system components include a dedicated system server which performs all the central processing and web based communication and a Raspberry PI which hosts the alarm control interface.  
 
 [![solarized dualmode]
-(https://github.com/BrandonJoffe/home_surveillance/blob/master/system/debugging/designOverview-2.png?raw=true)](#features)
+(https://github.com/BrandonJoffe/home_surveillance/blob/master/system/testing/implementation/designOverview-2.png?raw=true)](#features)
 
 ### How does it work? ###
 
