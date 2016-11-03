@@ -129,7 +129,7 @@ class SurveillanceSystem(object):
         self.get_face_database_names() # Gets people in database for web client
 
         #//////////////////////////////////////////////////// Camera Examples ////////////////////////////////////////////////////
-        # self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example
+        # self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code 
         # self.cameras.append(Camera.IPCamera("http://192.168.1.33/video.mjpg","detect_recognise_track",False))
             
         # processing frame threads 
