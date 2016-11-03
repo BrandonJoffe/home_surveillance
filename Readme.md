@@ -110,11 +110,11 @@ python WebApp.py
 
 ## Ideas for Future developement ##
 
-- Database Implmentation
+- Database Implementation
 
 - Improved Security
 
-- Open set recognition for an even more accurate identification of unknown people
+- Open set recognition for accurate identification of unknown people
 
 - Behaviour recognition using neural networks
 
