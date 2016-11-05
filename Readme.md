@@ -24,7 +24,7 @@ The SurveillanceSystem object is the heart of the system. It can process several
 
 ### How do I setup the network? ###
 
-How the network is setup is really up to you. I used a PoE switch to connect all my IP cameras to the network and you can stream from cameras that are directly connected to the NVR.
+How the network is setup is really up to you. I used a PoE switch to connect all my IP cameras to the network and you can stream from cameras that are directly connected to a NVR.
 
 [![solarized dualmode]
 (https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/testingEnvironment.png?raw=true)](#features)
