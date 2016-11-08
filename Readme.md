@@ -54,14 +54,19 @@ By default, the SurveillanceSystem object resizes frames to a ratio where the he
 Openface provides an automated docker build which works well on Ubuntu and OSX (Haven't attempted Windows) and was used with the addition of a few Flask dependencies for development. Docker for MAC often gave a bad response from the Docker engine which is currently an unsolved problem. If you would like to deploy the system, Docker for MAC is currently not a viable solution. Other than that, any Ubuntu OS running a 64-bit x86 architecture should run the Docker container without any problems. To get access to your application outside your home network, you'll have to open up port 5000 on your router and assign the IP address of your system server.
 
 ---
+1) Clone Repo
 
-1) Pull Docker Image
+```
+git clone https://github.com/BrandonJoffe/home_surveillance.git
+```
+
+2) Pull Docker Image
 
 ```
 docker pull bjoffe/openface_flask_v2
 ```
 
-2) Run Docker image, make sure you mount your User (for MAC) or home (for Ubuntu) directory as a volume so you can access your local files
+3) Run Docker image, make sure you mount your User (for MAC) or home (for Ubuntu) directory as a volume so you can access your local files
 
 ```
 docker run -v /Users/:/host -p 9000:9000 -p 8000:8000 -p 5000:5000 -t -i bjoffe/openface_flask_v2  /bin/bash
@@ -74,7 +79,7 @@ docker run -v /Users/:/host -p 9000:9000 -p 8000:8000 -p 5000:5000 -t -i bjoffe/
 ```
 cd system
 ```
-- Run WebApp.py
+4) Run WebApp.py
 ```
 python WebApp.py
 ```
