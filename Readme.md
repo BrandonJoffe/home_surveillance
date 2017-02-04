@@ -51,7 +51,7 @@ By default, the SurveillanceSystem object resizes frames to a ratio where the he
 
 ### Docker ###
 
-Openface provides an automated docker build which works well on Ubuntu and OSX (Haven't attempted Windows) and was used with the addition of a few Flask dependencies for development. Docker for MAC often gave a bad response from the Docker engine which is currently an unsolved problem. If you would like to deploy the system, Docker for MAC is currently not a viable solution. Other than that, any Ubuntu OS running on a 64-bit x86 architecture should run the Docker container without any problems. To get access to your application outside your home network, you will have to open up port 5000 on your router and assign it to the IP address of your system server running the application.
+Openface provides an automated docker build which works well on Ubuntu and OSX (Haven't attempted Windows) and was used with the addition of a few Flask dependencies for development. Docker for MAC often gave a bad response from the Docker engine which is currently an unsolved problem. If you would like to deploy the system, Docker for MAC is currently not a viable solution. Other than that, Ubuntu 14.04 running on a 64-bit x86 architecture should run the Docker container without any problems. To get access to your application outside your home network, you will have to open up port 5000 on your router and assign it to the IP address of your system server running the application.
 
 ---
 1) Clone Repo
