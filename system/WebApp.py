@@ -22,8 +22,8 @@ import Camera
 from flask.ext.socketio import SocketIO, send, emit 
 import SurveillanceSystem
 import json
-import app.logger
-from app.logger.handlers import RotatingFileHandler
+import logging
+from logging.handlers import RotatingFileHandler
 import threading
 import time
 from random import random

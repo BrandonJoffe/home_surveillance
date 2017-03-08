@@ -18,11 +18,9 @@
       <file leaf-file-name="WebApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/WebApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4909">
-              <caret line="407" column="32" lean-forward="false" selection-start-line="407" selection-start-column="32" selection-end-line="407" selection-end-column="32" />
-              <folding>
-                <element signature="e#635#745#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="25" column="12" lean-forward="false" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -63,8 +61,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="518" />
-    <option name="y" value="69" />
+    <option name="x" value="820" />
+    <option name="y" value="46" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -345,7 +343,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="518" y="69" width="1400" height="1000" extended-state="0" />
+    <frame x="820" y="46" width="1400" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18020834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -383,9 +381,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#635#745#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -452,11 +448,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/WebApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4909">
-          <caret line="407" column="32" lean-forward="false" selection-start-line="407" selection-start-column="32" selection-end-line="407" selection-end-column="32" />
-          <folding>
-            <element signature="e#635#745#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="221">
+          <caret line="25" column="12" lean-forward="false" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
