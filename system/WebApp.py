@@ -32,6 +32,7 @@ import sys
 import cv2
 import psutil
 
+LOG_FILENAME = 'logs/WebApp.log'
 
 # Initialises system variables, this object is the heart of the application
 HomeSurveillance = SurveillanceSystem.SurveillanceSystem() 
@@ -404,8 +405,10 @@ def disconnect():
 
 if __name__ == '__main__':
      # Starts server on default port 5000 and makes socket connection available to other hosts (host = '0.0.0.0')
-     handler = RotatingFileHandler('WebApp.log', maxBytes=10000, backupCount=1)
+     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+     handler = RotatingFileHandler(LOG_FILENAME, maxBytes=1000000, backupCount=10)
      handler.setLevel(logging.INFO)
+     handler.setFormatter(formatter)
      app.logger.addHandler(handler)
      socketio.run(app, host='0.0.0.0', debug=False, use_reloader=False) 
     
