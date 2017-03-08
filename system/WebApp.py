@@ -33,7 +33,7 @@ import psutil
 
 
 #initialize logging
-logging.basicConfig(filename='logs/WebApp.log',level=logging.DEBUG)
+logging.basicConfig(filename='WebApp.log',level=logging.INFO)
 
 # Initialises system variables, this object is the heart of the application
 HomeSurveillance = SurveillanceSystem.SurveillanceSystem() 
@@ -133,12 +133,14 @@ def cpu_usage():
       psutil.cpu_percent(interval=1, percpu=False) #ignore first call - often returns 0
       time.sleep(0.12)
       cpu_load = psutil.cpu_percent(interval=1, percpu=False)
-      print "CPU Load: " + str(cpu_load)  
+      #print "CPU Load: " + str(cpu_load)
+      logging.info("CPU Load: " + str(cpu_load))
       return cpu_load  
 
 def memory_usage():
      mem_usage = psutil.virtual_memory().percent
-     print "System Memory Usage: " + str( mem_usage) 
+     #print "System Memory Usage: " + str( mem_usage)
+     logging.info("System Memory Usage: " + str( mem_usage))
      return mem_usage 
 
 @app.route('/add_camera', methods = ['GET','POST'])
@@ -175,7 +177,8 @@ def create_alert():
         notify_police = request.form.get('notify_police')
         confidence = request.form.get('confidence')
 
-        print "unknownconfidence: " + confidence 
+        #print "unknownconfidence: " + confidence
+        logging.info("unknownconfidence: " + confidence)
 
         actions = {'push_alert': push_alert , 'email_alert':email_alert , 'trigger_alarm':trigger_alarm , 'notify_police':notify_police}
         with HomeSurveillance.alertsLock:
@@ -208,9 +211,11 @@ def remove_face():
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             try:   
                 del HomeSurveillance.cameras[int(camNum)].people[predicted_name]  
-                print "\n\n\n======================= REMOVED: " + predicted_name + "=========================\n\n\n"
+                #print "\n\n\n======================= REMOVED: " + predicted_name + "=========================\n\n\n"
+                logging.info("======================= REMOVED: " + predicted_name + "=========================")
             except Exception as e:
-                print "\n\n\nERROR could not remove Face\n\n\n" 
+                logging.error("ERROR could not remove Face" + e)
+                print "\n\n\nERROR could not remove Face\n\n\n"
                 print e
                 pass
 
@@ -234,8 +239,10 @@ def add_face():
                 del HomeSurveillance.cameras[int(camNum)].people[person_id]    # Removes face from people detected in all cameras 
             except Exception as e:
                 print "\n\n\nERROR could not add Face\n\n\n" + e
+                logging.error("ERROR could not add Face" + e)
  
-        print "trust " + str(trust)
+        #print "trust " + str(trust)
+        logging.info("trust " + str(trust))
         if str(trust) == "false":
             wriitenToDir = HomeSurveillance.add_face(new_name,img, upload = False)
         else:
@@ -265,8 +272,9 @@ def get_faceimg(name):
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             img = HomeSurveillance.cameras[int(camNum)].people[key].thumbnail 
     except Exception as e:
-        print "\n\n\n\nError\n\n\n"
-        print e 
+        logging.error("Error " + e)
+        #print "\n\n\n\nError\n\n\n"
+        #print e
         img = ""
 
     if img == "":
@@ -283,8 +291,9 @@ def get_faceimgs(name):
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             img = HomeSurveillance.cameras[int(camNum)].people[key].thumbnails[imgNum] 
     except Exception as e:
-        print "\n\n\n\nError\n\n\n"
-        print e 
+        logging.error("Error " + e)
+        #print "\n\n\n\nError\n\n\n"
+        #print e
         img = ""
 
     if img == "":
@@ -304,7 +313,8 @@ def update_faces():
                 with HomeSurveillance.cameras[i].peopleDictLock:
                     for key, person in camera.people.iteritems():  
                         persondict = {'identity': key , 'confidence': person.confidence, 'camera': i, 'timeD':person.time, 'prediction': person.identity,'thumbnailNum': len(person.thumbnails)}
-                        print persondict
+                        logging.info(persondict)
+                        #print persondict
                         peopledata.append(persondict)
      
         socketio.emit('people_detected', json.dumps(peopledata) ,namespace='/surveillance')
@@ -345,20 +355,24 @@ def connect():
     global facesUpdateThread 
     global monitoringThread
 
-    print "\n\nclient connected\n\n"
+    #print "\n\nclient connected\n\n"
+    logging.info("client connected")
 
     if not alarmStateThread.isAlive():
-        print "Starting alarmStateThread"
+        #print "Starting alarmStateThread"
+        logging.info("Starting alarmStateThread")
         alarmStateThread = threading.Thread(name='alarmstate_process_thread_',target= alarm_state, args=())
         alarmStateThread.start()
    
     if not facesUpdateThread.isAlive():
-        print "Starting facesUpdateThread"
+        #print "Starting facesUpdateThread"
+        logging.info("Starting facesUpdateThread")
         facesUpdateThread = threading.Thread(name='websocket_process_thread_',target= update_faces, args=())
         facesUpdateThread.start()
 
     if not monitoringThread.isAlive():
-        print "Starting monitoringThread"
+        #print "Starting monitoringThread"
+        logging.info("Starting monitoringThread")
         monitoringThread = threading.Thread(name='monitoring_process_thread_',target= system_monitoring, args=())
         monitoringThread.start()
 
@@ -369,14 +383,16 @@ def connect():
         for i, camera in enumerate(HomeSurveillance.cameras):
             with HomeSurveillance.cameras[i].peopleDictLock:
                 cameraData = {'camNum': i , 'url': camera.url}
-                print cameraData
+                #print cameraData
+                logging.info(cameraData)
                 cameras.append(cameraData)
     alertData = {}
     alerts = []
     for i, alert in enumerate(HomeSurveillance.alerts):
         with HomeSurveillance.alertsLock:
             alertData = {'alert_id': alert.id , 'alert_message':  "Alert if " + alert.alertString}
-            print alertData
+            #print alertData
+            logging.info(alertData)
             alerts.append(alertData)
    
     systemData = {'camNum': len(HomeSurveillance.cameras) , 'people': HomeSurveillance.peopleDB, 'cameras': cameras, 'alerts': alerts, 'onConnect': True}
@@ -384,7 +400,8 @@ def connect():
 
 @socketio.on('disconnect', namespace='/surveillance')
 def disconnect():
-    print('Client disconnected')
+    #print('Client disconnected')
+    logging.info("Client disconnected")
 
 
 if __name__ == '__main__':
