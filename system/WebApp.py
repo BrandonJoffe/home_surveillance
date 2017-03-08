@@ -22,7 +22,8 @@ import Camera
 from flask.ext.socketio import SocketIO, send, emit 
 import SurveillanceSystem
 import json
-import logging
+import app.logger
+from app.logger.handlers import RotatingFileHandler
 import threading
 import time
 from random import random
@@ -31,9 +32,6 @@ import sys
 import cv2
 import psutil
 
-
-#initialize logging
-logging.basicConfig(filename='WebApp.log',level=logging.INFO)
 
 # Initialises system variables, this object is the heart of the application
 HomeSurveillance = SurveillanceSystem.SurveillanceSystem() 
@@ -124,7 +122,7 @@ def system_monitoring():
     
             cameraProcessingFPS.append("{0:.2f}".format(camera.processingFPS))
             #print "FPS: " +str(camera.processingFPS) + " " + str(camera.streamingFPS)
-            logging.info("FPS: " +str(camera.processingFPS) + " " + str(camera.streamingFPS))
+            app.logger.info("FPS: " +str(camera.processingFPS) + " " + str(camera.streamingFPS))
         systemState = {'cpu':cpu_usage(),'memory':memory_usage(), 'processingFPS': cameraProcessingFPS}
         socketio.emit('system_monitoring', json.dumps(systemState) ,namespace='/surveillance')
         time.sleep(3)
@@ -134,13 +132,13 @@ def cpu_usage():
       time.sleep(0.12)
       cpu_load = psutil.cpu_percent(interval=1, percpu=False)
       #print "CPU Load: " + str(cpu_load)
-      logging.info("CPU Load: " + str(cpu_load))
+      app.logger.info("CPU Load: " + str(cpu_load))
       return cpu_load  
 
 def memory_usage():
      mem_usage = psutil.virtual_memory().percent
      #print "System Memory Usage: " + str( mem_usage)
-     logging.info("System Memory Usage: " + str( mem_usage))
+     app.logger.info("System Memory Usage: " + str( mem_usage))
      return mem_usage 
 
 @app.route('/add_camera', methods = ['GET','POST'])
@@ -178,7 +176,7 @@ def create_alert():
         confidence = request.form.get('confidence')
 
         #print "unknownconfidence: " + confidence
-        logging.info("unknownconfidence: " + confidence)
+        app.logger.info("unknownconfidence: " + confidence)
 
         actions = {'push_alert': push_alert , 'email_alert':email_alert , 'trigger_alarm':trigger_alarm , 'notify_police':notify_police}
         with HomeSurveillance.alertsLock:
@@ -212,9 +210,9 @@ def remove_face():
             try:   
                 del HomeSurveillance.cameras[int(camNum)].people[predicted_name]  
                 #print "\n\n\n======================= REMOVED: " + predicted_name + "=========================\n\n\n"
-                logging.info("======================= REMOVED: " + predicted_name + "=========================")
+                app.logger.info("======================= REMOVED: " + predicted_name + "=========================")
             except Exception as e:
-                logging.error("ERROR could not remove Face" + e)
+                app.logger.error("ERROR could not remove Face" + e)
                 print "\n\n\nERROR could not remove Face\n\n\n"
                 print e
                 pass
@@ -239,10 +237,10 @@ def add_face():
                 del HomeSurveillance.cameras[int(camNum)].people[person_id]    # Removes face from people detected in all cameras 
             except Exception as e:
                 print "\n\n\nERROR could not add Face\n\n\n" + e
-                logging.error("ERROR could not add Face" + e)
+                app.logger.error("ERROR could not add Face" + e)
  
         #print "trust " + str(trust)
-        logging.info("trust " + str(trust))
+        app.logger.info("trust " + str(trust))
         if str(trust) == "false":
             wriitenToDir = HomeSurveillance.add_face(new_name,img, upload = False)
         else:
@@ -272,7 +270,7 @@ def get_faceimg(name):
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             img = HomeSurveillance.cameras[int(camNum)].people[key].thumbnail 
     except Exception as e:
-        logging.error("Error " + e)
+        app.logger.error("Error " + e)
         #print "\n\n\n\nError\n\n\n"
         #print e
         img = ""
@@ -291,7 +289,7 @@ def get_faceimgs(name):
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             img = HomeSurveillance.cameras[int(camNum)].people[key].thumbnails[imgNum] 
     except Exception as e:
-        logging.error("Error " + e)
+        app.logger.error("Error " + e)
         #print "\n\n\n\nError\n\n\n"
         #print e
         img = ""
@@ -313,7 +311,7 @@ def update_faces():
                 with HomeSurveillance.cameras[i].peopleDictLock:
                     for key, person in camera.people.iteritems():  
                         persondict = {'identity': key , 'confidence': person.confidence, 'camera': i, 'timeD':person.time, 'prediction': person.identity,'thumbnailNum': len(person.thumbnails)}
-                        logging.info(persondict)
+                        app.logger.info(persondict)
                         #print persondict
                         peopledata.append(persondict)
      
@@ -356,23 +354,23 @@ def connect():
     global monitoringThread
 
     #print "\n\nclient connected\n\n"
-    logging.info("client connected")
+    app.logger.info("client connected")
 
     if not alarmStateThread.isAlive():
         #print "Starting alarmStateThread"
-        logging.info("Starting alarmStateThread")
+        app.logger.info("Starting alarmStateThread")
         alarmStateThread = threading.Thread(name='alarmstate_process_thread_',target= alarm_state, args=())
         alarmStateThread.start()
    
     if not facesUpdateThread.isAlive():
         #print "Starting facesUpdateThread"
-        logging.info("Starting facesUpdateThread")
+        app.logger.info("Starting facesUpdateThread")
         facesUpdateThread = threading.Thread(name='websocket_process_thread_',target= update_faces, args=())
         facesUpdateThread.start()
 
     if not monitoringThread.isAlive():
         #print "Starting monitoringThread"
-        logging.info("Starting monitoringThread")
+        app.logger.info("Starting monitoringThread")
         monitoringThread = threading.Thread(name='monitoring_process_thread_',target= system_monitoring, args=())
         monitoringThread.start()
 
@@ -384,7 +382,7 @@ def connect():
             with HomeSurveillance.cameras[i].peopleDictLock:
                 cameraData = {'camNum': i , 'url': camera.url}
                 #print cameraData
-                logging.info(cameraData)
+                app.logger.info(cameraData)
                 cameras.append(cameraData)
     alertData = {}
     alerts = []
@@ -392,7 +390,7 @@ def connect():
         with HomeSurveillance.alertsLock:
             alertData = {'alert_id': alert.id , 'alert_message':  "Alert if " + alert.alertString}
             #print alertData
-            logging.info(alertData)
+            app.logger.info(alertData)
             alerts.append(alertData)
    
     systemData = {'camNum': len(HomeSurveillance.cameras) , 'people': HomeSurveillance.peopleDB, 'cameras': cameras, 'alerts': alerts, 'onConnect': True}
@@ -401,10 +399,12 @@ def connect():
 @socketio.on('disconnect', namespace='/surveillance')
 def disconnect():
     #print('Client disconnected')
-    logging.info("Client disconnected")
+    app.logger.info("Client disconnected")
 
 
 if __name__ == '__main__':
      # Starts server on default port 5000 and makes socket connection available to other hosts (host = '0.0.0.0')
+     handler = RotatingFileHandler('WebApp.log', maxBytes=10000, backupCount=1)
+     handler.setLevel(app.logger.INFO)
      socketio.run(app, host='0.0.0.0', debug=False, use_reloader=False) 
     
