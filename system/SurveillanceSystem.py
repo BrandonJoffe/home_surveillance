@@ -64,9 +64,9 @@ import math
 # //////////////////////////////////////////////////////////////////////////////////////////////
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
-luaDir = os.path.join(fileDir, '..', 'batch-represent')
+luaDir = os.path.join(fileDir, '..', 'batch-represent')   #path does not exist
 modelDir = os.path.join(fileDir, '..', 'models')
-dlibModelDir = os.path.join(modelDir, 'dlib')
+dlibModelDir = os.path.join(modelDir, 'dlib')           #path does not exist
 openfaceModelDir = os.path.join(modelDir, 'openface')
 parser = argparse.ArgumentParser()
 parser.add_argument('--dlibFacePredictor', 

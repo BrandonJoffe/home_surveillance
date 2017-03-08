@@ -32,6 +32,9 @@ import cv2
 import psutil
 
 
+#initialize logging
+logging.basicConfig(filename='logs/WebApp.log',level=logging.DEBUG)
+
 # Initialises system variables, this object is the heart of the application
 HomeSurveillance = SurveillanceSystem.SurveillanceSystem() 
 # Threads used to continuously push data to the client
@@ -120,7 +123,8 @@ def system_monitoring():
         for camera in HomeSurveillance.cameras:
     
             cameraProcessingFPS.append("{0:.2f}".format(camera.processingFPS))
-            print "FPS: " +str(camera.processingFPS) + " " + str(camera.streamingFPS)
+            #print "FPS: " +str(camera.processingFPS) + " " + str(camera.streamingFPS)
+            logging.info("FPS: " +str(camera.processingFPS) + " " + str(camera.streamingFPS))
         systemState = {'cpu':cpu_usage(),'memory':memory_usage(), 'processingFPS': cameraProcessingFPS}
         socketio.emit('system_monitoring', json.dumps(systemState) ,namespace='/surveillance')
         time.sleep(3)
