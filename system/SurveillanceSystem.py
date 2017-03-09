@@ -444,7 +444,7 @@ class SurveillanceSystem(object):
                            # personimg = cv2.flip(personimg, 1)
                            camera.faceBoxes = camera.faceDetector.detect_faces(personimg,camera.dlibDetection)  
                            logger.debug('//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////')
-                           if(str(len(camera.faceBoxes)) > 0)
+                           if(len(camera.faceBoxes) > 0)
                                logger.info("Found " + str(len(camera.faceBoxes)) + " faces.")
                            for face_bb in camera.faceBoxes: 
 
