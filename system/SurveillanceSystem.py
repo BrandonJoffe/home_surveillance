@@ -200,11 +200,13 @@ class SurveillanceSystem(object):
              if camera.cameraFunction == "detect_motion":
                  camera.motion, mframe = camera.motionDetector.detect_movement(frame, get_rects = False) 
                  camera.processing_frame = mframe
-                 if camera.motion == True:
-                     #logger.debug('////////////////////// MOTION DETECTED //////////////////////')
-                 else:
-                     #logger.debug('////////////////////// NO MOTION DETECTED //////////////////////')
-                     continue
+                 if camera.motion == False:
+                     # logger.debug('////////////////////// NO MOTION DETECTED //////////////////////')
+                    continue
+                 #else:
+                    # logger.debug('////////////////////// MOTION DETECTED //////////////////////')
+
+
 
              ##################################################################################################################################################
              #<#####################################################> FACE DETECTION AND RECOGNTIION <#########################################################>
