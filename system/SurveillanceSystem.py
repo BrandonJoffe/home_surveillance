@@ -63,8 +63,6 @@ import math
 # Get paths for models
 # //////////////////////////////////////////////////////////////////////////////////////////////
 
-logger = logging.getLogger()
-
 fileDir = os.path.dirname(os.path.realpath(__file__))
 luaDir = os.path.join(fileDir, '..', 'batch-represent')
 modelDir = os.path.join(fileDir, '..', 'models')
@@ -84,6 +82,14 @@ args = parser.parse_args()
 
 start = time.time()
 np.set_printoptions(precision=2)
+
+formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s)")
+handler = RotatingFileHandler("logs/surveillance.log", maxBytes=1000000, backupCount=10)
+handler.setLevel(logging.DEBUG)
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+
 #logging.basicConfig(level=logging.DEBUG,
 #                    format='(%(threadName)-10s) %(message)s',
 #                    )
