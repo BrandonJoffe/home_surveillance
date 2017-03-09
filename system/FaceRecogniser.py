@@ -173,7 +173,7 @@ class FaceRecogniser(object):
         logger.info("Succesfully removed " + path)
         start = time.time()
         aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",args.dlibFacePredictor,args.imgDim)
-        logger.info("Aligning images took {} seconds.".format(time.time() - start))
+        logger.info("Aligning images for training took {} seconds.".format(time.time() - start))
         done = False
         start = time.time()
 
@@ -190,16 +190,19 @@ class FaceRecogniser(object):
 
 
     def generate_representation(self):
-        logger.info(luaDir)
+        logger.info("lua Directory:    " + luaDir)
         self.cmd = ['/usr/bin/env', 'th', os.path.join(luaDir, 'main.lua'),'-outDir',  "generated-embeddings/" , '-data', "aligned-images/"]
+        logger.info("lua command:    " + str(self.cmd))
         if args.cuda:
             self.cmd.append('-cuda')
+            logger.info("using -cuda")
         self.p = Popen(self.cmd, stdin=PIPE, stdout=PIPE, bufsize=0)
         outs, errs = self.p.communicate() # Wait for process to exit - wait for subprocess to finish writing to files: labels.csv & reps.csv
+        logger.info("Waiting for process to exit to finish writing labels and reps.csv")
 
         def exitHandler():
             if self.p.poll() is None:
-                logger.info("<======================Something went Wrong============================>")
+                logger.info("<=Something went Wrong===>")
                 self.p.kill()
                 return False
         atexit.register(exitHandler)
