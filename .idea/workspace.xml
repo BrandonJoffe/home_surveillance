@@ -68,9 +68,11 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="408">
+              <caret line="91" column="34" lean-forward="true" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
+              <folding>
+                <element signature="e#807#818#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -514,7 +516,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1139">
           <caret line="67" column="19" lean-forward="true" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
-          <folding />
+          <folding>
+            <element signature="e#807#818#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -530,7 +534,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="60" column="11" lean-forward="true" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
-          <folding />
+          <folding>
+            <element signature="e#807#818#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -688,9 +694,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="60" column="13" lean-forward="true" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="408">
+          <caret line="91" column="34" lean-forward="true" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
+          <folding>
+            <element signature="e#807#818#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

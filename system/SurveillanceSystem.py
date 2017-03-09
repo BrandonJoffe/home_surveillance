@@ -88,8 +88,8 @@ formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(le
 handler = RotatingFileHandler("logs/surveillance.log", maxBytes=1000000, backupCount=10)
 handler.setLevel(logging.DEBUG)
 handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
+app.logger.addHandler(handler)
+app.logger.setLevel(logging.DEBUG)
 
 #logging.basicConfig(level=logging.DEBUG,
 #                    format='(%(threadName)-10s) %(message)s',
