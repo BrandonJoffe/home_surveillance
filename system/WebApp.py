@@ -152,6 +152,8 @@ def add_camera():
         with HomeSurveillance.camerasLock :
             HomeSurveillance.add_camera(SurveillanceSystem.Camera.IPCamera(camURL,application,detectionMethod))  
         data = {"camNum": len(HomeSurveillance.cameras) -1}
+        app.logger.info("Addding a new camera with url: ")
+        app.logger.info(camURL)
         return jsonify(data)
     return render_template('index.html')
 
@@ -209,13 +211,10 @@ def remove_face():
      
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             try:   
-                del HomeSurveillance.cameras[int(camNum)].people[predicted_name]  
-                #print "\n\n\n======================= REMOVED: " + predicted_name + "=========================\n\n\n"
+                del HomeSurveillance.cameras[int(camNum)].people[predicted_name]
                 app.logger.info("======================= REMOVED: " + predicted_name + "=========================")
             except Exception as e:
                 app.logger.error("ERROR could not remove Face" + e)
-                print "\n\n\nERROR could not remove Face\n\n\n"
-                print e
                 pass
 
         data = {"face_removed":  'true'}
@@ -237,7 +236,6 @@ def add_face():
                 predicted_name = HomeSurveillance.cameras[int(camNum)].people[person_id].identity
                 del HomeSurveillance.cameras[int(camNum)].people[person_id]    # Removes face from people detected in all cameras 
             except Exception as e:
-                print "\n\n\nERROR could not add Face\n\n\n" + e
                 app.logger.error("ERROR could not add Face" + e)
  
         #print "trust " + str(trust)
@@ -272,8 +270,6 @@ def get_faceimg(name):
             img = HomeSurveillance.cameras[int(camNum)].people[key].thumbnail 
     except Exception as e:
         app.logger.error("Error " + e)
-        #print "\n\n\n\nError\n\n\n"
-        #print e
         img = ""
 
     if img == "":
@@ -291,8 +287,6 @@ def get_faceimgs(name):
             img = HomeSurveillance.cameras[int(camNum)].people[key].thumbnails[imgNum] 
     except Exception as e:
         app.logger.error("Error " + e)
-        #print "\n\n\n\nError\n\n\n"
-        #print e
         img = ""
 
     if img == "":
@@ -313,7 +307,7 @@ def update_faces():
                     for key, person in camera.people.iteritems():  
                         persondict = {'identity': key , 'confidence': person.confidence, 'camera': i, 'timeD':person.time, 'prediction': person.identity,'thumbnailNum': len(person.thumbnails)}
                         app.logger.info(persondict)
-                        #print persondict
+                        logger.info(persondict)
                         peopledata.append(persondict)
      
         socketio.emit('people_detected', json.dumps(peopledata) ,namespace='/surveillance')

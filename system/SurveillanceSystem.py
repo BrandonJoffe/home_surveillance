@@ -66,9 +66,9 @@ import math
 logger = logging.getLogger()
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
-luaDir = os.path.join(fileDir, '..', 'batch-represent')   #path does not exist
+luaDir = os.path.join(fileDir, '..', 'batch-represent')
 modelDir = os.path.join(fileDir, '..', 'models')
-dlibModelDir = os.path.join(modelDir, 'dlib')           #path does not exist
+dlibModelDir = os.path.join(modelDir, 'dlib')
 openfaceModelDir = os.path.join(modelDir, 'openface')
 parser = argparse.ArgumentParser()
 parser.add_argument('--dlibFacePredictor', 
@@ -131,10 +131,8 @@ class SurveillanceSystem(object):
         self.get_face_database_names() # Gets people in database for web client
 
         #//////////////////////////////////////////////////// Camera Examples ////////////////////////////////////////////////////
-        # self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code 
+        self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code
         # self.cameras.append(Camera.IPCamera("http://192.168.1.33/video.mjpg","detect_recognise_track",False))
-
-        logger.info("test")
             
         # processing frame threads 
         for i, cam in enumerate(self.cameras):       
@@ -155,12 +153,11 @@ class SurveillanceSystem(object):
         self.cameraProcessingThreads.append(thread)
         thread.start()
 
-
    def process_frame(self,camera):
         """This function performs all the frame proccessing.
         It reads frames captured by the IPCamera instance,
         resizes them, and performs 1 of 5 functions"""
-        logging.debug('Processing Frames')
+        logger.info('Processing Frames')
         state = 1
         frame_count = 0;  
         FPScount = 0 # Used to calculate frame rate at which frames are being processed
@@ -171,7 +168,7 @@ class SurveillanceSystem(object):
         while True:  
 
              frame_count +=1
-             logging.debug('\n\n////////////////////// Reading Frame //////////////////////\n\n')
+             logger.debug('\n\n////////////////////// Reading Frame //////////////////////\n\n')
              frame = camera.read_frame()
              if frame == None or np.array_equal(frame, camera.tempFrame):  # Checks to see if the new frame is the same as the previous frame
                  continue
@@ -195,9 +192,9 @@ class SurveillanceSystem(object):
                  camera.motion, mframe = camera.motionDetector.detect_movement(frame, get_rects = False) 
                  camera.processing_frame = mframe
                  if camera.motion == True:
-                     logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')        
+                     logger.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
                  else:
-                     logging.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
+                     logger.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
                      continue
 
              ##################################################################################################################################################
@@ -216,7 +213,7 @@ class SurveillanceSystem(object):
                          frame = ImageUtils.draw_boxes(frame, camera.faceBoxes, camera.dlibDetection)
                     camera.processing_frame = frame
          
-                    logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
+                    logger.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
                     for face_bb in camera.faceBoxes: 
                         
                         # Used to reduce false positives from opencv haar cascade detector.
@@ -267,11 +264,11 @@ class SurveillanceSystem(object):
                      camera.motion, mframe = camera.motionDetector.detect_movement(frame, get_rects = False)   
           
                      if camera.motion == True:
-                        logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
+                        logger.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
                         state = 2
                         camera.processing_frame = mframe
                      else:
-                        logging.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
+                        logger.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
                      continue
 
                  elif state == 2: # If motion has been detected
@@ -288,11 +285,11 @@ class SurveillanceSystem(object):
 
                     if len(camera.faceBoxes) == 0:
                         if (time.time() - start) > 30.0:
-                            logging.debug('\n\n//////////////////////  No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode\n\n')
+                            logger.debug('\n\n//////////////////////  No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode\n\n')
                             state = 1
                             frame_count = 0;
                     else:                    
-                        logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
+                        logger.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
                         # frame = cv2.flip(frame, 1)
                         for face_bb in camera.faceBoxes: 
                       
@@ -341,16 +338,16 @@ class SurveillanceSystem(object):
 
                     if camera.motion == False:
                        camera.processing_frame = frame
-                       logging.debug('\n\n//////////////////////-- NO MOTION DETECTED --//////////////////////\n\n')
+                       logger.debug('\n\n//////////////////////-- NO MOTION DETECTED --//////////////////////\n\n')
                        continue
 
-                    logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
+                    logger.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
                     if self.drawing == True:
                         frame = ImageUtils.draw_boxes(frame, peopleRects, False)
 
                     for x, y, w, h in peopleRects:
                       
-                        logging.debug('\n\n////////////////////// Proccessing People Segmented Areas //////////////////////\n\n')
+                        logger.debug('\n\n////////////////////// Proccessing People Segmented Areas //////////////////////\n\n')
                         bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h)) 
                         personimg = ImageUtils.crop(frame, bb, dlibRect = True)
                        
@@ -367,7 +364,7 @@ class SurveillanceSystem(object):
                                     faceimg = ImageUtils.crop(personimg, face_bb, dlibRect = True)
                                     if len(camera.faceDetector.detect_cascadeface_accurate(faceimg)) == 0:
                                           continue
-                              logging.debug('\n\n////////////////////// Proccessing Detected faces //////////////////////\n\n')
+                              logger.debug('\n\n////////////////////// Proccessing Detected faces //////////////////////\n\n')
 
                               predictions, alignedFace = self.recogniser.make_prediction(personimg,face_bb)
 
@@ -402,20 +399,20 @@ class SurveillanceSystem(object):
 
                 training_blocker = self.trainingEvent.wait()  # Wait if classifier is being trained 
 
-                logging.debug('\n\n////////////////////// detect_recognise_track 1 //////////////////////\n\n')
+                logger.debug('\n\n////////////////////// detect_recognise_track 1 //////////////////////\n\n')
                 peopleFound = False
                 camera.motion, peopleRects  = camera.motionDetector.detect_movement(frame, get_rects = True)   
-                logging.debug('\n\n////////////////////// detect_recognise_track  2 //////////////////////\n\n')
+                logger.debug('\n\n////////////////////// detect_recognise_track  2 //////////////////////\n\n')
           
                 if camera.motion == False:
                    camera.processing_frame = frame
-                   logging.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
+                   logger.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
                    continue
 
                 if self.drawing == True:
                     camera.processing_frame = ImageUtils.draw_boxes(frame, peopleRects, False)
 
-                logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
+                logger.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
 
                
                 for x, y, w, h in peopleRects:
@@ -435,7 +432,7 @@ class SurveillanceSystem(object):
                            camera.trackers[i].update_tracker(person_bb)
                            # personimg = cv2.flip(personimg, 1)
                            camera.faceBoxes = camera.faceDetector.detect_faces(personimg,camera.dlibDetection)  
-                           logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')  
+                           logger.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
                            for face_bb in camera.faceBoxes: 
 
                                 if camera.dlibDetection == False:
@@ -598,7 +595,7 @@ class SurveillanceSystem(object):
                     camera.processing_frame = frame
                    
          
-                    logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
+                    logger.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
 
                     for face_bb in camera.faceBoxes: 
                         result = ""
@@ -630,7 +627,7 @@ class SurveillanceSystem(object):
 
                     camera.faceBoxes = camera.faceDetector.detect_faces(frame,camera.dlibDetection)
   
-                    logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
+                    logger.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
 
 
                     for face_bb in camera.faceBoxes: 
@@ -657,15 +654,15 @@ class SurveillanceSystem(object):
         """check alarm state -> check camera -> check event -> 
         either look for motion or look for detected faces -> take action"""
 
-        logging.debug('Alert engine starting')
+        logger.debug('Alert engine starting')
         while True:
            with self.alertsLock:
               for alert in self.alerts:
-                logging.debug('\nchecking alert\n')
+                logger.debug('\nchecking alert\n')
                 if alert.action_taken == False: # If action hasn't been taken for event 
                     if alert.alarmState != 'All':  # Check states
                         if  alert.alarmState == self.alarmState: 
-                            logging.debug('checking alarm state')
+                            logger.debug('checking alarm state')
                             alert.event_occurred = self.check_camera_events(alert)
                         else:
                           continue # Alarm not in correct state check next alert
@@ -826,7 +823,7 @@ class SurveillanceSystem(object):
         if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
           continue
         self.peopleDB.append(name)
-        logger.info(name)
+        logger.info("Found faces for: "+ name)
       self.peopleDB.append('unknown')
 
    def change_alarm_state(self):
