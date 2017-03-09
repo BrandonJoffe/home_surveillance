@@ -29,7 +29,7 @@ import datetime
 import threading
 import logging
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 class MotionDetector(object):
     """The MotionDetector Object recieves frames captured from 

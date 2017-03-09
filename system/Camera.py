@@ -34,7 +34,7 @@ import FaceDetector
 #                    format='(%(threadName)-10s) %(message)s',
 #                    )
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
 modelDir = os.path.join(fileDir, '..', 'models')

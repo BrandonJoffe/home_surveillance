@@ -18,7 +18,7 @@
       <file leaf-file-name="WebApp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/WebApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
+            <state relative-caret-position="566">
               <caret line="399" column="113" lean-forward="false" selection-start-line="399" selection-start-column="113" selection-end-line="399" selection-end-column="113" />
               <folding>
                 <element signature="e#635#745#0" expanded="true" />
@@ -30,8 +30,8 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="86" column="36" lean-forward="false" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
+            <state relative-caret-position="238">
+              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
               <folding>
                 <element signature="e#807#818#0" expanded="true" />
               </folding>
@@ -52,8 +52,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="62" column="50" lean-forward="false" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="50" />
+            <state relative-caret-position="364">
+              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -62,7 +62,7 @@
       <file leaf-file-name="aligndlib.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/aligndlib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
+            <state relative-caret-position="527">
               <caret line="40" column="23" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="23" />
               <folding />
             </state>
@@ -72,8 +72,8 @@
       <file leaf-file-name="ImageUtils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/ImageUtils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="719">
-              <caret line="235" column="31" lean-forward="false" selection-start-line="235" selection-start-column="29" selection-end-line="235" selection-end-column="31" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -82,8 +82,8 @@
       <file leaf-file-name="MotionDetector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="62" column="12" lean-forward="false" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
+            <state relative-caret-position="340">
+              <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -120,18 +120,18 @@
       <find>NO MO</find>
       <find>NO MOTION</find>
       <find>detect_reco</find>
-      <find>filtering</find>
       <find>debug</find>
       <find>logger</find>
       <find>FACE DETEC</find>
-      <find>\n</find>
       <find>camera</find>
       <find>ALIGNED</find>
       <find>face aligned</find>
-      <find>dlib</find>
-      <find>Found</find>
       <find>gen</find>
+      <find>Found</find>
       <find>make_prediction</find>
+      <find>dlib</find>
+      <find>\n</find>
+      <find>filtering</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -145,12 +145,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/system/Camera.py" />
         <option value="$PROJECT_DIR$/system/FaceDetector.py" />
-        <option value="$PROJECT_DIR$/system/MotionDetector.py" />
         <option value="$PROJECT_DIR$/system/WebApp.py" />
         <option value="$PROJECT_DIR$/system/FaceRecogniser.py" />
         <option value="$PROJECT_DIR$/system/SurveillanceSystem.py" />
+        <option value="$PROJECT_DIR$/system/Camera.py" />
+        <option value="$PROJECT_DIR$/system/MotionDetector.py" />
       </list>
     </option>
   </component>
@@ -161,10 +161,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="770" />
-    <option name="y" value="12" />
-    <option name="width" value="1148" />
-    <option name="height" value="998" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -467,7 +467,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="770" y="12" width="1148" height="998" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10520833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -639,35 +639,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/aligndlib.py">
+    <entry file="file://$PROJECT_DIR$/system/WebApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="40" column="23" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/ImageUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="719">
-          <caret line="235" column="31" lean-forward="false" selection-start-line="235" selection-start-column="29" selection-end-line="235" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="62" column="12" lean-forward="false" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/Camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="62" column="50" lean-forward="false" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="50" />
-          <folding />
+        <state relative-caret-position="566">
+          <caret line="399" column="113" lean-forward="false" selection-start-line="399" selection-start-column="113" selection-end-line="399" selection-end-column="113" />
+          <folding>
+            <element signature="e#635#745#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -679,16 +657,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/WebApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="399" column="113" lean-forward="false" selection-start-line="399" selection-start-column="113" selection-end-line="399" selection-end-column="113" />
-          <folding>
-            <element signature="e#635#745#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -697,10 +665,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
+    <entry file="file://$PROJECT_DIR$/system/Camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/aligndlib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="40" column="23" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/ImageUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="86" column="36" lean-forward="false" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
+          <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
           <folding>
             <element signature="e#807#818#0" expanded="true" />
           </folding>
