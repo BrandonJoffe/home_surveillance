@@ -69,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="28" />
+            <state relative-caret-position="252">
+              <caret line="204" column="19" lean-forward="false" selection-start-line="204" selection-start-column="19" selection-end-line="204" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -89,7 +89,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MotionDetector.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MotionDetector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="586">
@@ -125,8 +125,8 @@
         <option value="$PROJECT_DIR$/system/SurveillanceSystem.py" />
         <option value="$PROJECT_DIR$/system/Camera.py" />
         <option value="$PROJECT_DIR$/system/FaceDetector.py" />
-        <option value="$PROJECT_DIR$/system/FaceRecogniser.py" />
         <option value="$PROJECT_DIR$/system/MotionDetector.py" />
+        <option value="$PROJECT_DIR$/system/FaceRecogniser.py" />
       </list>
     </option>
   </component>
@@ -617,18 +617,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="586">
           <caret line="132" column="18" lean-forward="false" selection-start-line="132" selection-start-column="18" selection-end-line="132" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="204" column="19" lean-forward="false" selection-start-line="204" selection-start-column="19" selection-end-line="204" selection-end-column="19" />
           <folding />
         </state>
       </provider>

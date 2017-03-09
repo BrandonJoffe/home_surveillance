@@ -162,7 +162,7 @@ class FaceRecogniser(object):
 		try:
 		  os.remove(path) # Remove cache from aligned images folder
 		except:
-		  logger.info "Tried to remove cache.t7"
+		  logger.info("Tried to remove cache.t7")
 		  pass
 
 		start = time.time()
@@ -184,7 +184,7 @@ class FaceRecogniser(object):
 
 
 	def generate_representation(self):
-		logger.info "\n" + luaDir + "\n"
+		logger.info("\n" + luaDir + "\n")
 		self.cmd = ['/usr/bin/env', 'th', os.path.join(luaDir, 'main.lua'),'-outDir',  "generated-embeddings/" , '-data', "aligned-images/"]                 
 		if args.cuda:
 		    self.cmd.append('-cuda')
@@ -193,7 +193,7 @@ class FaceRecogniser(object):
 
 		def exitHandler():
 		    if self.p.poll() is None:
-		        logger.info "<======================Something went Wrong============================>"
+		        logger.info("<======================Something went Wrong============================>")
 		        self.p.kill()
 		        return False
 		atexit.register(exitHandler) 
