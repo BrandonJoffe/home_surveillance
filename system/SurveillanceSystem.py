@@ -85,7 +85,7 @@ start = time.time()
 np.set_printoptions(precision=2)
 
 logger = logging.getLogger()
-formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s)")
+formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
 handler.setLevel(logging.INFO)
 handler.setFormatter(formatter)
@@ -443,7 +443,9 @@ class SurveillanceSystem(object):
                            camera.trackers[i].update_tracker(person_bb)
                            # personimg = cv2.flip(personimg, 1)
                            camera.faceBoxes = camera.faceDetector.detect_faces(personimg,camera.dlibDetection)  
-                           logger.info('//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////')
+                           logger.debug('//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////')
+                           if(str(len(camera.faceBoxes)) > 0)
+                               logger.info("Found " + str(len(camera.faceBoxes)) + " faces.")
                            for face_bb in camera.faceBoxes: 
 
                                 if camera.dlibDetection == False:

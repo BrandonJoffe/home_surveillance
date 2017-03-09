@@ -28,8 +28,8 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1659">
-              <caret line="377" column="41" lean-forward="false" selection-start-line="377" selection-start-column="41" selection-end-line="377" selection-end-column="41" />
+            <state relative-caret-position="194">
+              <caret line="448" column="60" lean-forward="true" selection-start-line="448" selection-start-column="60" selection-end-line="448" selection-end-column="60" />
               <folding>
                 <element signature="e#807#818#0" expanded="true" />
               </folding>
@@ -90,8 +90,8 @@
       <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="112" column="27" lean-forward="false" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="27" />
+            <state relative-caret-position="602">
+              <caret line="100" column="54" lean-forward="false" selection-start-line="100" selection-start-column="54" selection-end-line="100" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -123,6 +123,7 @@
       <find>filtering</find>
       <find>debug</find>
       <find>logger</find>
+      <find>FACE DETEC</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -656,14 +657,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="112" column="27" lean-forward="false" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/FaceDetector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="355">
@@ -680,10 +673,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="602">
+          <caret line="100" column="54" lean-forward="false" selection-start-line="100" selection-start-column="54" selection-end-line="100" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1659">
-          <caret line="377" column="41" lean-forward="false" selection-start-line="377" selection-start-column="41" selection-end-line="377" selection-end-column="41" />
+        <state relative-caret-position="194">
+          <caret line="448" column="60" lean-forward="true" selection-start-line="448" selection-start-column="60" selection-end-line="448" selection-end-column="60" />
           <folding>
             <element signature="e#807#818#0" expanded="true" />
           </folding>
