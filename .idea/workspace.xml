@@ -28,8 +28,8 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="205" column="18" lean-forward="false" selection-start-line="205" selection-start-column="18" selection-end-line="205" selection-end-column="18" />
+            <state relative-caret-position="-1659">
+              <caret line="377" column="41" lean-forward="false" selection-start-line="377" selection-start-column="41" selection-end-line="377" selection-end-column="41" />
               <folding>
                 <element signature="e#807#818#0" expanded="true" />
               </folding>
@@ -40,8 +40,8 @@
       <file leaf-file-name="FaceDetector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/FaceDetector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="70" column="14" lean-forward="false" selection-start-line="70" selection-start-column="14" selection-end-line="70" selection-end-column="14" />
+            <state relative-caret-position="355">
+              <caret line="82" column="12" lean-forward="false" selection-start-line="82" selection-start-column="12" selection-end-line="82" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -80,8 +80,8 @@
       <file leaf-file-name="MotionDetector.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="97" column="139" lean-forward="false" selection-start-line="97" selection-start-column="139" selection-end-line="97" selection-end-column="139" />
+            <state relative-caret-position="867">
+              <caret line="62" column="12" lean-forward="false" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -102,7 +102,6 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>loggin</find>
-      <find>logger</find>
       <find>logger(</find>
       <find>prin</find>
       <find>logger.info</find>
@@ -116,9 +115,14 @@
       <find>print</find>
       <find>Reading F</find>
       <find>logging</find>
-      <find>filtering</find>
       <find>\n</find>
       <find>NO MO</find>
+      <find>Found</find>
+      <find>NO MOTION</find>
+      <find>detect_reco</find>
+      <find>filtering</find>
+      <find>debug</find>
+      <find>logger</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -628,14 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/FaceDetector.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="70" column="14" lean-forward="false" selection-start-line="70" selection-start-column="14" selection-end-line="70" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -668,18 +664,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/system/FaceDetector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="82" column="12" lean-forward="false" selection-start-line="82" selection-start-column="12" selection-end-line="82" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="97" column="139" lean-forward="false" selection-start-line="97" selection-start-column="139" selection-end-line="97" selection-end-column="139" />
+        <state relative-caret-position="867">
+          <caret line="62" column="12" lean-forward="false" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="205" column="18" lean-forward="false" selection-start-line="205" selection-start-column="18" selection-end-line="205" selection-end-column="18" />
+        <state relative-caret-position="-1659">
+          <caret line="377" column="41" lean-forward="false" selection-start-line="377" selection-start-column="41" selection-end-line="377" selection-end-column="41" />
           <folding>
             <element signature="e#807#818#0" expanded="true" />
           </folding>
