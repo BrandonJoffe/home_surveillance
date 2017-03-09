@@ -255,10 +255,12 @@ def add_face():
 @app.route('/retrain_classifier', methods = ['GET','POST'])
 def retrain_classifier():
     if request.method == 'POST':
+        app.logger.info("retrain button pushed. clearing event in surveillance objt and calling trainingEvent")
         HomeSurveillance.trainingEvent.clear() # Block processing threads
         retrained = HomeSurveillance.recogniser.trainClassifier()
         HomeSurveillance.trainingEvent.set() # Release processing threads       
         data = {"finished":  retrained}
+        app.logger.info("Finished re-training")
         return jsonify(data)
     return render_template('index.html')
 

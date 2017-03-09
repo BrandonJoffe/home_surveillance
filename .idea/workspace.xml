@@ -21,8 +21,8 @@
       <file leaf-file-name="WebApp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/WebApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-964">
-              <caret line="308" column="17" lean-forward="true" selection-start-line="308" selection-start-column="17" selection-end-line="308" selection-end-column="17" />
+            <state relative-caret-position="415">
+              <caret line="264" column="40" lean-forward="true" selection-start-line="264" selection-start-column="40" selection-end-line="264" selection-end-column="40" />
               <folding>
                 <element signature="e#635#745#0" expanded="true" />
               </folding>
@@ -30,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2518">
-              <caret line="873" column="2" lean-forward="false" selection-start-line="873" selection-start-column="0" selection-end-line="873" selection-end-column="2" />
+            <state relative-caret-position="296">
+              <caret line="625" column="68" lean-forward="false" selection-start-line="625" selection-start-column="63" selection-end-line="625" selection-end-column="68" />
               <folding>
                 <element signature="e#807#818#0" expanded="true" />
               </folding>
@@ -92,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2006">
-              <caret line="179" column="8" lean-forward="false" selection-start-line="179" selection-start-column="8" selection-end-line="179" selection-end-column="8" />
+            <state relative-caret-position="398">
+              <caret line="176" column="20" lean-forward="true" selection-start-line="176" selection-start-column="20" selection-end-line="176" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -134,8 +134,8 @@
       <find>reloadClassifier</find>
       <find>clf</find>
       <find>pick</find>
-      <find>train</find>
       <find>trainClassifier</find>
+      <find>train</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -153,8 +153,8 @@
         <option value="$PROJECT_DIR$/system/Camera.py" />
         <option value="$PROJECT_DIR$/system/MotionDetector.py" />
         <option value="$PROJECT_DIR$/system/SurveillanceSystem.py" />
-        <option value="$PROJECT_DIR$/system/FaceRecogniser.py" />
         <option value="$PROJECT_DIR$/system/WebApp.py" />
+        <option value="$PROJECT_DIR$/system/FaceRecogniser.py" />
       </list>
     </option>
   </component>
@@ -683,31 +683,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
+    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="179" column="8" lean-forward="false" selection-start-line="179" selection-start-column="8" selection-end-line="179" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="296">
+          <caret line="625" column="68" lean-forward="false" selection-start-line="625" selection-start-column="63" selection-end-line="625" selection-end-column="68" />
+          <folding>
+            <element signature="e#807#818#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/WebApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-964">
-          <caret line="308" column="17" lean-forward="true" selection-start-line="308" selection-start-column="17" selection-end-line="308" selection-end-column="17" />
+        <state relative-caret-position="415">
+          <caret line="264" column="40" lean-forward="true" selection-start-line="264" selection-start-column="40" selection-end-line="264" selection-end-column="40" />
           <folding>
             <element signature="e#635#745#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
+    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2518">
-          <caret line="873" column="2" lean-forward="false" selection-start-line="873" selection-start-column="0" selection-end-line="873" selection-end-column="2" />
-          <folding>
-            <element signature="e#807#818#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="398">
+          <caret line="176" column="20" lean-forward="true" selection-start-line="176" selection-start-column="20" selection-end-line="176" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>

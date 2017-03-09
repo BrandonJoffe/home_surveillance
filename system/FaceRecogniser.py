@@ -150,6 +150,7 @@ class FaceRecogniser(object):
     def reloadClassifier(self):
         with open("generated-embeddings/classifier.pkl", 'r') as f: # Reloads character stream from pickle file
             (self.le, self.clf) = pickle.load(f) # Loads labels and classifier SVM or GMM
+        logger.info("reloadClassifier called")
         return True
 
     def trainClassifier(self):
@@ -160,6 +161,8 @@ class FaceRecogniser(object):
         labels (names of the people) are used to train the classifier
         which is saved to a pickle file as a character stream"""
 
+        logger.info("trainClassifier called")
+
         path = fileDir + "/aligned-images/cache.t7"
         try:
             os.remove(path) # Remove cache from aligned images folder
@@ -167,6 +170,7 @@ class FaceRecogniser(object):
             logger.info("Failed to remove cache.t7")
             pass
 
+        logger.info("Succesfully removed " + path)
         start = time.time()
         aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",args.dlibFacePredictor,args.imgDim)
         logger.info("Aligning images took {} seconds.".format(time.time() - start))
