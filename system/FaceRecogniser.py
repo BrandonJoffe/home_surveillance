@@ -84,9 +84,10 @@ class FaceRecogniser(object):
 		self.align = openface.AlignDlib(args.dlibFacePredictor)
 		self.neuralNetLock = threading.Lock()
 		self.predictor = dlib.shape_predictor(args.dlibFacePredictor)
+        logger.info("Opening classifier.pkl to load existing known faces db")
 		with open("generated-embeddings/classifier.pkl", 'r') as f: # le = labels, clf = classifier
 			(self.le, self.clf) = pickle.load(f) # Loads labels and classifier SVM or GMM
-    
+
 	def make_prediction(self,rgbFrame,bb):
 		"""The function uses the location of a face 
 		to detect facial landmarks and perform an affine transform
@@ -121,7 +122,7 @@ class FaceRecogniser(object):
 	    if self.getRep(img) is None:  
 	        return None
 	    rep1 = self.getRep(img) # Gets embedding representation of image
-	    rep = rep1.reshape(1, -1) 
+	    rep = rep1.reshape(1, -1)   #take the image and  reshape the image array to a single line instead of 2 dimensionals
 	    start = time.time()
 	    predictions = self.clf.predict_proba(rep).ravel() # Computes probabilities of possible outcomes for samples in classifier(clf).
 	    maxI = np.argmax(predictions)
@@ -162,7 +163,7 @@ class FaceRecogniser(object):
 		try:
 		  os.remove(path) # Remove cache from aligned images folder
 		except:
-		  logger.info("Tried to remove cache.t7")
+		  logger.info("Failed to remove cache.t7")
 		  pass
 
 		start = time.time()

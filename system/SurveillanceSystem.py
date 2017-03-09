@@ -834,7 +834,7 @@ class SurveillanceSystem(object):
         if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
           continue
         self.peopleDB.append(name)
-        logger.info("Found faces for: " + name + " ")
+        logger.info("Known faces in our db for: " + name + " ")
       self.peopleDB.append('unknown')
 
    def change_alarm_state(self):
