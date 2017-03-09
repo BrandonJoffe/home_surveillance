@@ -123,9 +123,12 @@ class FaceRecogniser(object):
         if self.getRep(img) is None:
             return None
         rep1 = self.getRep(img) # Gets embedding representation of image
+        logger.info("Embedding returned. Reshaping the image and flatting it out in a 1 dimension array.")
         rep = rep1.reshape(1, -1)   #take the image and  reshape the image array to a single line instead of 2 dimensionals
         start = time.time()
+        logger.info("Submitting array for prediction.")
         predictions = self.clf.predict_proba(rep).ravel() # Computes probabilities of possible outcomes for samples in classifier(clf).
+        logger.info("We need to dig here to know why the probability are not right.")
         maxI = np.argmax(predictions)
         person1 = self.le.inverse_transform(maxI)
         confidence1 = int(math.ceil(predictions[maxI]*100))
@@ -139,11 +142,13 @@ class FaceRecogniser(object):
     def getRep(self,alignedFace):
         bgrImg = alignedFace
         if bgrImg is None:
-            logger.info("unable to load image")
+            logger.error("unable to load image")
             return None
 
+        logger.info("Tweaking the face color ")
         alignedFace = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
         start = time.time()
+        logger.info("Getting embedding for the face")
         rep = self.net.forward(alignedFace) # Gets embedding - 128 measurements
         return rep
 
