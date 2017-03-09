@@ -63,7 +63,7 @@ import math
 # Get paths for models
 # //////////////////////////////////////////////////////////////////////////////////////////////
 
-logger = logging.getLogger()
+logger = logging.getlogger.info()
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
 luaDir = os.path.join(fileDir, '..', 'batch-represent')   #path does not exist
@@ -84,9 +84,9 @@ args = parser.parse_args()
 
 start = time.time()
 np.set_printoptions(precision=2)
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+#logging.basicConfig(level=logging.DEBUG,
+#                    format='(%(threadName)-10s) %(message)s',
+#                    )
                   
 class SurveillanceSystem(object):
    """ The SurveillanceSystem object is the heart of this application.
@@ -545,7 +545,7 @@ class SurveillanceSystem(object):
                                                       person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictions['name'])
                                                 else:   
                                                       person = Person(predictions['rep'],predictions['confidence'], alignedFace, "unknown")
-                                                logger( "============================> New Tracker for " + person.identity + " <============================")
+                                                logger.info( "============================> New Tracker for " + person.identity + " <============================")
                                    
                                                 camera.trackers.append(Tracker(frame, person_bb, person,ID))
                                                 alreadyBeenDetected = True
@@ -561,7 +561,7 @@ class SurveillanceSystem(object):
                                     #add person to detected people      
                                     with camera.peopleDictLock:
                                           camera.people[strID] = person
-                                    logger( "============================> New Tracker for new person <============================")
+                                    logger.info( "============================> New Tracker for new person <============================")
                                     camera.trackers.append(Tracker(frame, person_bb, person,strID))
 
 
@@ -673,7 +673,7 @@ class SurveillanceSystem(object):
                         alert.event_occurred = self.check_camera_events(alert)
                 else:
                     if (time.time() - alert.eventTime) > 300: # Reinitialize event 5 min after event accured
-                        logger( "reinitiallising alert: " + alert.id)
+                        logger.info( "reinitiallising alert: " + alert.id)
                         alert.reinitialise()
                     continue 
 
@@ -684,29 +684,29 @@ class SurveillanceSystem(object):
         to determine whether an event has occurred"""
 
         if alert.camera != 'All':  # Check cameras   
-            logger( "alertTest" + alert.camera)
+            logger.info( "alertTest" + alert.camera)
             if alert.event == 'Recognition': #Check events
-                logger(  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person)
+                logger.info(  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person)
                 for person in self.cameras[int(alert.camera)].people.values():
-                    logger( "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity)
+                    logger.info( "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity)
                     if alert.person == person.identity: # Has person been detected
                        
                         if alert.person == "unknown" and (100 - person.confidence) >= alert.confidence:
-                            logger( "alertTest2" + alert.camera)
+                            logger.info( "alertTest2" + alert.camera)
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True
                         elif person.confidence >= alert.confidence:
-                            logger( "alertTest3" + alert.camera)
+                            logger.info( "alertTest3" + alert.camera)
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True     
                 return False # Person has not been detected check next alert       
 
             else:
-                logger( "alertTest4" + alert.camera)
+                logger.info( "alertTest4" + alert.camera)
                 if self.cameras[int(alert.camera)].motion == True: # Has motion been detected
-                       logger( "alertTest5" + alert.camera)
+                       logger.info( "alertTest5" + alert.camera)
                        cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                        self.take_action(alert)
                        return True
@@ -743,18 +743,18 @@ class SurveillanceSystem(object):
    def take_action(self,alert): 
         """Sends email alert and/or triggers the alarm"""
 
-        logger( "Taking action: =======================================================")
-        logger( alert.actions)
-        logger( "======================================================================")
+        logger.info( "Taking action: =======================================================")
+        logger.info( alert.actions)
+        logger.info( "======================================================================")
         if alert.action_taken == False: # Only take action if alert hasn't accured - Alerts reinitialise every 5 min for now
             alert.eventTime = time.time()  
             if alert.actions['email_alert'] == 'true':
-                logger( "\nemail notification being sent\n")
+                logger.info( "\nemail notification being sent\n")
                 self.send_email_notification_alert(alert)
             if alert.actions['trigger_alarm'] == 'true':
-                logger( "\ntriggering alarm1\n")
+                logger.info( "\ntriggering alarm1\n")
                 self.trigger_alarm()
-                logger( "\nalarm1 triggered\n")
+                logger.info( "\nalarm1 triggered\n")
             alert.action_taken = True
 
    def send_email_notification_alert(self,alert):
@@ -800,16 +800,16 @@ class SurveillanceSystem(object):
     
       if not os.path.exists(path + name):
         try:
-          logger( "Creating New Face Dircectory: " + name)
+          logger.info( "Creating New Face Dircectory: " + name)
           os.makedirs(path+name)
         except OSError:
-          logger( OSError)
+          logger.info( OSError)
           return False
           pass
       else:
          num = len([nam for nam in os.listdir(path +name) if os.path.isfile(os.path.join(path+name, nam))])
 
-      logger( "Writing Image To Directory: " + name)
+      logger.info( "Writing Image To Directory: " + name)
       cv2.imwrite(path+name+"/"+ name + "_"+str(num) + ".png", image)
       self.get_face_database_names()
 
@@ -826,7 +826,7 @@ class SurveillanceSystem(object):
         if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
           continue
         self.peopleDB.append(name)
-        logger( name)
+        logger.info(name)
       self.peopleDB.append('unknown')
 
    def change_alarm_state(self):
@@ -835,9 +835,9 @@ class SurveillanceSystem(object):
       to access the flask application."""
 
       r = requests.post('http://192.168.1.35:5000/change_state', data={"password": "admin"})
-      alarm_states = json.loads(r.text) 
-    
-      logger( alarm_states)
+      alarm_states = json.loads(r.text)
+
+      logger.info(alarm_states)
       if alarm_states['state'] == 1:
           self.alarmState = 'Armed' 
       else:
@@ -852,7 +852,7 @@ class SurveillanceSystem(object):
        r = requests.post('http://192.168.1.35:5000/trigger', data={"password": "admin"})
        alarm_states = json.loads(r.text) 
     
-       logger( alarm_states)
+       logger.info(alarm_states)
 
        if alarm_states['state'] == 1:
            self.alarmState = 'Armed' 
@@ -860,7 +860,7 @@ class SurveillanceSystem(object):
            self.alarmState = 'Disarmed' 
        
        self.alarmTriggerd = alarm_states['triggered']
-       logger( self.alarmTriggerd )
+       logger.info(self.alarmTriggerd )
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class Person(object):
@@ -947,7 +947,7 @@ class Alert(object):
     alert_count = 1
 
     def __init__(self,alarmState,camera, event, person, actions, emailAddress, confidence):   
-        logger( "\n\nalert_"+str(Alert.alert_count)+ " created\n\n")
+        logger.info( "\n\nalert_"+str(Alert.alert_count)+ " created\n\n")
        
 
         if  event == 'Motion':
