@@ -177,8 +177,7 @@ class SurveillanceSystem(object):
         while True:  
 
              frame_count +=1
-             logger.debug("Reading Frame")
-             print "Reading Frame print"
+             #logger.debug("Reading Frame")
              frame = camera.read_frame()
              if frame == None or np.array_equal(frame, camera.tempFrame):  # Checks to see if the new frame is the same as the previous frame
                  continue
