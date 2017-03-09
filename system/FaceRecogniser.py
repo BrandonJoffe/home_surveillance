@@ -51,12 +51,6 @@ import aligndlib
 import openface
 
 logger = logging.getLogger(__name__)
-#formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
-#handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
-#handler.setLevel(logging.INFO)
-#handler.setFormatter(formatter)
-#logger.addHandler(handler)
-#logger.setLevel(logging.INFO)
 
 start = time.time()
 np.set_printoptions(precision=2)
