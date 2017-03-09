@@ -131,9 +131,10 @@ class SurveillanceSystem(object):
         self.get_face_database_names() # Gets people in database for web client
 
         #//////////////////////////////////////////////////// Camera Examples ////////////////////////////////////////////////////
-        self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code
+        #self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code
         # self.cameras.append(Camera.IPCamera("http://192.168.1.33/video.mjpg","detect_recognise_track",False))
-            
+        self.cameras.append(Camera.IPCamera("rtsp://198.48.221.102:554/user=admin_password=RgNNc3qH_channel=1_stream=0.sdp","detect_recognise_track",False))
+
         # processing frame threads 
         for i, cam in enumerate(self.cameras):       
           thread = threading.Thread(name='frame_process_thread_' + str(i),target=self.process_frame,args=(cam,))
@@ -168,7 +169,8 @@ class SurveillanceSystem(object):
         while True:  
 
              frame_count +=1
-             logger.debug('\n\n////////////////////// Reading Frame //////////////////////\n\n')
+             logger.debug("Reading Frame")
+             print "Reading Frame print"
              frame = camera.read_frame()
              if frame == None or np.array_equal(frame, camera.tempFrame):  # Checks to see if the new frame is the same as the previous frame
                  continue

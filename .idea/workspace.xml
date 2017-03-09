@@ -70,8 +70,8 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="86" column="34" lean-forward="false" selection-start-line="86" selection-start-column="27" selection-end-line="86" selection-end-column="34" />
+            <state relative-caret-position="391">
+              <caret line="172" column="39" lean-forward="false" selection-start-line="172" selection-start-column="39" selection-end-line="172" selection-end-column="39" />
               <folding>
                 <element signature="e#807#818#0" expanded="true" />
               </folding>
@@ -102,8 +102,8 @@
       <file leaf-file-name="ImageUtils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/ImageUtils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="54" column="12" lean-forward="false" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="12" />
+            <state relative-caret-position="337">
+              <caret line="86" column="0" lean-forward="true" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -126,7 +126,6 @@
       <find>loggin</find>
       <find>logger</find>
       <find>logger(</find>
-      <find>print</find>
       <find>prin</find>
       <find>logger.info</find>
       <find>system_monitoring</find>
@@ -136,11 +135,13 @@
       <find>cameraProcessingThreads</find>
       <find>logginglogg</find>
       <find>logging</find>
+      <find>rtree</find>
+      <find>print</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
-      <replace>logger.info(</replace>
       <replace>logger</replace>
+      <replace>logger.info(</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -635,26 +636,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/ImageUtils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="54" column="12" lean-forward="false" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/MotionDetector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="586">
           <caret line="132" column="18" lean-forward="false" selection-start-line="132" selection-start-column="18" selection-end-line="132" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -701,10 +686,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/system/ImageUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="86" column="0" lean-forward="true" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="86" column="34" lean-forward="false" selection-start-line="86" selection-start-column="27" selection-end-line="86" selection-end-column="34" />
+        <state relative-caret-position="391">
+          <caret line="172" column="39" lean-forward="false" selection-start-line="172" selection-start-column="39" selection-end-line="172" selection-end-column="39" />
           <folding>
             <element signature="e#807#818#0" expanded="true" />
           </folding>
