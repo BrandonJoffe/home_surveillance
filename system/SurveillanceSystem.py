@@ -86,7 +86,7 @@ np.set_printoptions(precision=2)
 
 logger = logging.getLogger()
 formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s)")
-handler = RotatingFileHandler("logs/surveillance.log", maxBytes=1000000, backupCount=10)
+handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
 handler.setLevel(logging.DEBUG)
 handler.setFormatter(formatter)
 logger.addHandler(handler)
@@ -201,9 +201,9 @@ class SurveillanceSystem(object):
                  camera.motion, mframe = camera.motionDetector.detect_movement(frame, get_rects = False) 
                  camera.processing_frame = mframe
                  if camera.motion == True:
-                     logger.debug('////////////////////// MOTION DETECTED //////////////////////')
+                     #logger.debug('////////////////////// MOTION DETECTED //////////////////////')
                  else:
-                     logger.debug('////////////////////// NO MOTION DETECTED //////////////////////')
+                     #logger.debug('////////////////////// NO MOTION DETECTED //////////////////////')
                      continue
 
              ##################################################################################################################################################

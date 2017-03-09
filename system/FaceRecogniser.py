@@ -106,15 +106,15 @@ class FaceRecogniser(object):
 		    logger.info("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
 		    return None
 
-		logger.info("\n//////////////////////  FACE ALIGNED  ////////////////////// \n")
+		logger.info("//////////////////////  FACE ALIGNED  ////////////////////// ")
 		with self.neuralNetLock :
 		    persondict = self.recognize_face(alignedFace)
 
 		if persondict is None:
-		    logger.info("\n//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////\n")
+		    logger.info("//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////")
 		    return persondict, alignedFace
 		else:
-		    logger.info("\n//////////////////////  FACE RECOGNIZED  ////////////////////// \n")
+		    logger.info("//////////////////////  FACE RECOGNIZED  ////////////////////// ")
 		    return persondict, alignedFace
 
 	def recognize_face(self,img):
@@ -167,7 +167,7 @@ class FaceRecogniser(object):
 
 		start = time.time()
 		aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",args.dlibFacePredictor,args.imgDim)
-		logger.info("\nAligning images took {} seconds.".format(time.time() - start))
+		logger.info("Aligning images took {} seconds.".format(time.time() - start))
 		done = False
 		start = time.time()
 
@@ -184,7 +184,7 @@ class FaceRecogniser(object):
 
 
 	def generate_representation(self):
-		logger.info("\n" + luaDir + "\n")
+		logger.info(luaDir)
 		self.cmd = ['/usr/bin/env', 'th', os.path.join(luaDir, 'main.lua'),'-outDir',  "generated-embeddings/" , '-data', "aligned-images/"]                 
 		if args.cuda:
 		    self.cmd.append('-cuda')
