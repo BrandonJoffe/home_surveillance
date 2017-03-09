@@ -545,7 +545,7 @@ class SurveillanceSystem(object):
                                                       person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictions['name'])
                                                 else:   
                                                       person = Person(predictions['rep'],predictions['confidence'], alignedFace, "unknown")
-                                                app.logger( "============================> New Tracker for " + person.identity + " <============================")
+                                                logger( "============================> New Tracker for " + person.identity + " <============================")
                                    
                                                 camera.trackers.append(Tracker(frame, person_bb, person,ID))
                                                 alreadyBeenDetected = True
@@ -561,7 +561,7 @@ class SurveillanceSystem(object):
                                     #add person to detected people      
                                     with camera.peopleDictLock:
                                           camera.people[strID] = person
-                                    app.logger( "============================> New Tracker for new person <============================")
+                                    logger( "============================> New Tracker for new person <============================")
                                     camera.trackers.append(Tracker(frame, person_bb, person,strID))
 
 
@@ -673,7 +673,7 @@ class SurveillanceSystem(object):
                         alert.event_occurred = self.check_camera_events(alert)
                 else:
                     if (time.time() - alert.eventTime) > 300: # Reinitialize event 5 min after event accured
-                        app.logger( "reinitiallising alert: " + alert.id)
+                        logger( "reinitiallising alert: " + alert.id)
                         alert.reinitialise()
                     continue 
 
@@ -684,29 +684,29 @@ class SurveillanceSystem(object):
         to determine whether an event has occurred"""
 
         if alert.camera != 'All':  # Check cameras   
-            app.logger( "alertTest" + alert.camera)
+            logger( "alertTest" + alert.camera)
             if alert.event == 'Recognition': #Check events
-                app.logger(  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person)
+                logger(  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person)
                 for person in self.cameras[int(alert.camera)].people.values():
-                    app.logger( "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity)
+                    logger( "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity)
                     if alert.person == person.identity: # Has person been detected
                        
                         if alert.person == "unknown" and (100 - person.confidence) >= alert.confidence:
-                            app.logger( "alertTest2" + alert.camera)
+                            logger( "alertTest2" + alert.camera)
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True
                         elif person.confidence >= alert.confidence:
-                            app.logger( "alertTest3" + alert.camera)
+                            logger( "alertTest3" + alert.camera)
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True     
                 return False # Person has not been detected check next alert       
 
             else:
-                app.logger( "alertTest4" + alert.camera)
+                logger( "alertTest4" + alert.camera)
                 if self.cameras[int(alert.camera)].motion == True: # Has motion been detected
-                       app.logger( "alertTest5" + alert.camera)
+                       logger( "alertTest5" + alert.camera)
                        cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                        self.take_action(alert)
                        return True
@@ -743,18 +743,18 @@ class SurveillanceSystem(object):
    def take_action(self,alert): 
         """Sends email alert and/or triggers the alarm"""
 
-        app.logger( "Taking action: =======================================================")
-        app.logger( alert.actions)
-        app.logger( "======================================================================")
+        logger( "Taking action: =======================================================")
+        logger( alert.actions)
+        logger( "======================================================================")
         if alert.action_taken == False: # Only take action if alert hasn't accured - Alerts reinitialise every 5 min for now
             alert.eventTime = time.time()  
             if alert.actions['email_alert'] == 'true':
-                app.logger( "\nemail notification being sent\n")
+                logger( "\nemail notification being sent\n")
                 self.send_email_notification_alert(alert)
             if alert.actions['trigger_alarm'] == 'true':
-                app.logger( "\ntriggering alarm1\n")
+                logger( "\ntriggering alarm1\n")
                 self.trigger_alarm()
-                app.logger( "\nalarm1 triggered\n")
+                logger( "\nalarm1 triggered\n")
             alert.action_taken = True
 
    def send_email_notification_alert(self,alert):
@@ -800,16 +800,16 @@ class SurveillanceSystem(object):
     
       if not os.path.exists(path + name):
         try:
-          app.logger( "Creating New Face Dircectory: " + name)
+          logger( "Creating New Face Dircectory: " + name)
           os.makedirs(path+name)
         except OSError:
-          app.logger( OSError)
+          logger( OSError)
           return False
           pass
       else:
          num = len([nam for nam in os.listdir(path +name) if os.path.isfile(os.path.join(path+name, nam))])
 
-      app.logger( "Writing Image To Directory: " + name)
+      logger( "Writing Image To Directory: " + name)
       cv2.imwrite(path+name+"/"+ name + "_"+str(num) + ".png", image)
       self.get_face_database_names()
 
@@ -826,7 +826,7 @@ class SurveillanceSystem(object):
         if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
           continue
         self.peopleDB.append(name)
-        app.logger( name)
+        logger( name)
       self.peopleDB.append('unknown')
 
    def change_alarm_state(self):
@@ -837,7 +837,7 @@ class SurveillanceSystem(object):
       r = requests.post('http://192.168.1.35:5000/change_state', data={"password": "admin"})
       alarm_states = json.loads(r.text) 
     
-      app.logger( alarm_states)
+      logger( alarm_states)
       if alarm_states['state'] == 1:
           self.alarmState = 'Armed' 
       else:
@@ -852,7 +852,7 @@ class SurveillanceSystem(object):
        r = requests.post('http://192.168.1.35:5000/trigger', data={"password": "admin"})
        alarm_states = json.loads(r.text) 
     
-       app.logger( alarm_states)
+       logger( alarm_states)
 
        if alarm_states['state'] == 1:
            self.alarmState = 'Armed' 
@@ -860,7 +860,7 @@ class SurveillanceSystem(object):
            self.alarmState = 'Disarmed' 
        
        self.alarmTriggerd = alarm_states['triggered']
-       app.logger( self.alarmTriggerd )
+       logger( self.alarmTriggerd )
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class Person(object):
@@ -947,7 +947,7 @@ class Alert(object):
     alert_count = 1
 
     def __init__(self,alarmState,camera, event, person, actions, emailAddress, confidence):   
-        app.logger( "\n\nalert_"+str(Alert.alert_count)+ " created\n\n")
+        logger( "\n\nalert_"+str(Alert.alert_count)+ " created\n\n")
        
 
         if  event == 'Motion':
