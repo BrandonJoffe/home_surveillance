@@ -30,8 +30,8 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="136" column="27" lean-forward="false" selection-start-line="136" selection-start-column="27" selection-end-line="136" selection-end-column="27" />
+            <state relative-caret-position="243">
+              <caret line="949" column="72" lean-forward="false" selection-start-line="949" selection-start-column="72" selection-end-line="949" selection-end-column="72" />
               <folding>
                 <element signature="e#807#818#0" expanded="true" />
               </folding>
@@ -47,6 +47,9 @@
       <find>print</find>
       <find>logger</find>
     </findStrings>
+    <replaceStrings>
+      <replace>app.logger(</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -506,8 +509,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="136" column="27" lean-forward="false" selection-start-line="136" selection-start-column="27" selection-end-line="136" selection-end-column="27" />
+        <state relative-caret-position="243">
+          <caret line="949" column="72" lean-forward="false" selection-start-line="949" selection-start-column="72" selection-end-line="949" selection-end-column="72" />
           <folding>
             <element signature="e#807#818#0" expanded="true" />
           </folding>

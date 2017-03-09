@@ -431,7 +431,7 @@ class SurveillanceSystem(object):
                     for i in xrange(len(camera.trackers) - 1, -1, -1): 
                         
                         if camera.trackers[i].overlap(person_bb):
-                           print "============================> Updating Tracker <============================"
+                           logger.info("============================> Updating Tracker <============================")
                            camera.trackers[i].update_tracker(person_bb)
                            # personimg = cv2.flip(personimg, 1)
                            camera.faceBoxes = camera.faceDetector.detect_faces(personimg,camera.dlibDetection)  
@@ -464,8 +464,8 @@ class SurveillanceSystem(object):
                                                         # if the person has already been detected continue to track that person - use same person ID
                                                         if person.identity == predictedName or self.recogniser.getSquaredl2Distance(person.rep ,predictions['rep']) < 0.8:
                                                               
-                                                                person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictedName)               
-                                                                print "============================> New Tracker for " +person.identity + " <============================"
+                                                                person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictedName)
+                                                                logger.info( "============================> New Tracker for " +person.identity + " <============================")
                                                                 # Remove current tracker and create new one with the ID of the original person
                                                                 del camera.trackers[i]
                                                                 camera.trackers.append(Tracker(frame, person_bb, person,ID))
@@ -483,13 +483,13 @@ class SurveillanceSystem(object):
                                                     #add person to detected people      
                                                     with camera.peopleDictLock:
                                                           camera.people[strID] = person
-                                                    print "============================> New Tracker for new person <============================"
+                                                          logger.info( "============================> New Tracker for new person <============================")
                                                     del camera.trackers[i]
                                                     camera.trackers.append(Tracker(frame, person_bb, person,strID))
                                     # if it is the same person update confidence if it is higher and change prediction from unknown to identified person
                                     # if the new detected face has a lower confidence and can be classified as unknown, when the person being tracked isn't unknown - change tracker
-                                    else:  
-                                          print "============================> update person name and confidence <============================"
+                                    else:
+                                        logger.info( "============================> update person name and confidence <============================")
                                           if camera.trackers[i].person.confidence < predictions['confidence']:
                                               camera.trackers[i].person.confidence = predictions['confidence']
                                               if camera.trackers[i].person.confidence > self.confidenceThreshold:
@@ -498,7 +498,7 @@ class SurveillanceSystem(object):
                                   
                                 # If more than one face is detected in the region compare faces to the people being tracked and update tracker accordingly
                                 else:
-                                    print "============================> More Than One Face Detected <============================"
+                                    logger.info( "============================> More Than One Face Detected <============================")
                                     # if tracker is already tracking the identified face make an update 
                                     if self.recogniser.getSquaredl2Distance(camera.trackers[i].person.rep ,predictions['rep']) < 0.99 and camera.trackers[i].person.identity == predictions['name']: 
                                         if camera.trackers[i].person.confidence < predictions['confidence']:
@@ -544,8 +544,8 @@ class SurveillanceSystem(object):
                                                 if predictions['confidence'] > self.confidenceThreshold and person.confidence > self.confidenceThreshold:
                                                       person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictions['name'])
                                                 else:   
-                                                      person = Person(predictions['rep'],predictions['confidence'], alignedFace, "unknown")                
-                                                print "============================> New Tracker for " + person.identity + " <============================"
+                                                      person = Person(predictions['rep'],predictions['confidence'], alignedFace, "unknown")
+                                                app.logger( "============================> New Tracker for " + person.identity + " <============================")
                                    
                                                 camera.trackers.append(Tracker(frame, person_bb, person,ID))
                                                 alreadyBeenDetected = True
@@ -561,7 +561,7 @@ class SurveillanceSystem(object):
                                     #add person to detected people      
                                     with camera.peopleDictLock:
                                           camera.people[strID] = person
-                                    print "============================> New Tracker for new person <============================"
+                                    app.logger( "============================> New Tracker for new person <============================")
                                     camera.trackers.append(Tracker(frame, person_bb, person,strID))
 
 
@@ -673,7 +673,7 @@ class SurveillanceSystem(object):
                         alert.event_occurred = self.check_camera_events(alert)
                 else:
                     if (time.time() - alert.eventTime) > 300: # Reinitialize event 5 min after event accured
-                        print "reinitiallising alert: " + alert.id
+                        app.logger( "reinitiallising alert: " + alert.id)
                         alert.reinitialise()
                     continue 
 
@@ -684,29 +684,29 @@ class SurveillanceSystem(object):
         to determine whether an event has occurred"""
 
         if alert.camera != 'All':  # Check cameras   
-            print "alertTest" + alert.camera          
+            app.logger( "alertTest" + alert.camera)
             if alert.event == 'Recognition': #Check events
-                print  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person
+                app.logger(  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person)
                 for person in self.cameras[int(alert.camera)].people.values():
-                    print "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity
+                    app.logger( "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity)
                     if alert.person == person.identity: # Has person been detected
                        
                         if alert.person == "unknown" and (100 - person.confidence) >= alert.confidence:
-                            print "alertTest2" + alert.camera  
+                            app.logger( "alertTest2" + alert.camera)
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True
                         elif person.confidence >= alert.confidence:
-                            print "alertTest3" + alert.camera  
+                            app.logger( "alertTest3" + alert.camera)
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True     
                 return False # Person has not been detected check next alert       
 
             else:
-                print "alertTest4" + alert.camera 
+                app.logger( "alertTest4" + alert.camera)
                 if self.cameras[int(alert.camera)].motion == True: # Has motion been detected
-                       print "alertTest5" + alert.camera 
+                       app.logger( "alertTest5" + alert.camera)
                        cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                        self.take_action(alert)
                        return True
@@ -743,18 +743,18 @@ class SurveillanceSystem(object):
    def take_action(self,alert): 
         """Sends email alert and/or triggers the alarm"""
 
-        print "Taking action: ======================================================="
-        print alert.actions
-        print "======================================================================"
+        app.logger( "Taking action: =======================================================")
+        app.logger( alert.actions)
+        app.logger( "======================================================================")
         if alert.action_taken == False: # Only take action if alert hasn't accured - Alerts reinitialise every 5 min for now
             alert.eventTime = time.time()  
             if alert.actions['email_alert'] == 'true':
-                print "\nemail notification being sent\n"
+                app.logger( "\nemail notification being sent\n")
                 self.send_email_notification_alert(alert)
             if alert.actions['trigger_alarm'] == 'true':
-                print "\ntriggering alarm1\n"
+                app.logger( "\ntriggering alarm1\n")
                 self.trigger_alarm()
-                print "\nalarm1 triggered\n"
+                app.logger( "\nalarm1 triggered\n")
             alert.action_taken = True
 
    def send_email_notification_alert(self,alert):
@@ -800,16 +800,16 @@ class SurveillanceSystem(object):
     
       if not os.path.exists(path + name):
         try:
-          print "Creating New Face Dircectory: " + name
+          app.logger( "Creating New Face Dircectory: " + name)
           os.makedirs(path+name)
         except OSError:
-          print OSError
+          app.logger( OSError)
           return False
           pass
       else:
          num = len([nam for nam in os.listdir(path +name) if os.path.isfile(os.path.join(path+name, nam))])
 
-      print "Writing Image To Directory: " + name
+      app.logger( "Writing Image To Directory: " + name)
       cv2.imwrite(path+name+"/"+ name + "_"+str(num) + ".png", image)
       self.get_face_database_names()
 
@@ -826,7 +826,7 @@ class SurveillanceSystem(object):
         if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
           continue
         self.peopleDB.append(name)
-        print name
+        app.logger( name)
       self.peopleDB.append('unknown')
 
    def change_alarm_state(self):
@@ -837,7 +837,7 @@ class SurveillanceSystem(object):
       r = requests.post('http://192.168.1.35:5000/change_state', data={"password": "admin"})
       alarm_states = json.loads(r.text) 
     
-      print alarm_states
+      app.logger( alarm_states)
       if alarm_states['state'] == 1:
           self.alarmState = 'Armed' 
       else:
@@ -852,7 +852,7 @@ class SurveillanceSystem(object):
        r = requests.post('http://192.168.1.35:5000/trigger', data={"password": "admin"})
        alarm_states = json.loads(r.text) 
     
-       print alarm_states
+       app.logger( alarm_states)
 
        if alarm_states['state'] == 1:
            self.alarmState = 'Armed' 
@@ -860,7 +860,7 @@ class SurveillanceSystem(object):
            self.alarmState = 'Disarmed' 
        
        self.alarmTriggerd = alarm_states['triggered']
-       print self.alarmTriggerd 
+       app.logger( self.alarmTriggerd )
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class Person(object):
@@ -947,7 +947,7 @@ class Alert(object):
     alert_count = 1
 
     def __init__(self,alarmState,camera, event, person, actions, emailAddress, confidence):   
-        print "\n\nalert_"+str(Alert.alert_count)+ " created\n\n"
+        app.logger( "\n\nalert_"+str(Alert.alert_count)+ " created\n\n")
        
 
         if  event == 'Motion':
