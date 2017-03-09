@@ -63,7 +63,7 @@ import math
 # Get paths for models
 # //////////////////////////////////////////////////////////////////////////////////////////////
 
-logger = logging.getlogger()
+logger = logging.getLogger()
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
 luaDir = os.path.join(fileDir, '..', 'batch-represent')   #path does not exist
