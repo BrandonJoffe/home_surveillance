@@ -65,8 +65,6 @@ import math
 
 logger = logging.getLogger()
 
-logger.info("test")
-
 fileDir = os.path.dirname(os.path.realpath(__file__))
 luaDir = os.path.join(fileDir, '..', 'batch-represent')   #path does not exist
 modelDir = os.path.join(fileDir, '..', 'models')
@@ -135,6 +133,8 @@ class SurveillanceSystem(object):
         #//////////////////////////////////////////////////// Camera Examples ////////////////////////////////////////////////////
         # self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code 
         # self.cameras.append(Camera.IPCamera("http://192.168.1.33/video.mjpg","detect_recognise_track",False))
+
+        logger.info("test")
             
         # processing frame threads 
         for i, cam in enumerate(self.cameras):       

@@ -337,8 +337,7 @@ def panic():
    
 
 @socketio.on('my event', namespace='/surveillance') # socketio used to receive websocket messages, Namespaces allow a cliet to open multiple connections to the server that are multiplexed on a single socket
-def test_message(message):   # Custom events deliver JSON payload 
-
+def test_message(message):   # Custom events deliver JSON payload
     emit('my response', {'data': message['data']}) # emit() sends a message under a custom event name
 
 @socketio.on('my broadcast event', namespace='/surveillance')
@@ -413,7 +412,7 @@ if __name__ == '__main__':
      app.logger.setLevel(logging.DEBUG)
 
      log = logging.getLogger('werkzeug')
-     log.setLevel(logging.DEBUG)
+     log.setLevel(logging.ERROR)
      log.addHandler(handler)
      socketio.run(app, host='0.0.0.0', debug=False, use_reloader=False) 
     
