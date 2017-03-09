@@ -50,6 +50,8 @@ import pandas as pd
 import aligndlib
 import openface
 
+logger = logging.getLogger()
+
 start = time.time()
 np.set_printoptions(precision=2)
 
@@ -96,23 +98,23 @@ class FaceRecogniser(object):
 
 		landmarks = self.align.findLandmarks(rgbFrame, bb) 
 		if landmarks == None:
-			print("//////////////////////  FACE LANDMARKS COULD NOT BE FOUND  //////////////////////////")
+			logger.info("//////////////////////  FACE LANDMARKS COULD NOT BE FOUND  //////////////////////////")
 			return None
 		alignedFace = self.align.align(args.imgDim, rgbFrame, bb,landmarks=landmarks,landmarkIndices=openface.AlignDlib.OUTER_EYES_AND_NOSE) 
 
-		if alignedFace is None:  
-		    print("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
+		if alignedFace is None:
+		    logger.info("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
 		    return None
 
-		print("\n//////////////////////  FACE ALIGNED  ////////////////////// \n")
+		logger.info("\n//////////////////////  FACE ALIGNED  ////////////////////// \n")
 		with self.neuralNetLock :
 		    persondict = self.recognize_face(alignedFace)
 
 		if persondict is None:
-		    print("\n//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////\n")
+		    logger.info("\n//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////\n")
 		    return persondict, alignedFace
 		else:
-		    print("\n//////////////////////  FACE RECOGNIZED  ////////////////////// \n")
+		    logger.info("\n//////////////////////  FACE RECOGNIZED  ////////////////////// \n")
 		    return persondict, alignedFace
 
 	def recognize_face(self,img):
@@ -126,8 +128,8 @@ class FaceRecogniser(object):
 	    person1 = self.le.inverse_transform(maxI)
 	    confidence1 = int(math.ceil(predictions[maxI]*100))
 
-	    print("Recognition took {} seconds.".format(time.time() - start))
-	    print("Recognized {} with {:.2f} confidence.".format(person1, confidence1))
+	    logger.info("Recognition took {} seconds.".format(time.time() - start))
+	    logger.info("Recognized {} with {:.2f} confidence.".format(person1, confidence1))
 
 	    persondict = {'name': person1, 'confidence': confidence1, 'rep':rep1}
 	    return persondict
@@ -135,7 +137,7 @@ class FaceRecogniser(object):
 	def getRep(self,alignedFace):
 	    bgrImg = alignedFace
 	    if bgrImg is None:
-	        print("unable to load image")
+	        logger.info("unable to load image")
 	        return None
 
 	    alignedFace = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
@@ -160,29 +162,29 @@ class FaceRecogniser(object):
 		try:
 		  os.remove(path) # Remove cache from aligned images folder
 		except:
-		  print "Tried to remove cache.t7"
+		  logger.info "Tried to remove cache.t7"
 		  pass
 
 		start = time.time()
 		aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",args.dlibFacePredictor,args.imgDim)
-		print("\nAligning images took {} seconds.".format(time.time() - start))
+		logger.info("\nAligning images took {} seconds.".format(time.time() - start))
 		done = False
 		start = time.time()
 
 		done = self.generate_representation()
 		   
 		if done is True:
-		    print("Representation Generation (Classification Model) took {} seconds.".format(time.time() - start))
+		    logger.info("Representation Generation (Classification Model) took {} seconds.".format(time.time() - start))
 		    start = time.time()
 		    # Train Model
 		    self.train("generated-embeddings/","LinearSvm",-1)
-		    print("Training took {} seconds.".format(time.time() - start))
+		    logger.info("Training took {} seconds.".format(time.time() - start))
 		else:
-		    print("Generate representation did not return True")
+		    logger.info("Generate representation did not return True")
 
 
 	def generate_representation(self):
-		print "\n" + luaDir + "\n"
+		logger.info "\n" + luaDir + "\n"
 		self.cmd = ['/usr/bin/env', 'th', os.path.join(luaDir, 'main.lua'),'-outDir',  "generated-embeddings/" , '-data', "aligned-images/"]                 
 		if args.cuda:
 		    self.cmd.append('-cuda')
@@ -191,7 +193,7 @@ class FaceRecogniser(object):
 
 		def exitHandler():
 		    if self.p.poll() is None:
-		        print "<======================Something went Wrong============================>"
+		        logger.info "<======================Something went Wrong============================>"
 		        self.p.kill()
 		        return False
 		atexit.register(exitHandler) 
@@ -200,7 +202,7 @@ class FaceRecogniser(object):
 
 
 	def train(self,workDir,classifier,ldaDim):
-		print("Loading embeddings.")
+		logger.info("Loading embeddings.")
 		fname = "{}/labels.csv".format(workDir) #labels of faces
 		labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
 		labels = map(itemgetter(1),
@@ -213,7 +215,7 @@ class FaceRecogniser(object):
 											 # Fits labels to model
 		labelsNum = self.le.transform(labels)
 		nClasses = len(self.le.classes_)
-		print("Training for {} classes.".format(nClasses))
+		logger.info("Training for {} classes.".format(nClasses))
 
 		if classifier == 'LinearSvm':
 		   self.clf = SVC(C=1, kernel='linear', probability=True)
@@ -228,7 +230,7 @@ class FaceRecogniser(object):
 		self.clf.fit(embeddings, labelsNum) #link embeddings to labels
 
 		fName = "{}/classifier.pkl".format(workDir)
-		print("Saving classifier to '{}'".format(fName))
+		logger.info("Saving classifier to '{}'".format(fName))
 		with open(fName, 'w') as f:
 		  pickle.dump((self.le,  self.clf), f) # Creates character stream and writes to file to use for recognition
 

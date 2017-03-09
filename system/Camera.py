@@ -30,9 +30,11 @@ import SurveillanceSystem
 import MotionDetector
 import FaceDetector
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+#logging.basicConfig(level=logging.DEBUG,
+#                    format='(%(threadName)-10s) %(message)s',
+#                    )
+
+logger = logging.getLogger()
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
 modelDir = os.path.join(fileDir, '..', 'models')
@@ -94,7 +96,7 @@ class IPCamera(object):
 		self.video.release()
 
 	def get_frame(self):
-	    logging.debug('Getting Frames')
+	    logger.debug('Getting Frames')
 	    FPScount = 0
 	    warmup = 0
 	    FPSstart = time.time()
