@@ -307,9 +307,8 @@ def update_faces():
                     for key, person in camera.people.iteritems():  
                         persondict = {'identity': key , 'confidence': person.confidence, 'camera': i, 'timeD':person.time, 'prediction': person.identity,'thumbnailNum': len(person.thumbnails)}
                         app.logger.info(persondict)
-                        logger.info(persondict)
                         peopledata.append(persondict)
-     
+
         socketio.emit('people_detected', json.dumps(peopledata) ,namespace='/surveillance')
         time.sleep(4)
 
