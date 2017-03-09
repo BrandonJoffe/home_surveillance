@@ -490,10 +490,10 @@ class SurveillanceSystem(object):
                                     # if the new detected face has a lower confidence and can be classified as unknown, when the person being tracked isn't unknown - change tracker
                                     else:
                                         logger.info( "============================> update person name and confidence <============================")
-                                          if camera.trackers[i].person.confidence < predictions['confidence']:
-                                              camera.trackers[i].person.confidence = predictions['confidence']
-                                              if camera.trackers[i].person.confidence > self.confidenceThreshold:
-                                                  camera.trackers[i].person.identity = predictions['name']
+                                        if camera.trackers[i].person.confidence < predictions['confidence']:
+                                            camera.trackers[i].person.confidence = predictions['confidence']
+                                            if camera.trackers[i].person.confidence > self.confidenceThreshold:
+                                                camera.trackers[i].person.identity = predictions['name']
       
                                   
                                 # If more than one face is detected in the region compare faces to the people being tracked and update tracker accordingly
