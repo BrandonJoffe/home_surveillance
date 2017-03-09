@@ -50,7 +50,13 @@ import pandas as pd
 import aligndlib
 import openface
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+#formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
+#handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
+#handler.setLevel(logging.INFO)
+#handler.setFormatter(formatter)
+#logger.addHandler(handler)
+#logger.setLevel(logging.INFO)
 
 start = time.time()
 np.set_printoptions(precision=2)
@@ -98,23 +104,23 @@ class FaceRecogniser(object):
 
 		landmarks = self.align.findLandmarks(rgbFrame, bb) 
 		if landmarks == None:
-			logger.info("//////////////////////  FACE LANDMARKS COULD NOT BE FOUND  //////////////////////////")
+			logger.info("///  FACE LANDMARKS COULD NOT BE FOUND  ///")
 			return None
 		alignedFace = self.align.align(args.imgDim, rgbFrame, bb,landmarks=landmarks,landmarkIndices=openface.AlignDlib.OUTER_EYES_AND_NOSE) 
 
 		if alignedFace is None:
-		    logger.info("//////////////////////  FACE COULD NOT BE ALIGNED  //////////////////////////")
+		    logger.info("///  FACE COULD NOT BE ALIGNED  ///")
 		    return None
 
-		logger.info("//////////////////////  FACE ALIGNED  ////////////////////// ")
+		logger.info("////  FACE ALIGNED  // ")
 		with self.neuralNetLock :
 		    persondict = self.recognize_face(alignedFace)
 
 		if persondict is None:
-		    logger.info("//////////////////////  FACE COULD NOT BE RECOGNIZED  //////////////////////////")
+		    logger.info("/////  FACE COULD NOT BE RECOGNIZED  //")
 		    return persondict, alignedFace
 		else:
-		    logger.info("//////////////////////  FACE RECOGNIZED  ////////////////////// ")
+		    logger.info("/////  FACE RECOGNIZED  /// ")
 		    return persondict, alignedFace
 
 	def recognize_face(self,img):
