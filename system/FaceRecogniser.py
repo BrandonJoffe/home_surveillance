@@ -224,9 +224,9 @@ class FaceRecogniser(object):
         else:
             logger.info(fname + " file is empty")
             labels = "1:aligned-images/dummy/1.png"  #creating a dummy string to start the process
-        logger.info(map(os.path.dirname, labels))
-        logger.info(map(os.path.split,map(os.path.dirname, labels)))
-        logger.info(map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels))))
+        logger.debug(map(os.path.dirname, labels))
+        logger.debug(map(os.path.split,map(os.path.dirname, labels)))
+        logger.debug(map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels))))
         labels = map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels)))
 
         fname = "{}reps.csv".format(workDir) # Representations of faces
@@ -235,7 +235,7 @@ class FaceRecogniser(object):
             embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
         else:
             logger.info(fname + " file is empty")
-            embeddings = np.zeros((1,150))
+            embeddings = np.zeros((2,150)) #creating an empty array since csv is empty
 
         self.le = LabelEncoder().fit(labels) # LabelEncoder is a utility class to help normalize labels such that they contain only values between 0 and n_classes-1
         # Fits labels to model
