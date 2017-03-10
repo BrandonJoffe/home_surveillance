@@ -217,7 +217,7 @@ class FaceRecogniser(object):
 
     def train(self,workDir,classifier,ldaDim):
         logger.info("Loading embeddings.")
-        fname = "{}/labels.csv".format(workDir) #labels of faces
+        fname = "{}labels.csv".format(workDir) #labels of faces
         if os.stat(fname).st_size > 0:
             logger.info(fname + " file is not empty")
             labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
@@ -229,7 +229,7 @@ class FaceRecogniser(object):
         logger.info(map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels))))
         labels = map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels)))
 
-        fname = "{}/reps.csv".format(workDir) # Representations of faces
+        fname = "{}reps.csv".format(workDir) # Representations of faces
         if os.stat(fname).st_size > 0:
             logger.info(fname + " file is not empty")
             embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
