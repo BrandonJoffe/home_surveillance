@@ -219,7 +219,7 @@ class FaceRecogniser(object):
 
 
     def train(self,workDir,classifier,ldaDim):
-        fname = "{}/labels.csv".format(workDir) #labels of faces
+        fname = "{}labels.csv".format(workDir) #labels of faces
         logger.info("Loading labels " + fname)
         if self.is_non_zero_file(fname):
             logger.info(fname + " file is not empty")
@@ -233,7 +233,7 @@ class FaceRecogniser(object):
         logger.debug(map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels))))
         labels = map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels)))
 
-        fname = "{}/reps.csv".format(workDir) # Representations of faces
+        fname = "{}reps.csv".format(workDir) # Representations of faces
         logger.info("Loading embedding " + fname)
         if self.is_non_zero_file(fname):
             logger.info(fname + " file is not empty")
