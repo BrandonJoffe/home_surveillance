@@ -221,6 +221,7 @@ class FaceRecogniser(object):
         if os.stat(fname).st_size > 0:
             logger.info(fname + " file is not empty")
             labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
+            logger.info(labels)
         else:
             logger.info(fname + " file is empty")
             labels = "1:aligned-images/dummy/1.png"  #creating a dummy string to start the process
