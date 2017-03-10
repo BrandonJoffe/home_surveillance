@@ -224,9 +224,10 @@ class FaceRecogniser(object):
         else:
             logger.info(fname + " file is empty")
             labels = {1:"aligned-images/mathieu/1.png"}
-        labels = map(itemgetter(1),
-            map(os.path.split,
-            map(os.path.dirname, labels)))
+        logger.info(map(os.path.dirname, labels))
+        logger.info(map(os.path.split,map(os.path.dirname, labels)))
+        logger.info(map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels))))
+        labels = map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels)))
 
         fname = "{}/reps.csv".format(workDir) # Representations of faces
         if os.stat(fname).st_size > 0:
