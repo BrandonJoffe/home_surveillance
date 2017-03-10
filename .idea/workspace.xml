@@ -95,8 +95,8 @@
       <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="220" column="53" lean-forward="true" selection-start-line="220" selection-start-column="53" selection-end-line="220" selection-end-column="53" />
+            <state relative-caret-position="141">
+              <caret line="219" column="38" lean-forward="true" selection-start-line="219" selection-start-column="38" selection-end-line="219" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -165,10 +165,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="85" />
+    <option name="y" value="25" />
+    <option name="width" value="1148" />
+    <option name="height" value="998" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -471,7 +471,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="85" y="25" width="1148" height="998" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17844523" sideWeight="0.4954955" order="0" side_tool="false" content_ui="combo" />
@@ -769,8 +769,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="220" column="53" lean-forward="true" selection-start-line="220" selection-start-column="53" selection-end-line="220" selection-end-column="53" />
+        <state relative-caret-position="141">
+          <caret line="219" column="38" lean-forward="true" selection-start-line="219" selection-start-column="38" selection-end-line="219" selection-end-column="38" />
           <folding />
         </state>
       </provider>
