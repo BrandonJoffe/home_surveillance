@@ -89,6 +89,9 @@ class FaceRecogniser(object):
         with open("generated-embeddings/classifier.pkl", 'r') as f: # le = labels, clf = classifier
             (self.le, self.clf) = pickle.load(f) # Loads labels and classifier SVM or GMM
 
+    def is_non_zero_file(fpath):
+        return os.path.isfile(fpath) and os.path.getsize(fpath) > 0
+
     def make_prediction(self,rgbFrame,bb):
         """The function uses the location of a face
         to detect facial landmarks and perform an affine transform
@@ -216,7 +219,7 @@ class FaceRecogniser(object):
 
 
     def train(self,workDir,classifier,ldaDim):
-        fname = "{}labels.csv".format(workDir) #labels of faces
+        fname = "{}/labels.csv".format(workDir) #labels of faces
         logger.info("Loading labels " + fname)
         if is_non_zero_file(fname):
             logger.info(fname + " file is not empty")
@@ -230,7 +233,7 @@ class FaceRecogniser(object):
         logger.debug(map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels))))
         labels = map(itemgetter(1),map(os.path.split,map(os.path.dirname, labels)))
 
-        fname = "{}reps.csv".format(workDir) # Representations of faces
+        fname = "{}/reps.csv".format(workDir) # Representations of faces
         logger.info("Loading embedding " + fname)
         if is_non_zero_file(fname):
             logger.info(fname + " file is not empty")
@@ -268,7 +271,3 @@ class FaceRecogniser(object):
         to the same person"""
 
         d = rep1 - rep2
-        return np.dot(d, d)
-
-    def is_non_zero_file(fpath):
-        return os.path.isfile(fpath) and os.path.getsize(fpath) > 0
