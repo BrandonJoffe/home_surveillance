@@ -96,7 +96,7 @@
         <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="341">
-              <caret line="205" column="90" lean-forward="false" selection-start-line="205" selection-start-column="90" selection-end-line="205" selection-end-column="90" />
+              <caret line="205" column="106" lean-forward="false" selection-start-line="205" selection-start-column="106" selection-end-line="205" selection-end-column="106" />
               <folding />
             </state>
           </provider>
@@ -770,7 +770,7 @@
     <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="341">
-          <caret line="205" column="90" lean-forward="false" selection-start-line="205" selection-start-column="90" selection-end-line="205" selection-end-column="90" />
+          <caret line="205" column="106" lean-forward="false" selection-start-line="205" selection-start-column="106" selection-end-line="205" selection-end-column="106" />
           <folding />
         </state>
       </provider>

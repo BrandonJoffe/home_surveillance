@@ -203,7 +203,7 @@ class FaceRecogniser(object):
         self.p = Popen(self.cmd, stdin=PIPE, stdout=PIPE, bufsize=0)
         #our issue is here, torch probably crashes without giving much explanation.
         outs, errs = self.p.communicate() # Wait for process to exit - wait for subprocess to finish writing to files: labels.csv & reps.csv
-        logger.info("Waiting for process to exit to finish writing labels and reps.csv" + outs + " " + errs)
+        logger.info("Waiting for process to exit to finish writing labels and reps.csv" + str(outs) + " - " + str(errs))
 
         def exitHandler():
             if self.p.poll() is None:
