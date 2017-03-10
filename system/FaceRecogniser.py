@@ -89,9 +89,6 @@ class FaceRecogniser(object):
         with open("generated-embeddings/classifier.pkl", 'r') as f: # le = labels, clf = classifier
             (self.le, self.clf) = pickle.load(f) # Loads labels and classifier SVM or GMM
 
-    def is_non_zero_file(fpath):
-        return os.path.isfile(fpath) and os.path.getsize(fpath) > 0
-
     def make_prediction(self,rgbFrame,bb):
         """The function uses the location of a face
         to detect facial landmarks and perform an affine transform
@@ -220,9 +217,8 @@ class FaceRecogniser(object):
 
     def train(self,workDir,classifier,ldaDim):
         fname = "{}labels.csv".format(workDir) #labels of faces
-        fnametest = format(workDir) + "labels.csv"
-        logger.info("Loading labels " + fname)
-        if self.is_non_zero_file(fnametest):
+        logger.info("Loading labels " + fname + os.path.getsize(fname))
+        if os.path.getsize(fname) > 0:
             logger.info(fname + " file is not empty")
             labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
             logger.info(labels)
@@ -236,8 +232,8 @@ class FaceRecogniser(object):
 
         fname = "{}reps.csv".format(workDir) # Representations of faces
         fnametest = format(workDir) + "reps.csv"
-        logger.info("Loading embedding " + fname)
-        if self.is_non_zero_file(fnametest):
+        logger.info("Loading embedding " + fname + os.path.getsize(fname))
+        if os.path.getsize(fname) > 0:
             logger.info(fname + " file is not empty")
             embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
         else:
