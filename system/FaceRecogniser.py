@@ -128,7 +128,7 @@ class FaceRecogniser(object):
         start = time.time()
         logger.info("Submitting array for prediction.")
         predictions = self.clf.predict_proba(rep).ravel() # Computes probabilities of possible outcomes for samples in classifier(clf).
-        logger.info("We need to dig here to know why the probability are not right.")
+        #logger.info("We need to dig here to know why the probability are not right.")
         maxI = np.argmax(predictions)
         person1 = self.le.inverse_transform(maxI)
         confidence1 = int(math.ceil(predictions[maxI]*100))
@@ -218,13 +218,22 @@ class FaceRecogniser(object):
     def train(self,workDir,classifier,ldaDim):
         logger.info("Loading embeddings.")
         fname = "{}/labels.csv".format(workDir) #labels of faces
-        labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
+        if os.stat(fname).st_size > 0:
+            logger.info(fname + " file is not empty")
+            labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
+        else
+            logger.info(fname + " file is empty")
         labels = map(itemgetter(1),
             map(os.path.split,
             map(os.path.dirname, labels)))
 
         fname = "{}/reps.csv".format(workDir) # Representations of faces
-        embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
+        if os.stat(fname).st_size > 0:
+            logger.info(fname + " file is not empty")
+            embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
+        else
+            logger.info(fname + " file is empty")
+
         self.le = LabelEncoder().fit(labels) # LabelEncoder is a utility class to help normalize labels such that they contain only values between 0 and n_classes-1
         # Fits labels to model
         labelsNum = self.le.transform(labels)
