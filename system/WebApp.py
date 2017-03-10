@@ -257,7 +257,7 @@ def retrain_classifier():
     if request.method == 'POST':
         app.logger.info("retrain button pushed. clearing event in surveillance objt and calling trainingEvent")
         HomeSurveillance.trainingEvent.clear() # Block processing threads
-        retrained = HomeSurveillance.recogniser.trainClassifier()
+        retrained = HomeSurveillance.recogniser.trainClassifier()#calling the module in FaceRecogniser to start training
         HomeSurveillance.trainingEvent.set() # Release processing threads       
         data = {"finished":  retrained}
         app.logger.info("Finished re-training")
