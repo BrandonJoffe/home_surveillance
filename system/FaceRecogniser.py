@@ -168,14 +168,13 @@ class FaceRecogniser(object):
 
         logger.info("trainClassifier called")
 
-        path = fileDir + "aligned-images/cache.t7"
+        path = fileDir + "/aligned-images/cache.t7"
         try:
             os.remove(path) # Remove cache from aligned images folder
         except:
-            logger.info("Failed to remove cache.t7")
+            logger.info("Failed to remove cache.t7. Could be that it did not existed in the first place.")
             pass
 
-        logger.info("Succesfully removed " + path)
         start = time.time()
         aligndlib.alignMain("training-images/","aligned-images/","outerEyesAndNose",args.dlibFacePredictor,args.imgDim)
         logger.info("Aligning images for training took {} seconds.".format(time.time() - start))
@@ -217,7 +216,7 @@ class FaceRecogniser(object):
 
     def train(self,workDir,classifier,ldaDim):
         fname = "{}labels.csv".format(workDir) #labels of faces
-        logger.info("Loading labels " + fname + str(os.path.getsize(fname)))
+        logger.info("Loading labels " + fname + " csv size: " +  str(os.path.getsize(fname)))
         if os.path.getsize(fname) > 0:
             logger.info(fname + " file is not empty")
             labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
@@ -232,7 +231,7 @@ class FaceRecogniser(object):
 
         fname = "{}reps.csv".format(workDir) # Representations of faces
         fnametest = format(workDir) + "reps.csv"
-        logger.info("Loading embedding " + fname + str(os.path.getsize(fname)))
+        logger.info("Loading embedding " + fname + " csv size: " + str(os.path.getsize(fname)))
         if os.path.getsize(fname) > 0:
             logger.info(fname + " file is not empty")
             embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
