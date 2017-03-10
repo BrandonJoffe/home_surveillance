@@ -221,7 +221,7 @@ class FaceRecogniser(object):
         if os.stat(fname).st_size > 0:
             logger.info(fname + " file is not empty")
             labels = pd.read_csv(fname, header=None).as_matrix()[:, 1]
-        else
+        else:
             logger.info(fname + " file is empty")
         labels = map(itemgetter(1),
             map(os.path.split,
@@ -231,7 +231,7 @@ class FaceRecogniser(object):
         if os.stat(fname).st_size > 0:
             logger.info(fname + " file is not empty")
             embeddings = pd.read_csv(fname, header=None).as_matrix() # Get embeddings as a matrix from reps.csv
-        else
+        else:
             logger.info(fname + " file is empty")
 
         self.le = LabelEncoder().fit(labels) # LabelEncoder is a utility class to help normalize labels such that they contain only values between 0 and n_classes-1
