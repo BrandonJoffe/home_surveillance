@@ -212,7 +212,7 @@ def remove_face():
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             try:   
                 del HomeSurveillance.cameras[int(camNum)].people[predicted_name]
-                app.logger.info("======================= REMOVED: " + predicted_name + "=========================")
+                app.logger.info("==== REMOVED: " + predicted_name + "===")
             except Exception as e:
                 app.logger.error("ERROR could not remove Face" + e)
                 pass

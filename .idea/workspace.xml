@@ -18,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WebApp.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="WebApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/WebApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="259" column="119" lean-forward="false" selection-start-line="259" selection-start-column="119" selection-end-line="259" selection-end-column="119" />
+            <state relative-caret-position="296">
+              <caret line="214" column="69" lean-forward="false" selection-start-line="214" selection-start-column="69" selection-end-line="214" selection-end-column="69" />
               <folding>
                 <element signature="e#635#745#0" expanded="true" />
               </folding>
@@ -30,11 +30,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="551">
+              <caret line="118" column="55" lean-forward="true" selection-start-line="118" selection-start-column="55" selection-end-line="118" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="398">
+              <caret line="248" column="102" lean-forward="true" selection-start-line="248" selection-start-column="83" selection-end-line="248" selection-end-column="102" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="68" column="33" lean-forward="true" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+            <state relative-caret-position="408">
+              <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -44,9 +64,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>logger</find>
-      <find>FACE DETEC</find>
-      <find>camera</find>
       <find>ALIGNED</find>
       <find>face aligned</find>
       <find>gen</find>
@@ -69,11 +86,14 @@
       <find>labels.csv</find>
       <find>labels.</find>
       <find>labels</find>
-      <find>train</find>
       <find>trainClassifier</find>
       <find>aligned-</find>
       <find>retrain_classifier</find>
       <find>add_fa</find>
+      <find>train</find>
+      <find>make_pre</find>
+      <find>RECOGNIZ</find>
+      <find>remove</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -91,10 +111,10 @@
         <option value="$PROJECT_DIR$/system/Camera.py" />
         <option value="$PROJECT_DIR$/system/MotionDetector.py" />
         <option value="$PROJECT_DIR$/system/SurveillanceSystem.py" />
-        <option value="$PROJECT_DIR$/system/WebApp.py" />
         <option value="$PROJECT_DIR$/system/FaceRecogniser.py" />
         <option value="&lt;1908fd2c-1ed0-4b52-9667-ae3b17a38240&gt;/home_surveillance/system/aligndlib.py" />
         <option value="&lt;1908fd2c-1ed0-4b52-9667-ae3b17a38240&gt;/home_surveillance/system/SurveillanceSystem.py" />
+        <option value="$PROJECT_DIR$/system/WebApp.py" />
       </list>
     </option>
   </component>
@@ -125,7 +145,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -155,6 +174,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -399,7 +419,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17760417" sideWeight="0.4954955" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -791,13 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="112" column="18" lean-forward="false" selection-start-line="112" selection-start-column="13" selection-end-line="112" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/FaceDetector.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -826,28 +839,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
+    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="205" column="106" lean-forward="false" selection-start-line="205" selection-start-column="106" selection-end-line="205" selection-end-column="106" />
+        <state relative-caret-position="398">
+          <caret line="248" column="102" lean-forward="true" selection-start-line="248" selection-start-column="83" selection-end-line="248" selection-end-column="102" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/WebApp.py">
+    <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="259" column="119" lean-forward="false" selection-start-line="259" selection-start-column="119" selection-end-line="259" selection-end-column="119" />
-          <folding>
-            <element signature="e#635#745#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="551">
+          <caret line="118" column="55" lean-forward="true" selection-start-line="118" selection-start-column="55" selection-end-line="118" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="68" column="33" lean-forward="true" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+        <state relative-caret-position="408">
+          <caret line="85" column="37" lean-forward="true" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/WebApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="214" column="69" lean-forward="false" selection-start-line="214" selection-start-column="69" selection-end-line="214" selection-end-column="69" />
+          <folding>
+            <element signature="e#635#745#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
