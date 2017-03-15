@@ -75,9 +75,11 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="84" column="87" lean-forward="false" selection-start-line="84" selection-start-column="87" selection-end-line="84" selection-end-column="87" />
-              <folding />
+            <state relative-caret-position="135">
+              <caret line="84" column="105" lean-forward="false" selection-start-line="84" selection-start-column="105" selection-end-line="84" selection-end-column="105" />
+              <folding>
+                <element signature="e#641#657#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,9 +151,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="607" />
-    <option name="y" value="54" />
-    <option name="width" value="1131" />
+    <option name="x" value="938" />
+    <option name="y" value="77" />
+    <option name="width" value="976" />
     <option name="height" value="818" />
   </component>
   <component name="ProjectView">
@@ -460,7 +462,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="607" y="54" width="1131" height="818" extended-state="0" />
+    <frame x="938" y="77" width="976" height="818" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23404256" sideWeight="0.4954955" order="0" side_tool="false" content_ui="combo" />
@@ -506,7 +508,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="54" column="48" lean-forward="false" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding />
+          <folding>
+            <element signature="e#641#657#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -566,7 +570,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
           <caret line="54" column="48" lean-forward="false" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding />
+          <folding>
+            <element signature="e#641#657#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -626,7 +632,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="54" column="48" lean-forward="false" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding />
+          <folding>
+            <element signature="e#641#657#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -686,7 +694,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="52" column="2" lean-forward="false" selection-start-line="52" selection-start-column="2" selection-end-line="52" selection-end-column="2" />
-          <folding />
+          <folding>
+            <element signature="e#641#657#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -913,9 +923,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="84" column="87" lean-forward="false" selection-start-line="84" selection-start-column="87" selection-end-line="84" selection-end-column="87" />
-          <folding />
+        <state relative-caret-position="135">
+          <caret line="84" column="105" lean-forward="false" selection-start-line="84" selection-start-column="105" selection-end-line="84" selection-end-column="105" />
+          <folding>
+            <element signature="e#641#657#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
