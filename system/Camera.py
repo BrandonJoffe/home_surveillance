@@ -61,7 +61,7 @@ class IPCamera(object):
 	SureveillanceSystem object, within the process_frame function"""
 
 	def __init__(self,camURL, cameraFunction, dlibDetection):
-		print("Loading Stream From IP Camera ",camURL)
+		logger.info("Loading Stream From IP Camera: " + camURL)
 		self.motionDetector = MotionDetector.MotionDetector()
 		self.faceDetector = FaceDetector.FaceDetector()
 		self.processing_frame = None
@@ -81,7 +81,10 @@ class IPCamera(object):
 		self.captureEvent = threading.Event()
 		self.captureEvent.set()
 		self.peopleDictLock = threading.Lock() # Used to block concurrent access to people dictionary
-	 	self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
+		self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
+		if not self.video
+			raise IOError("Capture from " + camURL + " Failed.")
+		logger.info("Capture properties:" + self.video.get(cv.CV_CAP_PROP_FRAME_COUNT)
 	 	self.url = camURL
 		if not self.video.isOpened():
 			self.video.open()		
@@ -96,12 +99,12 @@ class IPCamera(object):
 		self.video.release()
 
 	def get_frame(self):
-	    logger.debug('Getting Frames')
-	    FPScount = 0
-	    warmup = 0
-	    FPSstart = time.time()
+		logger.debug('Getting Frames')
+		FPScount = 0
+		warmup = 0
+		FPSstart = time.time()
 
-	    while True:
+		while True:
 			success, frame = self.video.read()
 			self.captureEvent.clear() 
 			if success:		

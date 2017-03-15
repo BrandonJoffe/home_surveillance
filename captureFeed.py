@@ -3,7 +3,6 @@ import cv2
 
 cap = cv2.VideoCapture('rtsp://198.48.221.102:554/user=admin_password=RgNNc3qH_channel=1_stream=0.sdp')
 
-
 # Define the codec and create VideoWriter object
 #fourcc = cv2.VideoWriter_fourcc(*'XVID')
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
