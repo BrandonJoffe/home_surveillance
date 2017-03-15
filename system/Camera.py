@@ -89,7 +89,7 @@ class IPCamera(object):
 			self.video.open()
 		logger.info("Video feed open.")
 		logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
-		logger.info("----)
+		logger.info("----")
 		logger.info("Position of the video file in milliseconds or video capture timestamp: ")
 		logger.info(self.video.get(cv.CV_CAP_PROP_POS_MSEC)
 		self.dump_video_info()
