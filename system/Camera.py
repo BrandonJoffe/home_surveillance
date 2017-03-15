@@ -91,7 +91,7 @@ class IPCamera(object):
 		logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
 		logger.info("----")
 		logger.info("Position of the video file in milliseconds or video capture timestamp: ")
-		logger.info(self.video.get(cv.CV_CAP_PROP_POS_MSEC)
+		logger.info(self.video.get(cv.CV_CAP_PROP_POS_MSEC))
 		self.dump_video_info()
 		#logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
 		# Start a thread to continuously capture frames.
