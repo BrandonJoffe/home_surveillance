@@ -53,8 +53,8 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="92" selection-end-column="29" />
+            <state relative-caret-position="204">
+              <caret line="140" column="52" lean-forward="false" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -75,8 +75,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="87" column="8" lean-forward="false" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="8" />
+            <state relative-caret-position="271">
+              <caret line="89" column="63" lean-forward="true" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="63" />
               <folding>
                 <element signature="e#641#657#0" expanded="true" />
               </folding>
@@ -88,7 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Found</find>
       <find>make_prediction</find>
       <find>dlib</find>
       <find>\n</find>
@@ -116,8 +115,9 @@
       <find>Read</find>
       <find>IP Camera</find>
       <find>add_camera</find>
-      <find>make_pre</find>
       <find>RECOGNIZ</find>
+      <find>logger</find>
+      <find>make_pre</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -151,8 +151,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="938" />
-    <option name="y" value="77" />
+    <option name="x" value="866" />
+    <option name="y" value="55" />
     <option name="width" value="976" />
     <option name="height" value="818" />
   </component>
@@ -462,7 +462,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="938" y="77" width="976" height="818" extended-state="0" />
+    <frame x="866" y="55" width="976" height="818" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23404256" sideWeight="0.4954955" order="0" side_tool="false" content_ui="combo" />
@@ -905,14 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="92" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -921,10 +913,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="140" column="52" lean-forward="false" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="87" column="8" lean-forward="false" selection-start-line="87" selection-start-column="8" selection-end-line="87" selection-end-column="8" />
+        <state relative-caret-position="271">
+          <caret line="89" column="63" lean-forward="true" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="63" />
           <folding>
             <element signature="e#641#657#0" expanded="true" />
           </folding>
