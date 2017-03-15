@@ -83,11 +83,13 @@ class IPCamera(object):
 		self.captureEvent.set()
 		self.peopleDictLock = threading.Lock() # Used to block concurrent access to people dictionary
 		self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
-		logger.info("We are capturing")
+		logger.info("We are opening the video feed.")
 	 	self.url = camURL
 		if not self.video.isOpened():
 			self.video.open()
-		logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
+		logger.info("Video feed open.")
+		self.dump_video_info()
+		#logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
 		# Start a thread to continuously capture frames.
 		# The capture thread ensures the frames being processed are up to date and are not old
 		self.captureLock = threading.Lock() # Sometimes used to prevent concurrent access
@@ -153,3 +155,28 @@ class IPCamera(object):
 		ret, jpeg = cv2.imencode('.jpg', frame)
 		return jpeg.tostring()
 
+	def dump_video_info(self):
+		logger.info("---------Dumping video feed info---------------------")
+		logger.info("Position of the video file in milliseconds or video capture timestamp: " + self.video.get(cv.CV_CAP_PROP_POS_MSEC))
+		logger.info("0-based index of the frame to be decoded/captured next: " + self.video.get(cv.CV_CAP_PROP_POS_FRAMES))
+		logger.info("Relative position of the video file: 0 - start of the film, 1 - end of the film: " + self.video.get(cv.CV_CAP_PROP_POS_AVI_RATIO))
+		logger.info("Width of the frames in the video stream: " + self.video.get(cv.CV_CAP_PROP_FRAME_WIDTH))
+		logger.info("Height of the frames in the video stream: " + self.video.get(cv.CV_CAP_PROP_FRAME_HEIGHT))
+		logger.info("Frame rate:" + self.video.get(cv.CV_CAP_PROP_FPS))
+		logger.info("4-character code of codec." + self.video.get(cv.CV_CAP_PROP_FOURCC))
+		logger.info("Number of frames in the video file." + self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
+		logger.info("Format of the Mat objects returned by retrieve() ." + self.video.get(cv.CV_CAP_PROP_FORMAT))
+		logger.info("Backend-specific value indicating the current capture mode." + self.video.get(cv.CV_CAP_PROP_MODE))
+		logger.info("Brightness of the image (only for cameras)." + self.video.get(cv.CV_CAP_PROP_BRIGHTNESS))
+		logger.info("Contrast of the image (only for cameras)." + self.video.get(cv.CV_CAP_PROP_CONTRAST))
+		logger.info("Saturation of the image (only for cameras)." + self.video.get(cv.CV_CAP_PROP_SATURATION))
+		logger.info("Hue of the image (only for cameras)." + self.video.get(cv.CV_CAP_PROP_HUE))
+		logger.info("Gain of the image (only for cameras)." + self.video.get(cv.CV_CAP_PROP_GAIN))
+		logger.info("Exposure (only for cameras)." + self.video.get(cv.CV_CAP_PROP_EXPOSURE))
+		logger.info("Boolean flags indicating whether images should be converted to RGB." + self.video.get(cv.CV_CAP_PROP_CONVERT_RGB))
+		logger.info("The U value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)" + self.video.get(cv.CV_CAP_PROP_WHITE_BALANCE_U))
+		logger.info("The V value of the whitebalance setting (note: only supported by DC1394 v 2.x backend currently)" + self.video.get(cv.CV_CAP_PROP_WHITE_BALANCE_V))
+		logger.info("Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)" + self.video.get(cv.CV_CAP_PROP_RECTIFICATION))
+		logger.info("The ISO speed of the camera (note: only supported by DC1394 v 2.x backend currently)" + self.video.get(cv.CV_CAP_PROP_ISO_SPEED))
+		logger.info("Amount of frames stored in internal buffer memory (note: only supported by DC1394 v 2.x backend currently)" + self.video.get(cv.CV_CAP_PROP_BUFFERSIZE))
+		logger.info("--------------------------End of video feed info---------------------")
