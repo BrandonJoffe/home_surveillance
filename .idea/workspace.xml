@@ -75,8 +75,8 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="84" column="25" lean-forward="true" selection-start-line="84" selection-start-column="25" selection-end-line="84" selection-end-column="25" />
+            <state relative-caret-position="165">
+              <caret line="83" column="105" lean-forward="false" selection-start-line="83" selection-start-column="105" selection-end-line="83" selection-end-column="105" />
               <folding />
             </state>
           </provider>
@@ -149,8 +149,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="681" />
-    <option name="y" value="26" />
+    <option name="x" value="607" />
+    <option name="y" value="54" />
     <option name="width" value="1131" />
     <option name="height" value="818" />
   </component>
@@ -460,7 +460,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="681" y="26" width="1131" height="818" extended-state="0" />
+    <frame x="607" y="54" width="1131" height="818" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23404256" sideWeight="0.4954955" order="0" side_tool="false" content_ui="combo" />
@@ -913,8 +913,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="84" column="25" lean-forward="true" selection-start-line="84" selection-start-column="25" selection-end-line="84" selection-end-column="25" />
+        <state relative-caret-position="165">
+          <caret line="83" column="105" lean-forward="false" selection-start-line="83" selection-start-column="105" selection-end-line="83" selection-end-column="105" />
           <folding />
         </state>
       </provider>
