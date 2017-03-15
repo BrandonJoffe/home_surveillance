@@ -83,7 +83,10 @@ class IPCamera(object):
 		self.captureEvent.set()
 		self.peopleDictLock = threading.Lock() # Used to block concurrent access to people dictionary
 		self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
-		logger.info("Capture properties:" + self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
+		self.video = cv.CaptureFromFile(camURL)
+		logger.info("We are capturing")
+		logger.info(cv.GetCaptureProperty(self.video, cv.CV_CAP_PROP_FRAME_COUNT))
+		#logger.info("Capture properties:" + self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
 	 	self.url = camURL
 		if not self.video.isOpened():
 			self.video.open()		
