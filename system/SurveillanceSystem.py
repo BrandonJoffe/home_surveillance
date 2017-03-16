@@ -358,7 +358,7 @@ class SurveillanceSystem(object):
 
                     for x, y, w, h in peopleRects:
                       
-                        logger.info('//// Proccessing People Segmented Areas ///')
+                        logger.debug('//// Proccessing People Segmented Areas ///')
                         bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h)) 
                         personimg = ImageUtils.crop(frame, bb, dlibRect = True)
                        

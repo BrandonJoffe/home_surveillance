@@ -24,10 +24,13 @@ def main(argv):
     print "---------OpenCV Video feed analyzer -------------\n\n\n"
     print "Analyzing url: " + videofeed
     cap = cv2.VideoCapture(videofeed)
+    cap.set(cv.CV_CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv.CV_CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv.CV_CAP_PROP_FOURCC ,CV_FOURCC('M', 'J', 'P', 'G') )
+
     if not cap.isOpened():
         try:
             cap.open()
-            break
         except ValueError:
             print "Could not open the video feed."
             exit()
