@@ -9,24 +9,11 @@
 
 import numpy as np
 import cv2
-import sys, getopt
+import sys
 
 def main(argv):
     videofeed = ''
-    try:
-        opts, args = getopt.getopt(argv, "hf")
-    except getopt.GetoptError:
-        print "captureFeed.py -f <video feed url>"
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print "captureFeed.py -f <video feed url>"
-            sys.exit()
-        elif opt in ("-f"):
-            videofeed = arg
-        elif:
-            print "captureFeed.py -f <video feed url>"
-            sys.exit(2)
+    videofeed = str(sys.argv)
 
     print "---------OpenCV Video feed analyzer -------------\n\n\n"
     print "Analyzing url: " + videofeed
