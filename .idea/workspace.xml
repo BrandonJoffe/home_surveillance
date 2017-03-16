@@ -21,8 +21,8 @@
       <file leaf-file-name="WebApp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/WebApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="144" column="51" lean-forward="true" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
+            <state relative-caret-position="2210">
+              <caret line="144" column="51" lean-forward="false" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
               <folding>
                 <element signature="e#635#745#0" expanded="true" />
               </folding>
@@ -33,8 +33,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="279" column="61" lean-forward="true" selection-start-line="279" selection-start-column="61" selection-end-line="279" selection-end-column="61" />
+            <state relative-caret-position="4743">
+              <caret line="279" column="61" lean-forward="false" selection-start-line="279" selection-start-column="61" selection-end-line="279" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -43,8 +43,8 @@
       <file leaf-file-name="FaceRecogniser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="89" column="89" lean-forward="true" selection-start-line="89" selection-start-column="89" selection-end-line="89" selection-end-column="89" />
+            <state relative-caret-position="296">
+              <caret line="43" column="27" lean-forward="false" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -53,18 +53,18 @@
       <file leaf-file-name="SurveillanceSystem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="140" column="52" lean-forward="false" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
+            <state relative-caret-position="449">
+              <caret line="161" column="51" lean-forward="true" selection-start-line="161" selection-start-column="51" selection-end-line="161" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="captureFeed.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="captureFeed.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/captureFeed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+            <state relative-caret-position="204">
+              <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -72,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="743">
-              <caret line="191" column="63" lean-forward="false" selection-start-line="191" selection-start-column="63" selection-end-line="191" selection-end-column="63" />
+            <state relative-caret-position="296">
+              <caret line="57" column="59" lean-forward="false" selection-start-line="57" selection-start-column="59" selection-end-line="57" selection-end-column="59" />
               <folding>
                 <element signature="e#641#657#0" expanded="true" />
               </folding>
@@ -88,7 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>make_prediction</find>
       <find>dlib</find>
       <find>\n</find>
       <find>filtering</find>
@@ -118,6 +117,7 @@
       <find>make_pre</find>
       <find>logger</find>
       <find>RECOGNIZ</find>
+      <find>add_</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -138,9 +138,9 @@
         <option value="&lt;1908fd2c-1ed0-4b52-9667-ae3b17a38240&gt;/home_surveillance/system/aligndlib.py" />
         <option value="&lt;1908fd2c-1ed0-4b52-9667-ae3b17a38240&gt;/home_surveillance/system/SurveillanceSystem.py" />
         <option value="$PROJECT_DIR$/system/WebApp.py" />
-        <option value="$PROJECT_DIR$/captureFeed.py" />
         <option value="$PROJECT_DIR$/system/templates/index.html" />
         <option value="$PROJECT_DIR$/system/Camera.py" />
+        <option value="$PROJECT_DIR$/captureFeed.py" />
       </list>
     </option>
   </component>
@@ -879,54 +879,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="279" column="61" lean-forward="true" selection-start-line="279" selection-start-column="61" selection-end-line="279" selection-end-column="61" />
+        <state relative-caret-position="4743">
+          <caret line="279" column="61" lean-forward="false" selection-start-line="279" selection-start-column="61" selection-end-line="279" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/WebApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="144" column="51" lean-forward="true" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
+        <state relative-caret-position="2210">
+          <caret line="144" column="51" lean-forward="false" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
           <folding>
             <element signature="e#635#745#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/captureFeed.py">
+    <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        <state relative-caret-position="296">
+          <caret line="57" column="59" lean-forward="false" selection-start-line="57" selection-start-column="59" selection-end-line="57" selection-end-column="59" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#641#657#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="140" column="52" lean-forward="false" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/FaceRecogniser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="89" column="89" lean-forward="true" selection-start-line="89" selection-start-column="89" selection-end-line="89" selection-end-column="89" />
+        <state relative-caret-position="296">
+          <caret line="43" column="27" lean-forward="false" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/Camera.py">
+    <entry file="file://$PROJECT_DIR$/system/SurveillanceSystem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="743">
-          <caret line="191" column="63" lean-forward="false" selection-start-line="191" selection-start-column="63" selection-end-line="191" selection-end-column="63" />
+        <state relative-caret-position="449">
+          <caret line="161" column="51" lean-forward="true" selection-start-line="161" selection-start-column="51" selection-end-line="161" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/captureFeed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
           <folding>
-            <element signature="e#641#657#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
