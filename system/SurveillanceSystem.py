@@ -84,9 +84,19 @@ args = parser.parse_args()
 start = time.time()
 np.set_printoptions(precision=2)
 
+try:
+    os.makedirs('logs', exist_ok=True)  # Python>3.2
+except TypeError:
+    try:
+        os.makedirs('logs')
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir('logs'):
+            pass
+        else:
+            raise
+
 logger = logging.getLogger()
 formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
-mkdir_p(os.path.dirname("logs"))
 handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
 handler.setLevel(logging.INFO)
 handler.setFormatter(formatter)
@@ -996,13 +1006,4 @@ class Alert(object):
         self.alertString = message
 
 
-def mkdir_p(path):
-    try:
-        os.makedirs(path, exist_ok=True)  # Python>3.2
-    except TypeError:
-        try:
-            os.makedirs(path)
-        except OSError as exc: # Python >2.5
-            if exc.errno == errno.EEXIST and os.path.isdir(path):
-                pass
-            else: raise
+
