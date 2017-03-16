@@ -52,8 +52,7 @@ def main(argv):
     out.release()
     cv2.destroyAllWindows()
     print "\n\n-----------FFMEG video data output:-----------\n\n"
-    call(["ffmpeg", "-i " + videofeed])
-
+    os.system("ffmpeg -i " + videofeed)
 
 def dump_video_info(cap):
     print "---------Dumping video feed info---------------------"
