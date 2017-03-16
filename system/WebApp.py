@@ -157,18 +157,18 @@ def add_camera():
         return jsonify(data)
     return render_template('index.html')
 
- @app.route('/remove_camera', methods = ['GET','POST'])
- def remove_camera():
-     if request.method == 'POST':
-         camID = request.form.get('camURL')
-         data = {"camNum": len(HomeSurveillance.cameras) - 1}
-         application = request.form.get('application')
-         with HomeSurveillance.camerasLock:
-             HomeSurveillance.remove_camera(SurveillanceSystem.Camera.IPCamera(camURL, application))
-         app.logger.info("Removing camera number : " + data)
-         data = {"alert_status": "removed"}
-         return jsonify(data)
-     return render_template('index.html')
+@app.route('/remove_camera', methods = ['GET','POST'])
+def remove_camera():
+    if request.method == 'POST':
+        camID = request.form.get('camURL')
+        data = {"camNum": len(HomeSurveillance.cameras) - 1}
+        application = request.form.get('application')
+        with HomeSurveillance.camerasLock:
+            HomeSurveillance.remove_camera(SurveillanceSystem.Camera.IPCamera(camURL, application))
+        app.logger.info("Removing camera number : " + data)
+        data = {"alert_status": "removed"}
+        return jsonify(data)
+    return render_template('index.html')
 
 @app.route('/create_alert', methods = ['GET','POST'])
 def create_alert():
