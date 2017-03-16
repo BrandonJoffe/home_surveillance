@@ -157,12 +157,18 @@ def add_camera():
         return jsonify(data)
     return render_template('index.html')
 
-# @app.route('/remove_camera', methods = ['GET','POST'])
-# def remove_camera():
-#     if request.method == 'POST':
-#         data = {"alert_status": "removed"}
-#         return jsonify(data)
-#     return render_template('index.html')
+ @app.route('/remove_camera', methods = ['GET','POST'])
+ def remove_camera():
+     if request.method == 'POST':
+         camID = request.form.get('camURL')
+         data = {"camNum": len(HomeSurveillance.cameras) - 1}
+         application = request.form.get('application')
+         with HomeSurveillance.camerasLock:
+             HomeSurveillance.remove_camera(SurveillanceSystem.Camera.IPCamera(camURL, application))
+         app.logger.info("Removing camera number : " + data)
+         data = {"alert_status": "removed"}
+         return jsonify(data)
+     return render_template('index.html')
 
 @app.route('/create_alert', methods = ['GET','POST'])
 def create_alert():
@@ -210,7 +216,8 @@ def remove_face():
         camNum = request.form.get('camera')
      
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
-            try:   
+        with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
+            try:
                 del HomeSurveillance.cameras[int(camNum)].people[predicted_name]
                 app.logger.info("==== REMOVED: " + predicted_name + "===")
             except Exception as e:

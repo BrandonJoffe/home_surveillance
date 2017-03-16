@@ -812,6 +812,28 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 
+            function removeCamera() {
+                            //getting camera id
+                            var camID = document.getElementById("application");
+
+                            console.log("Removing camera: " + camID;
+                            $.ajax({
+                                  type: "POST",
+                                  url: "{{ url_for('remove_camera') }}",
+                                  data : {'camID': camID},
+                                  success: function(cam) {
+                                    console.log(cam);
+                                        $('#removecam').html('Removing Camera');
+                                  },
+                                  error: function(error) {
+                                    console.log(error);
+                                  }
+                            });
+
+
+                }
+
+
              function addCamera() {
                             //getting selected option from dropdowns
                             var camURL = document.getElementById("camURL").value;
@@ -852,7 +874,7 @@
                                         btn.setAttribute("data-dismiss", "alert");  
                                         btn.setAttribute("aria-hidden","true"); 
                                         btn.setAttribute("onclick","removeCamera(this.id)"); 
-                                        btn.setAttribute("id","camera_" + cam.camNum);  
+                                        btn.setAttribute("id","camera_" + cam.camNum);
                                         btn.innerHTML = "&times;";
                                         camdiv.innerHTML = '<div class="text-center"><span>' + icon + '<div><strong>Camera '+ cam.camNum + ' FPS: <strong id="camera_' + cam.camNum+ '_fps">' + "Loading... </strong></div><div>" +'<font size="0.9">' + camURL+'<font></span></div>';
                                         camdiv.appendChild(btn);

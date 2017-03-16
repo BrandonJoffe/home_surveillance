@@ -162,6 +162,12 @@ class SurveillanceSystem(object):
         self.cameraProcessingThreads.append(thread)
         thread.start()
 
+   def remove_camera(self, camera):
+        """remove a camera to the System and kill its processing thread"""
+        self.cameras.pop(camera)
+        self.cameraProcessingThreads.pop(thread)
+        self.captureThread.stop = False
+
    def process_frame(self,camera):
         """This function performs all the frame proccessing.
         It reads frames captured by the IPCamera instance,
@@ -172,9 +178,9 @@ class SurveillanceSystem(object):
         FPScount = 0 # Used to calculate frame rate at which frames are being processed
         FPSstart = time.time()
         start = time.time()
-        stop = False
+        stop = camera.captureThread.stop
         
-        while True:  
+        while not stop:
 
              frame_count +=1
              logger.debug("Reading Frame")
