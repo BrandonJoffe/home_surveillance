@@ -90,10 +90,7 @@ except TypeError:
     try:
         os.makedirs('logs')
     except OSError as exc:  # Python >2.5
-        if exc.errno == errno.EEXIST and os.path.isdir('logs'):
-            pass
-        else:
-            raise
+        print "logging directory already exist"
 
 logger = logging.getLogger()
 formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -173,10 +170,10 @@ class SurveillanceSystem(object):
         self.cameraProcessingThreads.append(thread)
         thread.start()
 
-   def remove_camera(self, camera):
+   def remove_camera(self, camID):
         """remove a camera to the System and kill its processing thread"""
-        self.cameras.pop(camera)
-        self.cameraProcessingThreads.pop(thread)
+        self.cameras.pop(camID)
+        self.cameraProcessingThreads.pop(camID)
         self.captureThread.stop = False
 
    def process_frame(self,camera):

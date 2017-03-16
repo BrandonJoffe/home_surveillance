@@ -162,9 +162,8 @@ def remove_camera():
     if request.method == 'POST':
         camID = request.form.get('camURL')
         data = {"camNum": len(HomeSurveillance.cameras) - 1}
-        application = request.form.get('application')
         with HomeSurveillance.camerasLock:
-            HomeSurveillance.remove_camera(SurveillanceSystem.Camera.IPCamera(camURL, application))
+            HomeSurveillance.remove_camera(camID)
         app.logger.info("Removing camera number : " + data)
         data = {"alert_status": "removed"}
         return jsonify(data)
