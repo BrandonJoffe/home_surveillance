@@ -160,7 +160,9 @@ def add_camera():
 @app.route('/remove_camera', methods = ['GET','POST'])
 def remove_camera():
     if request.method == 'POST':
-        camID = request.form.get('camURL')
+        camID = request.form.get('id')
+        app.logger.info("Removing camera: ")
+        app.logger.info(camID)
         data = {"camNum": len(HomeSurveillance.cameras) - 1}
         with HomeSurveillance.camerasLock:
             HomeSurveillance.remove_camera(camID)
