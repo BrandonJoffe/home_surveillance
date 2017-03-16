@@ -9,7 +9,9 @@
 
 import numpy as np
 import cv2
+import cv2.cv as cv
 import sys
+import time
 
 def main(argv):
     videofeed = ''
@@ -20,15 +22,16 @@ def main(argv):
     cap = cv2.VideoCapture(videofeed)
     if not cap.isOpened():
         cap.open()
-    Print "Video feed open."
-    dump_video_info()  # logging every specs of the video feed
+    print "Video feed open."
+    dump_video_info(cap)  # logging every specs of the video feed
 
     # Define the codec and create VideoWriter object
     # fourcc = cv2.VideoWriter_fourcc(*'XVID')
     fourcc = cv2.cv.CV_FOURCC(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 20.0, (1280, 720))
 
-    while (cap.isOpened()):
+    t_end = time.time() + 15
+    while time.time() < t_end:
         ret, frame = cap.read()
         if ret == True:
             frame = cv2.flip(frame, 0)
@@ -48,7 +51,7 @@ def main(argv):
     cv2.destroyAllWindows()
 
 
-def dump_video_info(self):
+def dump_video_info(cap):
     print "---------Dumping video feed info---------------------"
     print "Position of the video file in milliseconds or video capture timestamp: "
     print cap.get(cv.CV_CAP_PROP_POS_MSEC)

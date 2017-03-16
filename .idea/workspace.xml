@@ -63,8 +63,8 @@
       <file leaf-file-name="captureFeed.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/captureFeed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="52" column="83" lean-forward="true" selection-start-line="52" selection-start-column="83" selection-end-line="52" selection-end-column="83" />
+            <state relative-caret-position="255">
+              <caret line="33" column="30" lean-forward="true" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
               <folding>
                 <element signature="e#120#138#0" expanded="true" />
               </folding>
@@ -75,11 +75,9 @@
       <file leaf-file-name="Camera.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/system/Camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="90" selection-end-column="71" />
-              <folding>
-                <element signature="e#641#657#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="374">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -115,9 +113,9 @@
       <find>logger</find>
       <find>RECOGNIZ</find>
       <find>add_</find>
-      <find>dump_video_info</find>
       <find>logger.info(</find>
       <find>self.video.</find>
+      <find>dump_video_info</find>
     </findStrings>
     <replaceStrings>
       <replace>app.logger(</replace>
@@ -461,9 +459,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="54" column="48" lean-forward="false" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding>
-            <element signature="e#641#657#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -523,9 +519,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="918">
           <caret line="54" column="48" lean-forward="false" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding>
-            <element signature="e#641#657#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -585,9 +579,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
           <caret line="54" column="48" lean-forward="false" selection-start-line="54" selection-start-column="48" selection-end-line="54" selection-end-column="48" />
-          <folding>
-            <element signature="e#641#657#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -647,9 +639,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="52" column="2" lean-forward="false" selection-start-line="52" selection-start-column="2" selection-end-line="52" selection-end-column="2" />
-          <folding>
-            <element signature="e#641#657#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -866,18 +856,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/system/Camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="90" selection-end-column="71" />
-          <folding>
-            <element signature="e#641#657#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/captureFeed.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="52" column="83" lean-forward="true" selection-start-line="52" selection-start-column="83" selection-end-line="52" selection-end-column="83" />
+        <state relative-caret-position="255">
+          <caret line="33" column="30" lean-forward="true" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
           <folding>
             <element signature="e#120#138#0" expanded="true" />
           </folding>
