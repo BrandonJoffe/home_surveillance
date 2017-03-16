@@ -16,20 +16,21 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hf")
     except getopt.GetoptError:
-        print
-        'captureFeed.py -f <video feed url>'
+        print "captureFeed.py -f <video feed url>"
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print
-            'captureFeed.py -f <video feed url>'
+            print "captureFeed.py -f <video feed url>"
             sys.exit()
         elif opt in ("-f"):
             videofeed = arg
+        elif:
+            print "captureFeed.py -f <video feed url>"
+            sys.exit(2)
 
     print "---------OpenCV Video feed analyzer -------------\n\n\n"
     print "Analyzing url: " + videofeed
-    cap = cv2.VideoCapture(videfeed)
+    cap = cv2.VideoCapture(videofeed)
 
     # Define the codec and create VideoWriter object
     # fourcc = cv2.VideoWriter_fourcc(*'XVID')
