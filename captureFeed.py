@@ -12,6 +12,7 @@ import cv2
 import cv2.cv as cv
 import sys
 import time
+from subprocess import call
 
 def main(argv):
     videofeed = ''
@@ -30,6 +31,7 @@ def main(argv):
     fourcc = cv2.cv.CV_FOURCC(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 20.0, (1280, 720))
 
+    #recording a video sample (output.avi) for X seconds
     t_end = time.time() + 15
     while time.time() < t_end:
         ret, frame = cap.read()
@@ -49,6 +51,8 @@ def main(argv):
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+    print "\n\n-----------FFMEG video data output:-----------\n\n"
+    call(["ffmpeg", "-i " + videofeed])
 
 
 def dump_video_info(cap):
