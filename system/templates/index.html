@@ -812,11 +812,8 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 
-            function removeCamera() {
-                            //getting camera id
-                            var camID = document.getElementById("application");
-
-                            console.log("Removing camera: " + camID;
+            function removeCamera(camID) {
+                            console.log("Removing camera: " + camID);
                             $.ajax({
                                   type: "POST",
                                   url: "{{ url_for('remove_camera') }}",
@@ -829,9 +826,7 @@
                                     console.log(error);
                                   }
                             });
-
-
-                }
+            }
 
 
              function addCamera() {

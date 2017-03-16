@@ -214,8 +214,7 @@ def remove_face():
     if request.method == 'POST':
         predicted_name = request.form.get('predicted_name')
         camNum = request.form.get('camera')
-     
-        with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
+
         with HomeSurveillance.cameras[int(camNum)].peopleDictLock:
             try:
                 del HomeSurveillance.cameras[int(camNum)].people[predicted_name]
