@@ -12,8 +12,8 @@ Smart security is the future, and with the help of the open source community and
 
 The main system components include a dedicated system server which performs all the central processing and web-based communication and a Raspberry PI which hosts the alarm control interface.  
 
-[![solarized dualmode]
-(https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/designOverview-2.png)](#features)
+
+[![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/designOverview-2.png)](#features)
 
 ### How does it work? ###
 
