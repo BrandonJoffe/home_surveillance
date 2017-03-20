@@ -104,6 +104,7 @@ class IPCamera(object):
 		logger.debug('Getting Frames')
 		FPScount = 0
 		warmup = 0
+		fpsTweak = 0
 		FPSstart = time.time()
 
 		while True:
@@ -120,11 +121,12 @@ class IPCamera(object):
 				FPSstart = time.time()
 				FPScount = 0
 
-			if self.streamingFPS != 0:  # If frame rate gets too fast slow it down, if it gets too slow speed it up
-				if self.streamingFPS > CAPTURE_HZ:
-					time.sleep(1/CAPTURE_HZ) 
-				else:
-					time.sleep(self.streamingFPS/(CAPTURE_HZ*CAPTURE_HZ))
+			if fpsTweak:
+				if self.streamingFPS != 0:  # If frame rate gets too fast slow it down, if it gets too slow speed it up
+					if self.streamingFPS > CAPTURE_HZ:
+						time.sleep(1/CAPTURE_HZ)
+					else:
+						time.sleep(self.streamingFPS/(CAPTURE_HZ*CAPTURE_HZ))
 
 	def read_jpg(self):
 		"""We are using Motion JPEG, and OpenCV captures raw images,
