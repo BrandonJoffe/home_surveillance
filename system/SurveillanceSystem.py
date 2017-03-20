@@ -84,6 +84,14 @@ args = parser.parse_args()
 start = time.time()
 np.set_printoptions(precision=2)
 
+try:
+    os.makedirs('logs', exist_ok=True)  # Python>3.2
+except TypeError:
+    try:
+        os.makedirs('logs')
+    except OSError as exc:  # Python >2.5
+        print "logging directory already exist"
+
 logger = logging.getLogger()
 formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
@@ -162,6 +170,12 @@ class SurveillanceSystem(object):
         self.cameraProcessingThreads.append(thread)
         thread.start()
 
+   def remove_camera(self, camID):
+        """remove a camera to the System and kill its processing thread"""
+        self.cameras.pop(camID)
+        self.cameraProcessingThreads.pop(camID)
+        self.captureThread.stop = False
+
    def process_frame(self,camera):
         """This function performs all the frame proccessing.
         It reads frames captured by the IPCamera instance,
@@ -172,9 +186,9 @@ class SurveillanceSystem(object):
         FPScount = 0 # Used to calculate frame rate at which frames are being processed
         FPSstart = time.time()
         start = time.time()
-        stop = False
+        stop = camera.captureThread.stop
         
-        while True:  
+        while not stop:
 
              frame_count +=1
              logger.debug("Reading Frame")
@@ -358,7 +372,7 @@ class SurveillanceSystem(object):
 
                     for x, y, w, h in peopleRects:
                       
-                        logger.info('//// Proccessing People Segmented Areas ///')
+                        logger.debug('//// Proccessing People Segmented Areas ///')
                         bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h)) 
                         personimg = ImageUtils.crop(frame, bb, dlibRect = True)
                        
@@ -987,3 +1001,6 @@ class Alert(object):
 
     def set_custom_alertmessage(self,message):
         self.alertString = message
+
+
+

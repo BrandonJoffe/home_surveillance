@@ -95,6 +95,7 @@ class IPCamera(object):
 		self.captureThread = threading.Thread(name='video_captureThread',target=self.get_frame)
 		self.captureThread.daemon = True
 		self.captureThread.start()
+		self.captureThread.stop = False
 
 	def __del__(self):
 		self.video.release()

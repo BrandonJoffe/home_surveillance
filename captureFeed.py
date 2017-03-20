@@ -12,16 +12,29 @@ import cv2
 import cv2.cv as cv
 import sys
 import time
+import os
 
 def main(argv):
     videofeed = ''
     videofeed = str(sys.argv[1])
 
+    print "\n\n-----------FFMEG video data output:-----------\n\n"
+    os.system("ffmpeg -i " + videofeed)
+
     print "---------OpenCV Video feed analyzer -------------\n\n\n"
     print "Analyzing url: " + videofeed
     cap = cv2.VideoCapture(videofeed)
+    cap.set(cv.CV_CAP_PROP_FRAME_WIDTH, 640)
+    cap.set(cv.CV_CAP_PROP_FRAME_HEIGHT, 480)
+    cap.set(cv.CV_CAP_PROP_FOURCC ,CV_FOURCC('M', 'J', 'P', 'G') )
+
     if not cap.isOpened():
-        cap.open()
+        try:
+            cap.open()
+        except ValueError:
+            print "Could not open the video feed."
+            exit()
+
     print "Video feed open."
     dump_video_info(cap)  # logging every specs of the video feed
 
@@ -30,6 +43,7 @@ def main(argv):
     fourcc = cv2.cv.CV_FOURCC(*'MJPG')
     out = cv2.VideoWriter('output.avi', fourcc, 20.0, (1280, 720))
 
+    #recording a video sample (output.avi) for X seconds
     t_end = time.time() + 15
     while time.time() < t_end:
         ret, frame = cap.read()
@@ -49,7 +63,6 @@ def main(argv):
     cap.release()
     out.release()
     cv2.destroyAllWindows()
-
 
 def dump_video_info(cap):
     print "---------Dumping video feed info---------------------"
