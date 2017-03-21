@@ -61,7 +61,7 @@ class IPCamera(object):
 	detect_recognise_track. These can be found in the 
 	SureveillanceSystem object, within the process_frame function"""
 
-	def __init__(self,camURL, cameraFunction, dlibDetection):
+	def __init__(self,camURL, cameraFunction, dlibDetection, fpsTweak):
 		logger.info("Loading Stream From IP Camera: " + camURL)
 		self.motionDetector = MotionDetector.MotionDetector()
 		self.faceDetector = FaceDetector.FaceDetector()
@@ -77,6 +77,7 @@ class IPCamera(object):
 		self.trackers = [] # Holds all alive trackers
 		self.cameraFunction = cameraFunction 
 		self.dlibDetection = dlibDetection # Used to choose detection method for camera (dlib - True vs opencv - False)
+		self.fpsTweak = fpsTweak # used to know if we should apply the FPS work around when you have many cameras
 		self.rgbFrame = None
 		self.faceBoxes = None
 		self.captureEvent = threading.Event()
@@ -104,7 +105,7 @@ class IPCamera(object):
 		logger.debug('Getting Frames')
 		FPScount = 0
 		warmup = 0
-		fpsTweak = 0
+		#fpsTweak = 0  # set that to 1 if you want to enable Brandon's fps tweak. that break most video feeds so recommend not to
 		FPSstart = time.time()
 
 		while True:
@@ -121,7 +122,7 @@ class IPCamera(object):
 				FPSstart = time.time()
 				FPScount = 0
 
-			if fpsTweak:
+			if self.fpsTweak:
 				if self.streamingFPS != 0:  # If frame rate gets too fast slow it down, if it gets too slow speed it up
 					if self.streamingFPS > CAPTURE_HZ:
 						time.sleep(1/CAPTURE_HZ)
