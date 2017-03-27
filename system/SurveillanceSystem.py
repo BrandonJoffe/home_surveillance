@@ -40,7 +40,6 @@ from subprocess import Popen, PIPE
 import os.path
 import sys
 import logging
-from logging.handlers import RotatingFileHandler
 import threading
 import time
 from datetime import datetime, timedelta
@@ -83,26 +82,9 @@ args = parser.parse_args()
 
 start = time.time()
 np.set_printoptions(precision=2)
-
-try:
-    os.makedirs('logs', exist_ok=True)  # Python>3.2
-except TypeError:
-    try:
-        os.makedirs('logs')
-    except OSError as exc:  # Python >2.5
-        print "logging directory already exist"
-
-logger = logging.getLogger()
-formatter = logging.Formatter("(%(threadName)-10s) %(asctime)s - %(name)s - %(levelname)s - %(message)s")
-handler = RotatingFileHandler("logs/surveillance.log", maxBytes=10000000, backupCount=10)
-handler.setLevel(logging.INFO)
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.INFO)
-
-#logging.basicConfig(level=logging.DEBUG,
-#                    format='(%(threadName)-10s) %(message)s',
-#                    )
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
                   
 class SurveillanceSystem(object):
    """ The SurveillanceSystem object is the heart of this application.
@@ -147,9 +129,9 @@ class SurveillanceSystem(object):
         self.get_face_database_names() # Gets people in database for web client
 
         #//////////////////////////////////////////////////// Camera Examples ////////////////////////////////////////////////////
-        #self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code
+        # self.cameras.append(Camera.IPCamera("testing/iphoneVideos/singleTest.m4v","detect_recognise_track",False)) # Video Example - uncomment and run code 
         # self.cameras.append(Camera.IPCamera("http://192.168.1.33/video.mjpg","detect_recognise_track",False))
-        
+            
         # processing frame threads 
         for i, cam in enumerate(self.cameras):       
           thread = threading.Thread(name='frame_process_thread_' + str(i),target=self.process_frame,args=(cam,))
@@ -169,28 +151,23 @@ class SurveillanceSystem(object):
         self.cameraProcessingThreads.append(thread)
         thread.start()
 
-   def remove_camera(self, camID):
-        """remove a camera to the System and kill its processing thread"""
-        self.cameras.pop(camID)
-        self.cameraProcessingThreads.pop(camID)
-        self.captureThread.stop = False
 
    def process_frame(self,camera):
         """This function performs all the frame proccessing.
         It reads frames captured by the IPCamera instance,
         resizes them, and performs 1 of 5 functions"""
-        logger.debug('Processing Frames')
+        logging.debug('Processing Frames')
         state = 1
         frame_count = 0;  
         FPScount = 0 # Used to calculate frame rate at which frames are being processed
         FPSstart = time.time()
         start = time.time()
-        stop = camera.captureThread.stop
+        stop = False
         
-        while not stop:
+        while True:  
 
              frame_count +=1
-             logger.debug("Reading Frame")
+             logging.debug('\n\n////////////////////// Reading Frame //////////////////////\n\n')
              frame = camera.read_frame()
              if frame == None or np.array_equal(frame, camera.tempFrame):  # Checks to see if the new frame is the same as the previous frame
                  continue
@@ -213,13 +190,11 @@ class SurveillanceSystem(object):
              if camera.cameraFunction == "detect_motion":
                  camera.motion, mframe = camera.motionDetector.detect_movement(frame, get_rects = False) 
                  camera.processing_frame = mframe
-                 if camera.motion == False:
-                    logger.debug('//// NO MOTION DETECTED /////')
-                    continue
+                 if camera.motion == True:
+                     logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')        
                  else:
-                    logger.debug('/// MOTION DETECTED ///')
-
-
+                     logging.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
+                     continue
 
              ##################################################################################################################################################
              #<#####################################################> FACE DETECTION AND RECOGNTIION <#########################################################>
@@ -237,7 +212,7 @@ class SurveillanceSystem(object):
                          frame = ImageUtils.draw_boxes(frame, camera.faceBoxes, camera.dlibDetection)
                     camera.processing_frame = frame
          
-                    logger.info('////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //')
+                    logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
                     for face_bb in camera.faceBoxes: 
                         
                         # Used to reduce false positives from opencv haar cascade detector.
@@ -288,11 +263,11 @@ class SurveillanceSystem(object):
                      camera.motion, mframe = camera.motionDetector.detect_movement(frame, get_rects = False)   
           
                      if camera.motion == True:
-                        logger.debug('////////////////////// MOTION DETECTED //////////////////////')
+                        logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
                         state = 2
                         camera.processing_frame = mframe
                      else:
-                        logger.debug('////////////////////// NO MOTION DETECTED //////////////////////')
+                        logging.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
                      continue
 
                  elif state == 2: # If motion has been detected
@@ -309,11 +284,11 @@ class SurveillanceSystem(object):
 
                     if len(camera.faceBoxes) == 0:
                         if (time.time() - start) > 30.0:
-                            logger.info('//  No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode')
+                            logging.debug('\n\n//////////////////////  No faces found for ' + str(time.time() - start) + ' seconds - Going back to Motion Detection Mode\n\n')
                             state = 1
                             frame_count = 0;
-                    else:
-                        logger.info('////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' ////')
+                    else:                    
+                        logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
                         # frame = cv2.flip(frame, 1)
                         for face_bb in camera.faceBoxes: 
                       
@@ -362,16 +337,16 @@ class SurveillanceSystem(object):
 
                     if camera.motion == False:
                        camera.processing_frame = frame
-                       logger.debug('////-- NO MOTION DETECTED --////')
+                       logging.debug('\n\n//////////////////////-- NO MOTION DETECTED --//////////////////////\n\n')
                        continue
 
-                    logger.debug('///// MOTION DETECTED /////')
+                    logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
                     if self.drawing == True:
                         frame = ImageUtils.draw_boxes(frame, peopleRects, False)
 
                     for x, y, w, h in peopleRects:
                       
-                        logger.debug('//// Proccessing People Segmented Areas ///')
+                        logging.debug('\n\n////////////////////// Proccessing People Segmented Areas //////////////////////\n\n')
                         bb = dlib.rectangle(long(x), long(y), long(x+w), long(y+h)) 
                         personimg = ImageUtils.crop(frame, bb, dlibRect = True)
                        
@@ -388,7 +363,7 @@ class SurveillanceSystem(object):
                                     faceimg = ImageUtils.crop(personimg, face_bb, dlibRect = True)
                                     if len(camera.faceDetector.detect_cascadeface_accurate(faceimg)) == 0:
                                           continue
-                              logger.info('/// Proccessing Detected faces ///')
+                              logging.debug('\n\n////////////////////// Proccessing Detected faces //////////////////////\n\n')
 
                               predictions, alignedFace = self.recogniser.make_prediction(personimg,face_bb)
 
@@ -423,20 +398,20 @@ class SurveillanceSystem(object):
 
                 training_blocker = self.trainingEvent.wait()  # Wait if classifier is being trained 
 
-                logger.debug('//// detect_recognise_track 1 ////')
+                logging.debug('\n\n////////////////////// detect_recognise_track 1 //////////////////////\n\n')
                 peopleFound = False
                 camera.motion, peopleRects  = camera.motionDetector.detect_movement(frame, get_rects = True)   
-                logger.debug('//// detect_recognise_track  2 /////')
+                logging.debug('\n\n////////////////////// detect_recognise_track  2 //////////////////////\n\n')
           
                 if camera.motion == False:
                    camera.processing_frame = frame
-                   logger.debug('///// NO MOTION DETECTED /////')
+                   logging.debug('\n\n////////////////////// NO MOTION DETECTED //////////////////////\n\n')
                    continue
 
                 if self.drawing == True:
                     camera.processing_frame = ImageUtils.draw_boxes(frame, peopleRects, False)
 
-                logger.debug('//// MOTION DETECTED //////')
+                logging.debug('\n\n////////////////////// MOTION DETECTED //////////////////////\n\n')
 
                
                 for x, y, w, h in peopleRects:
@@ -452,13 +427,11 @@ class SurveillanceSystem(object):
                     for i in xrange(len(camera.trackers) - 1, -1, -1): 
                         
                         if camera.trackers[i].overlap(person_bb):
-                           logger.debug("=> Updating Tracker <=")
+                           print "============================> Updating Tracker <============================"
                            camera.trackers[i].update_tracker(person_bb)
                            # personimg = cv2.flip(personimg, 1)
                            camera.faceBoxes = camera.faceDetector.detect_faces(personimg,camera.dlibDetection)  
-                           logger.debug('//////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' /////')
-                           if len(camera.faceBoxes) > 0:
-                               logger.info("Found " + str(len(camera.faceBoxes)) + " faces.")
+                           logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')  
                            for face_bb in camera.faceBoxes: 
 
                                 if camera.dlibDetection == False:
@@ -487,8 +460,8 @@ class SurveillanceSystem(object):
                                                         # if the person has already been detected continue to track that person - use same person ID
                                                         if person.identity == predictedName or self.recogniser.getSquaredl2Distance(person.rep ,predictions['rep']) < 0.8:
                                                               
-                                                                person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictedName)
-                                                                logger.info( "====> New Tracker for " +person.identity + " <===")
+                                                                person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictedName)               
+                                                                print "============================> New Tracker for " +person.identity + " <============================"
                                                                 # Remove current tracker and create new one with the ID of the original person
                                                                 del camera.trackers[i]
                                                                 camera.trackers.append(Tracker(frame, person_bb, person,ID))
@@ -506,22 +479,22 @@ class SurveillanceSystem(object):
                                                     #add person to detected people      
                                                     with camera.peopleDictLock:
                                                           camera.people[strID] = person
-                                                          logger.info( "=====> New Tracker for new person <====")
+                                                    print "============================> New Tracker for new person <============================"
                                                     del camera.trackers[i]
                                                     camera.trackers.append(Tracker(frame, person_bb, person,strID))
                                     # if it is the same person update confidence if it is higher and change prediction from unknown to identified person
                                     # if the new detected face has a lower confidence and can be classified as unknown, when the person being tracked isn't unknown - change tracker
-                                    else:
-                                        logger.info( "====> update person name and confidence <==")
-                                        if camera.trackers[i].person.confidence < predictions['confidence']:
-                                            camera.trackers[i].person.confidence = predictions['confidence']
-                                            if camera.trackers[i].person.confidence > self.confidenceThreshold:
-                                                camera.trackers[i].person.identity = predictions['name']
+                                    else:  
+                                          print "============================> update person name and confidence <============================"
+                                          if camera.trackers[i].person.confidence < predictions['confidence']:
+                                              camera.trackers[i].person.confidence = predictions['confidence']
+                                              if camera.trackers[i].person.confidence > self.confidenceThreshold:
+                                                  camera.trackers[i].person.identity = predictions['name']
       
                                   
                                 # If more than one face is detected in the region compare faces to the people being tracked and update tracker accordingly
                                 else:
-                                    logger.info( "==> More Than One Face Detected <==")
+                                    print "============================> More Than One Face Detected <============================"
                                     # if tracker is already tracking the identified face make an update 
                                     if self.recogniser.getSquaredl2Distance(camera.trackers[i].person.rep ,predictions['rep']) < 0.99 and camera.trackers[i].person.identity == predictions['name']: 
                                         if camera.trackers[i].person.confidence < predictions['confidence']:
@@ -567,8 +540,8 @@ class SurveillanceSystem(object):
                                                 if predictions['confidence'] > self.confidenceThreshold and person.confidence > self.confidenceThreshold:
                                                       person = Person(predictions['rep'],predictions['confidence'], alignedFace, predictions['name'])
                                                 else:   
-                                                      person = Person(predictions['rep'],predictions['confidence'], alignedFace, "unknown")
-                                                logger.info( "==> New Tracker for " + person.identity + " <====")
+                                                      person = Person(predictions['rep'],predictions['confidence'], alignedFace, "unknown")                
+                                                print "============================> New Tracker for " + person.identity + " <============================"
                                    
                                                 camera.trackers.append(Tracker(frame, person_bb, person,ID))
                                                 alreadyBeenDetected = True
@@ -584,7 +557,7 @@ class SurveillanceSystem(object):
                                     #add person to detected people      
                                     with camera.peopleDictLock:
                                           camera.people[strID] = person
-                                    logger.info( "====> New Tracker for new person <=")
+                                    print "============================> New Tracker for new person <============================"
                                     camera.trackers.append(Tracker(frame, person_bb, person,strID))
 
 
@@ -621,7 +594,7 @@ class SurveillanceSystem(object):
                     camera.processing_frame = frame
                    
          
-                    logger.debug('////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //')
+                    logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
 
                     for face_bb in camera.faceBoxes: 
                         result = ""
@@ -653,7 +626,7 @@ class SurveillanceSystem(object):
 
                     camera.faceBoxes = camera.faceDetector.detect_faces(frame,camera.dlibDetection)
   
-                    logger.debug('//  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' ///')
+                    logging.debug('\n\n//////////////////////  FACES DETECTED: '+ str(len(camera.faceBoxes)) +' //////////////////////\n\n')
 
 
                     for face_bb in camera.faceBoxes: 
@@ -680,15 +653,15 @@ class SurveillanceSystem(object):
         """check alarm state -> check camera -> check event -> 
         either look for motion or look for detected faces -> take action"""
 
-        logger.debug('Alert engine starting')
+        logging.debug('Alert engine starting')
         while True:
            with self.alertsLock:
               for alert in self.alerts:
-                logger.debug('checking alert')
+                logging.debug('\nchecking alert\n')
                 if alert.action_taken == False: # If action hasn't been taken for event 
                     if alert.alarmState != 'All':  # Check states
                         if  alert.alarmState == self.alarmState: 
-                            logger.debug('checking alarm state')
+                            logging.debug('checking alarm state')
                             alert.event_occurred = self.check_camera_events(alert)
                         else:
                           continue # Alarm not in correct state check next alert
@@ -696,7 +669,7 @@ class SurveillanceSystem(object):
                         alert.event_occurred = self.check_camera_events(alert)
                 else:
                     if (time.time() - alert.eventTime) > 300: # Reinitialize event 5 min after event accured
-                        logger.info( "reinitiallising alert: " + alert.id)
+                        print "reinitiallising alert: " + alert.id
                         alert.reinitialise()
                     continue 
 
@@ -707,29 +680,29 @@ class SurveillanceSystem(object):
         to determine whether an event has occurred"""
 
         if alert.camera != 'All':  # Check cameras   
-            logger.info( "alertTest" + alert.camera)
+            print "alertTest" + alert.camera          
             if alert.event == 'Recognition': #Check events
-                logger.info(  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person)
+                print  "checkingalertconf "+ str(alert.confidence) + " : " + alert.person
                 for person in self.cameras[int(alert.camera)].people.values():
-                    logger.info( "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity)
+                    print "checkingalertconf "+ str(alert.confidence )+ " : " + alert.person + " : " + person.identity
                     if alert.person == person.identity: # Has person been detected
                        
                         if alert.person == "unknown" and (100 - person.confidence) >= alert.confidence:
-                            logger.info( "alertTest2" + alert.camera)
+                            print "alertTest2" + alert.camera  
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True
                         elif person.confidence >= alert.confidence:
-                            logger.info( "alertTest3" + alert.camera)
+                            print "alertTest3" + alert.camera  
                             cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                             self.take_action(alert)
                             return True     
                 return False # Person has not been detected check next alert       
 
             else:
-                logger.info( "alertTest4" + alert.camera)
+                print "alertTest4" + alert.camera 
                 if self.cameras[int(alert.camera)].motion == True: # Has motion been detected
-                       logger.info( "alertTest5" + alert.camera)
+                       print "alertTest5" + alert.camera 
                        cv2.imwrite("notification/image.png", self.cameras[int(alert.camera)].processing_frame)#
                        self.take_action(alert)
                        return True
@@ -766,16 +739,18 @@ class SurveillanceSystem(object):
    def take_action(self,alert): 
         """Sends email alert and/or triggers the alarm"""
 
-        logger.info( "Taking action: ==" + alert.actions)
+        print "Taking action: ======================================================="
+        print alert.actions
+        print "======================================================================"
         if alert.action_taken == False: # Only take action if alert hasn't accured - Alerts reinitialise every 5 min for now
             alert.eventTime = time.time()  
             if alert.actions['email_alert'] == 'true':
-                logger.info( "email notification being sent")
+                print "\nemail notification being sent\n"
                 self.send_email_notification_alert(alert)
             if alert.actions['trigger_alarm'] == 'true':
-                logger.info( "triggering alarm1")
+                print "\ntriggering alarm1\n"
                 self.trigger_alarm()
-                logger.info( "alarm1 triggered")
+                print "\nalarm1 triggered\n"
             alert.action_taken = True
 
    def send_email_notification_alert(self,alert):
@@ -790,7 +765,7 @@ class SurveillanceSystem(object):
       msg['To'] = toaddr
       msg['Subject'] = "HOME SURVEILLANCE"
        
-      body = "NOTIFICATION ALERT:" +  alert.alertString + ""
+      body = "NOTIFICATION ALERT:\n\n" +  alert.alertString + "\n\n"
        
       msg.attach(MIMEText(body, 'plain'))
        
@@ -821,16 +796,16 @@ class SurveillanceSystem(object):
     
       if not os.path.exists(path + name):
         try:
-          logger.info( "Creating New Face Dircectory: " + name)
+          print "Creating New Face Dircectory: " + name
           os.makedirs(path+name)
         except OSError:
-          logger.info( OSError)
+          print OSError
           return False
           pass
       else:
          num = len([nam for nam in os.listdir(path +name) if os.path.isfile(os.path.join(path+name, nam))])
 
-      logger.info( "Writing Image To Directory: " + name)
+      print "Writing Image To Directory: " + name
       cv2.imwrite(path+name+"/"+ name + "_"+str(num) + ".png", image)
       self.get_face_database_names()
 
@@ -847,7 +822,7 @@ class SurveillanceSystem(object):
         if (name == 'cache.t7' or name == '.DS_Store' or name[0:7] == 'unknown'):
           continue
         self.peopleDB.append(name)
-        logger.info("Known faces in our db for: " + name + " ")
+        print name
       self.peopleDB.append('unknown')
 
    def change_alarm_state(self):
@@ -856,9 +831,9 @@ class SurveillanceSystem(object):
       to access the flask application."""
 
       r = requests.post('http://192.168.1.35:5000/change_state', data={"password": "admin"})
-      alarm_states = json.loads(r.text)
-
-      logger.info(alarm_states)
+      alarm_states = json.loads(r.text) 
+    
+      print alarm_states
       if alarm_states['state'] == 1:
           self.alarmState = 'Armed' 
       else:
@@ -873,7 +848,7 @@ class SurveillanceSystem(object):
        r = requests.post('http://192.168.1.35:5000/trigger', data={"password": "admin"})
        alarm_states = json.loads(r.text) 
     
-       logger.info(alarm_states)
+       print alarm_states
 
        if alarm_states['state'] == 1:
            self.alarmState = 'Armed' 
@@ -881,7 +856,7 @@ class SurveillanceSystem(object):
            self.alarmState = 'Disarmed' 
        
        self.alarmTriggerd = alarm_states['triggered']
-       logger.info(self.alarmTriggerd )
+       print self.alarmTriggerd 
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 class Person(object):
@@ -968,7 +943,7 @@ class Alert(object):
     alert_count = 1
 
     def __init__(self,alarmState,camera, event, person, actions, emailAddress, confidence):   
-        logger.info( "alert_"+str(Alert.alert_count)+ " created")
+        print "\n\nalert_"+str(Alert.alert_count)+ " created\n\n"
        
 
         if  event == 'Motion':
@@ -1000,6 +975,3 @@ class Alert(object):
 
     def set_custom_alertmessage(self,message):
         self.alertString = message
-
-
-
