@@ -1,0 +1,2 @@
+pkill python
+pkill luajit

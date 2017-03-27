@@ -20,6 +20,7 @@ import threading
 import time
 import numpy as np
 import cv2
+import cv2.cv as cv
 import ImageUtils
 import dlib
 import openface
@@ -30,9 +31,11 @@ import SurveillanceSystem
 import MotionDetector
 import FaceDetector
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+#logging.basicConfig(level=logging.DEBUG,
+#                    format='(%(threadName)-10s) %(message)s',
+#                    )
+
+logger = logging.getLogger(__name__)
 
 fileDir = os.path.dirname(os.path.realpath(__file__))
 modelDir = os.path.join(fileDir, '..', 'models')
@@ -58,8 +61,8 @@ class IPCamera(object):
 	detect_recognise_track. These can be found in the 
 	SureveillanceSystem object, within the process_frame function"""
 
-	def __init__(self,camURL, cameraFunction, dlibDetection):
-		print("Loading Stream From IP Camera ",camURL)
+	def __init__(self,camURL, cameraFunction, dlibDetection, fpsTweak):
+		logger.info("Loading Stream From IP Camera: " + camURL)
 		self.motionDetector = MotionDetector.MotionDetector()
 		self.faceDetector = FaceDetector.FaceDetector()
 		self.processing_frame = None
@@ -74,32 +77,38 @@ class IPCamera(object):
 		self.trackers = [] # Holds all alive trackers
 		self.cameraFunction = cameraFunction 
 		self.dlibDetection = dlibDetection # Used to choose detection method for camera (dlib - True vs opencv - False)
+		self.fpsTweak = fpsTweak # used to know if we should apply the FPS work around when you have many cameras
 		self.rgbFrame = None
 		self.faceBoxes = None
 		self.captureEvent = threading.Event()
 		self.captureEvent.set()
 		self.peopleDictLock = threading.Lock() # Used to block concurrent access to people dictionary
-	 	self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
+		self.video = cv2.VideoCapture(camURL) # VideoCapture object used to capture frames from IP camera
+		logger.info("We are opening the video feed.")
 	 	self.url = camURL
 		if not self.video.isOpened():
-			self.video.open()		
+			self.video.open()
+		logger.info("Video feed open.")
+		self.dump_video_info()  # logging every specs of the video feed
 		# Start a thread to continuously capture frames.
 		# The capture thread ensures the frames being processed are up to date and are not old
 		self.captureLock = threading.Lock() # Sometimes used to prevent concurrent access
 		self.captureThread = threading.Thread(name='video_captureThread',target=self.get_frame)
 		self.captureThread.daemon = True
 		self.captureThread.start()
+		self.captureThread.stop = False
 
 	def __del__(self):
 		self.video.release()
 
 	def get_frame(self):
-	    logging.debug('Getting Frames')
-	    FPScount = 0
-	    warmup = 0
-	    FPSstart = time.time()
+		logger.debug('Getting Frames')
+		FPScount = 0
+		warmup = 0
+		#fpsTweak = 0  # set that to 1 if you want to enable Brandon's fps tweak. that break most video feeds so recommend not to
+		FPSstart = time.time()
 
-	    while True:
+		while True:
 			success, frame = self.video.read()
 			self.captureEvent.clear() 
 			if success:		
@@ -113,11 +122,12 @@ class IPCamera(object):
 				FPSstart = time.time()
 				FPScount = 0
 
-			if self.streamingFPS != 0:  # If frame rate gets too fast slow it down, if it gets too slow speed it up
-				if self.streamingFPS > CAPTURE_HZ:
-					time.sleep(1/CAPTURE_HZ) 
-				else:
-					time.sleep(self.streamingFPS/(CAPTURE_HZ*CAPTURE_HZ))
+			if self.fpsTweak:
+				if self.streamingFPS != 0:  # If frame rate gets too fast slow it down, if it gets too slow speed it up
+					if self.streamingFPS > CAPTURE_HZ:
+						time.sleep(1/CAPTURE_HZ)
+					else:
+						time.sleep(self.streamingFPS/(CAPTURE_HZ*CAPTURE_HZ))
 
 	def read_jpg(self):
 		"""We are using Motion JPEG, and OpenCV captures raw images,
@@ -148,3 +158,40 @@ class IPCamera(object):
 		ret, jpeg = cv2.imencode('.jpg', frame)
 		return jpeg.tostring()
 
+	def dump_video_info(self):
+		logger.info("---------Dumping video feed info---------------------")
+		logger.info("Position of the video file in milliseconds or video capture timestamp: ")
+		logger.info(self.video.get(cv.CV_CAP_PROP_POS_MSEC))
+		logger.info("0-based index of the frame to be decoded/captured next: ")
+		logger.info(self.video.get(cv.CV_CAP_PROP_POS_FRAMES))
+		logger.info("Relative position of the video file: 0 - start of the film, 1 - end of the film: ")
+		logger.info(self.video.get(cv.CV_CAP_PROP_POS_AVI_RATIO))
+		logger.info("Width of the frames in the video stream: ")
+		logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_WIDTH))
+		logger.info("Height of the frames in the video stream: ")
+		logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_HEIGHT))
+		logger.info("Frame rate:")
+		logger.info(self.video.get(cv.CV_CAP_PROP_FPS))
+		logger.info("4-character code of codec.")
+		logger.info(self.video.get(cv.CV_CAP_PROP_FOURCC))
+		logger.info("Number of frames in the video file.")
+		logger.info(self.video.get(cv.CV_CAP_PROP_FRAME_COUNT))
+		logger.info("Format of the Mat objects returned by retrieve() .")
+		logger.info(self.video.get(cv.CV_CAP_PROP_FORMAT))
+		logger.info("Backend-specific value indicating the current capture mode.")
+		logger.info(self.video.get(cv.CV_CAP_PROP_MODE))
+		logger.info("Brightness of the image (only for cameras).")
+		logger.info(self.video.get(cv.CV_CAP_PROP_BRIGHTNESS))
+		logger.info("Contrast of the image (only for cameras).")
+		logger.info(self.video.get(cv.CV_CAP_PROP_CONTRAST))
+		logger.info("Saturation of the image (only for cameras).")
+		logger.info(self.video.get(cv.CV_CAP_PROP_SATURATION))
+		logger.info("Hue of the image (only for cameras).")
+		logger.info(self.video.get(cv.CV_CAP_PROP_HUE))
+		logger.info("Gain of the image (only for cameras).")
+		logger.info(self.video.get(cv.CV_CAP_PROP_GAIN))
+		logger.info("Exposure (only for cameras).")
+		logger.info(self.video.get(cv.CV_CAP_PROP_EXPOSURE))
+		logger.info("Boolean flags indicating whether images should be converted to RGB.")
+		logger.info(self.video.get(cv.CV_CAP_PROP_CONVERT_RGB))
+		logger.info("--------------------------End of video feed info---------------------")
