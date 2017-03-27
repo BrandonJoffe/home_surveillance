@@ -4,7 +4,7 @@ Smart security is the future, and with the help of the open source community and
 
 ---
 
-[![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/dashboard.png)](#features)
+[![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/revert-29-master/system/testing/implementation/dashboard.png)](#features)
 
 ## System Overview ##
 
