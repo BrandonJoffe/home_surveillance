@@ -19,8 +19,6 @@ The main system components include a dedicated system server which performs all 
 
 The SurveillanceSystem object is the heart of the system. It can process several IPCameras and monitors the system's alerts. A FaceRecogniser object provides functions for training a linear SVM classifier using the face database and includes all the functions necessary to perform face recognition using Openface's pre-trained neural network (thank you Brandon Amos!!). The IPcamera object streams frames directly from an IP camera and makes them available for processing, and streaming to the web client. Each IPCamera has its own MotionDetector and FaceDetector object, which are used by other subsequent processes to perform face recognition and person tracking. The FlaskSocketIO object streams jpeg frames (mjpeg) to the client and transfers JSON data using HTTP POST requests and web sockets. Finally, the flask object on the Raspberry PI simply controls a GPIO interface which can be directly connected to an existing wired alarm panel.
  
- [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/master/system/testing/implementation/finalSystemImplementation.png)](#features)
- 
 [![solarized dualmode](https://raw.githubusercontent.com/BrandonJoffe/home_surveillance/revert-29-master/system/testing/implementation/finalSystemImplementation.png)](#features)
  
 
