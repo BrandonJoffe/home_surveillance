@@ -68,7 +68,7 @@ docker pull bjoffe/openface_flask_v2
 3) Run Docker image, make sure you mount your User (for MAC) or home (for Ubuntu) directory as a volume so you can access your local files
 
 ```
-docker run -v /Users/:/host -p 9000:9000 -p 8000:8000 -p 5000:5000 -t -i bjoffe/openface_flask_v2  /bin/bash
+docker run -v /Users/:/host -p 5000:5000 -t -i bjoffe/openface_flask_v2  /bin/bash
 ```
 
 - Navigate to the home_surveillance project inside the volume within your Docker container
