@@ -285,9 +285,9 @@
                                
                                 <label>Video Processing Application</label>
                                     <select id="application" class="form-control">
-                                        <!--<option value="detect_motion">Motion Detection</option>
+                                        <option value="detect_motion">Motion Detection</option>
                                         <option value="detect_recognise">Face Recognition</option>
-                                        <option value="motion_detect_recognise">Motion Detection & Face Recognition</option>-->
+                                        <option value="motion_detect_recognise">Motion Detection & Face Recognition</option>
                                         <option value="segment_detect_recognise">Motion Object Segmentation & Face Recognition</option>
                                         <option value="detect_recognise_track">Face Recognition & Tracking</option>
                                     </select>
@@ -299,11 +299,7 @@
                                         <option value="opencv">Opencv Haar Cascade</option>
                                         <option value="dlib">Dlib HOG Face Detector</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                <label>Check for many simultaneous cameras (FPS Tweak)</label>
-                                    <input type="checkbox" id="fpstweak" value="fpstweak">
-                                </div>
+                               </div>
                             </div>
                          
                       </div>
@@ -605,7 +601,8 @@
       
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
-
+   
+        
 
     </div>
   <!-- /.content-wrapper -->
@@ -614,7 +611,196 @@
     reserved.
   </footer>
 
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                <p>Will be 23 on April 24th</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-user bg-yellow"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                <p>New phone +1(800)555-1234</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                <p>nora@example.com</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                <p>Execution time 5 seconds</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="label label-danger pull-right">70%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Update Resume
+                <span class="label label-success pull-right">95%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Laravel Integration
+                <span class="label label-warning pull-right">50%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)">
+              <h4 class="control-sidebar-subheading">
+                Back End Framework
+                <span class="label label-primary pull-right">68%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Allow mail redirect
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Other sets of options are available
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Expose author name in posts
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Allow the user to show his name in blog posts
+            </p>
+          </div>
+          <!-- /.form-group -->
+
+          <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Show me as online
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Turn off notifications
+              <input type="checkbox" class="pull-right">
+            </label>
+          </div>
+          <!-- /.form-group -->
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Delete chat history
+              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+            </label>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
@@ -626,23 +812,6 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 
-            function removeCamera(camID) {
-                            console.log("Removing camera: " + camID);
-                            $.ajax({
-                                  type: "POST",
-                                  url: "{{ url_for('remove_camera') }}",
-                                  data : {'camID': camID},
-                                  success: function(cam) {
-                                    console.log(cam);
-                                        $('#removecam').html('Removing Camera');
-                                  },
-                                  error: function(error) {
-                                    console.log(error);
-                                  }
-                            });
-            }
-
-
              function addCamera() {
                             //getting selected option from dropdowns
                             var camURL = document.getElementById("camURL").value;
@@ -650,8 +819,7 @@
                             var e1 = document.getElementById("application");
                             var application = e1.options[e1.selectedIndex].value; 
                             var e2 = document.getElementById("detectionMethod");
-                            var detectionMethod = e2.options[e2.selectedIndex].value;
-                            var fpstweak = document.getElementById("fpstweak");
+                            var detectionMethod = e2.options[e2.selectedIndex].value;        
                            
                             alertstyle = "alert-success";
 
@@ -663,23 +831,16 @@
                                 dlibDetection = false;
                             }
                             else{
-                                dlibDetection = true;
-                            }
-
-                            if(fpstweak == "checked"){
-                                fpstweak = true;
-                            }
-                            else{
-                                fpstweak = false;
+                                dlibDetection =true
                             }
 
                             $('#addcam').html('<i class="fa fa-spin fa-cog fa-3x fa-fw" style="font-size:12px;"></i> Adding Camera');
 
-                            console.log("Front end logging:"  + camURL + " " + application + " " + detectionMethod + " FPS Tweak: " + fpstweak);
+                            console.log(camURL + " " + application + " " + detectionMethod);
                             $.ajax({
                                   type: "POST",
                                   url: "{{ url_for('add_camera') }}",
-                                  data : {'camURL': camURL, 'application': application, 'detectionMethod': dlibDetection, 'fpstweak': fpstweak},
+                                  data : {'camURL': camURL, 'application': application, 'detectionMethod': dlibDetection}, 
                                   success: function(cam) {
                                     console.log(cam);
 
@@ -691,7 +852,7 @@
                                         btn.setAttribute("data-dismiss", "alert");  
                                         btn.setAttribute("aria-hidden","true"); 
                                         btn.setAttribute("onclick","removeCamera(this.id)"); 
-                                        btn.setAttribute("id","camera_" + cam.camNum);
+                                        btn.setAttribute("id","camera_" + cam.camNum);  
                                         btn.innerHTML = "&times;";
                                         camdiv.innerHTML = '<div class="text-center"><span>' + icon + '<div><strong>Camera '+ cam.camNum + ' FPS: <strong id="camera_' + cam.camNum+ '_fps">' + "Loading... </strong></div><div>" +'<font size="0.9">' + camURL+'<font></span></div>';
                                         camdiv.appendChild(btn);
