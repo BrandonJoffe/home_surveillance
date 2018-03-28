@@ -88,7 +88,6 @@ python WebApp.py
 
 >### *Camera Settings*
 - To add your own IP camera simply add the URL of the camera into field on the camera panel and choose 1 out of the 5 processing settings and your preferred face detection method. 
-- Unfortunately, I haven't included a means to remove the cameras once they have been added, however, this will be added shortly.
 
 >### *Customizable Alerts*
 - The Dashboard allows you to configure your own email and alarm trigger alerts. 
