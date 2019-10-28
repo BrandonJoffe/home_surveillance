@@ -2,7 +2,7 @@ click==6.6
 dask==0.10.1
 decorator==4.0.10
 dlib==18.17.100
-Flask==0.11.1
+Flask==1.0
 Flask-SocketIO==2.5
 itsdangerous==0.24
 Jinja2==2.8
