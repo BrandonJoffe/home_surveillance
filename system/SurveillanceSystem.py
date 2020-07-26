@@ -192,7 +192,7 @@ class SurveillanceSystem(object):
              frame_count +=1
              logger.debug("Reading Frame")
              frame = camera.read_frame()
-             if frame == None or np.array_equal(frame, camera.tempFrame):  # Checks to see if the new frame is the same as the previous frame
+             if frame is None or np.all(frame == camera.tempFrame):  # Checks to see if the new frame is the same as the previous frame
                  continue
              frame = ImageUtils.resize(frame)
              height, width, channels = frame.shape
