@@ -17,7 +17,7 @@
 # limitations under the License.
 
 from flask import Flask, render_template, Response, redirect, url_for, request, jsonify, send_file, session, g
-from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 import Camera
 from flask.ext.socketio import SocketIO, send, emit 
 import SurveillanceSystem
