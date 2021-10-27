@@ -1,5 +1,5 @@
 click==6.6
-dask==0.10.1
+dask==2021.10.0
 decorator==4.0.10
 dlib==18.17.100
 Flask==0.11.1
