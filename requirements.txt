@@ -8,7 +8,7 @@ itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
 networkx==1.11
-numpy==1.11.1
+numpy==1.21.0
 Pillow==3.3.0
 python-engineio==0.9.2
 python-socketio==1.4.2
